@@ -28,11 +28,24 @@ Global $_guiListCurrentType
 ; log tab
 Global $_logBuffer = ""
 
+; selected services
+;   first = service
+;	second = columns
+;		* selected (0)
+;		* name (1)
+;		* display name (2)
+;		* startup type (3)
+;		* status (4)
+Global $_selectedServices[100][5]
+
+
+
+
 ; template data
 ; first dimension  = types			Bolo, Excalibur, OGsql
 ; second dimension = components		Bridges, Docs, SQL
 ; third dimension  = files			CHECK, CVI, DOC_ID, ...
-Global $_winservicesData[100][100][100]
+Global $_winservicesData[10][10][10]
 
 
 ; end

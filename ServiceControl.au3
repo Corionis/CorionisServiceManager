@@ -1,4 +1,8 @@
-Global $STANDARD_RIGHTS_REQUIRED = 0x000F0000
+#include-once
+
+#include <SecurityConstants.au3>
+
+;Global $STANDARD_RIGHTS_REQUIRED = 0x000F0000
 
 ; Service Control Manager access types
 Global $SC_MANAGER_CONNECT = 0x0001
@@ -108,7 +112,7 @@ Func _StartService($sComputerName, $sServiceName)
    If $hKernel32 = -1 Then Return 0
    $arRet = DllCall($hAdvapi32, "long", "OpenSCManager", _
                     "str", $sComputerName, _
-                    "str", "ServicesActive", _ 
+                    "str", "ServicesActive", _
                     "long", $SC_MANAGER_CONNECT)
    If $arRet[0] = 0 Then
       $arRet = DllCall($hKernel32, "long", "GetLastError")
@@ -132,13 +136,13 @@ Func _StartService($sComputerName, $sServiceName)
             $arRet = DllCall($hKernel32, "long", "GetLastError")
             $lError = $arRet[0]
          EndIf
-         DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hService)         
+         DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hService)
       EndIf
       DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hSC)
    EndIf
    DllClose($hAdvapi32)
    DllClose($hKernel32)
-   If $lError <> -1 Then 
+   If $lError <> -1 Then
       SetError($lError)
       Return 0
    EndIf
@@ -192,13 +196,13 @@ Func _StopService($sComputerName, $sServiceName)
             $arRet = DllCall($hKernel32, "long", "GetLastError")
             $lError = $arRet[0]
          EndIf
-         DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hService)         
+         DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hService)
       EndIf
       DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hSC)
    EndIf
    DllClose($hAdvapi32)
-   DllClose($hKernel32)   
-   If $lError <> -1 Then 
+   DllClose($hKernel32)
+   If $lError <> -1 Then
       SetError($lError)
       Return 0
    EndIf
@@ -256,7 +260,7 @@ Func _ServiceRunning($sComputerName, $sServiceName)
    Local $hAdvapi32
    Local $arRet
    Local $hSC
-   Local $hService   
+   Local $hService
    Local $bRunning = 0
 
    $hAdvapi32 = DllOpen("advapi32.dll")
@@ -282,7 +286,7 @@ Func _ServiceRunning($sComputerName, $sServiceName)
       EndIf
       DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hSC)
    EndIf
-   DllClose($hAdvapi32)   
+   DllClose($hAdvapi32)
    Return $bRunning
 EndFunc
 
@@ -297,7 +301,7 @@ EndFunc
 ;                                name of the account under which the service should run
 ;                $sPassword - [optional] default is empty
 ;                             password to the account name specified by $sServiceUser
-;                             Specify an empty string if the account has no password or if the service 
+;                             Specify an empty string if the account has no password or if the service
 ;                             runs in the LocalService, NetworkService, or LocalSystem account
 ;                 $nServiceType - [optional] default is $SERVICE_WIN32_OWN_PROCESS
 ;                 $nStartType - [optional] default is $SERVICE_AUTO_START
@@ -326,7 +330,7 @@ Func _CreateService($sComputerName, _
    Local $hKernel32
    Local $arRet
    Local $hSC
-   Local $lError = -1   
+   Local $lError = -1
 
    $hAdvapi32 = DllOpen("advapi32.dll")
    If $hAdvapi32 = -1 Then Return 0
@@ -360,7 +364,7 @@ Func _CreateService($sComputerName, _
                           "str", "", _
                           "str", $sServiceUser, _
                           "str", $sPassword)
-         If $arRet[0] = 0 Then            
+         If $arRet[0] = 0 Then
             $arRet = DllCall($hKernel32, "long", "GetLastError")
             $lError = $arRet[0]
          Else
@@ -368,12 +372,12 @@ Func _CreateService($sComputerName, _
          EndIf
       Else
          DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $arRet[0])
-      EndIf      
+      EndIf
       DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hSC)
    EndIf
    DllClose($hAdvapi32)
-   DllClose($hKernel32)   
-   If $lError <> -1 Then 
+   DllClose($hKernel32)
+   If $lError <> -1 Then
       SetError($lError)
       Return 0
    EndIf
@@ -394,7 +398,7 @@ Func _DeleteService($sComputerName, $sServiceName)
    Local $arRet
    Local $hSC
    Local $hService
-   Local $lError = -1   
+   Local $lError = -1
 
    $hAdvapi32 = DllOpen("advapi32.dll")
    If $hAdvapi32 = -1 Then Return 0
@@ -429,8 +433,8 @@ Func _DeleteService($sComputerName, $sServiceName)
       DllCall($hAdvapi32, "int", "CloseServiceHandle", "long", $hSC)
    EndIf
    DllClose($hAdvapi32)
-   DllClose($hKernel32)   
-   If $lError <> -1 Then 
+   DllClose($hKernel32)
+   If $lError <> -1 Then
       SetError($lError)
       Return 0
    EndIf

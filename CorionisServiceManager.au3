@@ -1,7 +1,8 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=res\manager.ico
 #AutoIt3Wrapper_Res_Comment=MIT License
 #AutoIt3Wrapper_Res_Description=Manage selected Windows Services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.2
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.4
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (c) 2017 Todd R. Hill
 #AutoIt3Wrapper_Res_Field=ProductName|Corionis Service Manager
@@ -39,6 +40,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include "guiList.au3"
 #include "guiLog.au3"
 #include "Restart.au3"					; 3rd party function
+#include "ServiceControl.au3"
 #include "services.au3"
 
 ;----------------------------------------------------------------------------
@@ -93,13 +95,54 @@ EndIf
 
 GUISetState()
 While 1
-	Sleep(1000)
+	Sleep(5000)
+	UpdateMonitor()
 WEnd
 
 CloseProgram()
 
 ; Main
 ;============================================================================
+
+Func UpdateMonitor()
+	Dim $i, $j, $l, $state, $svc[5]
+	If $_guiMonitorIsMonitoring = True Then
+		For $i = 0 to $_guiMonitorListCount - 1
+			$l = GUICtrlRead($_guiMonitorList[$i])
+			$svc = StringSplit($l, "|", $STR_NOCOUNT)
+ 			$j = _ServiceRunning("", $svc[0])
+			If $j = 1 Then
+				$state = "Running"
+			Else
+				$state = "Stopped"
+			EndIf
+			If $svc[3] <> $state Then
+				$svc[3] = $state
+				$l = ""
+				For $j = 0 to 3
+					$l = $l & $svc[$j]
+					If $j < 3 Then
+						$l = $l & "|"
+					EndIf
+				Next
+				GUICtrlSetData($_guiMonitorList[$i], $l)
+			EndIf
+			;MsgBox(64, "Service", $i & " = " & $l)
+		Next
+	EndIf
+
+
+;~ 		For $j = 1 to 4
+;~ 			$l = $l & $_selectedServices[$i][$j]
+
+;~ 			If $j < 4 Then
+;~ 				$l = $l & "|"
+;~ 			EndIf
+;~ 		Next
+;~ 		$_guiMonitorList[$_guiMonitorListCount] = GUICtrlCreateListViewItem($l, $_guiMonitorView)
+;~ 		$_guiMonitorListCount = $_guiMonitorListCount + 1
+
+EndFunc
 
 ;----------------------------------------------------------------------------
 Func CheckAdmin()

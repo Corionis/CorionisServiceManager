@@ -1,7 +1,7 @@
 #include-once
 #cs -------------------------------------------------------------------------
 
- Current list of Bridges tab
+ Monitor Selected Services tab
 
 #ce -------------------------------------------------------------------------
 
@@ -24,44 +24,85 @@ AutoItSetOption("MustDeclareVars", 1)
 Global $_guiMonitorView
 Global $i1, $i2, $i3
 Global $_guiMonitorSelected = -1
+Global $_guiMonitorIsMonitoring = false
+Global $_guiMonitorList[100]
+Global $_guiMonitorListCount = 0
 
 ;----------------------------------------------------------------------------
 Func guiMonitorInit()
-	$_guiMonitorView = GUICtrlCreateListView("Name          |Description                    |Status         |Installed    ", 13, 31, 611, 305)
-	;GUICtrlSetBkColor($_guiMonitorView, $GUI_BKCOLOR_LV_ALTERNATE)
-	$i1 = GUICtrlCreateListViewItem("CHECK|Standard Check Bridge|Running|03/31/2013 14:23:32", $_guiMonitorView)
-	GUICtrlSetOnEvent($i1, "guiMonitorItemPicked")
-	;GUICtrlSetBkColor(-1, 0xf4f4f4)
-	$i2 = GUICtrlCreateListViewItem("CVI|Standard CVI Bridge|Stopped|03/31/2013 14:34:06", $_guiMonitorView)
-	GUICtrlSetOnEvent($i2, "guiMonitorItemPicked")
-	;GUICtrlSetBkColor(-1, 0xf4f4f4)
-	$i3 = GUICtrlCreateListViewItem("DOC_ID|Standard DOC_ID Bridge|Running|03/31/2013 14:40:52", $_guiMonitorView)
-	GUICtrlSetOnEvent($i3, "guiMonitorItemPicked")
+	Dim $i, $j, $l
 
-	Local $GUIButton = GUICtrlCreateButton("GUI", 226, 342, 50, 25)
-	GUICtrlSetOnEvent($GUIButton, "guiMonitorGUI")
-	GUICtrlSetTip($GUIButton, "Run the selected Bridge GUI")
+	$_guiMonitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, 611, 305)
+
+	$_selectedServices[0][0] = False
+	$_selectedServices[0][1] = "tomcat7"
+	$_selectedServices[0][2] = "DocVue Enterprise Server"
+	$_selectedServices[0][3] = "Automatic"
+	$_selectedServices[0][4] = "-"
+
+	$_selectedServices[1][0] = False
+	$_selectedServices[1][1] = "jasperreportsTomcat"
+	$_selectedServices[1][2] = "Jasperreports Tomcat"
+	$_selectedServices[1][3] = "Automatic"
+	$_selectedServices[1][4] = "-"
+
+	$_selectedServices[2][0] = False
+	$_selectedServices[2][1] = "jasperreportsPostgreSQL"
+	$_selectedServices[2][2] = "jasperreportsPostgreSQL"
+	$_selectedServices[2][3] = "Automatic"
+	$_selectedServices[2][4] = "-"
+
+	$_selectedServices[3][0] = False
+	$_selectedServices[3][1] = "MSSQLSERVER"
+	$_selectedServices[3][2] = "SQL Server"
+	$_selectedServices[3][3] = "Automatic"
+	$_selectedServices[3][4] = "-"
+
+	$_selectedServices[4][0] = False
+	$_selectedServices[4][1] = "Spooler"
+	$_selectedServices[4][2] = "Print Spooler"
+	$_selectedServices[4][3] = "Automatic"
+	$_selectedServices[4][4] = "-"
+
+	ReDim $_selectedServices[5][5]
+
+	For $i = 0 to UBound($_selectedServices) - 1
+		$l = ""
+		For $j = 1 to 4
+			$l = $l & $_selectedServices[$i][$j]
+			If $j < 4 Then
+				$l = $l & "|"
+			EndIf
+		Next
+		$_guiMonitorList[$_guiMonitorListCount] = GUICtrlCreateListViewItem($l, $_guiMonitorView)
+		GUICtrlSetOnEvent($_guiMonitorList[$_guiMonitorListCount], "guiMonitorItemPicked")
+		$_guiMonitorListCount = $_guiMonitorListCount + 1
+	Next
+
+
+
+
 	Local $StartButton = GUICtrlCreateButton("Start", 286, 342, 50, 25)
 	GUICtrlSetOnEvent($StartButton, "guiMonitorStart")
-	GUICtrlSetTip($StartButton, "Start the selected Bridge service")
+	GUICtrlSetTip($StartButton, "Start the selected service")
 	Local $StopButton = GUICtrlCreateButton("Stop", 346, 342, 50, 25)
 	GUICtrlSetOnEvent($StopButton, "guiMonitorStop")
-	GUICtrlSetTip($StopButton, "Stop the selected Bridge service")
+	GUICtrlSetTip($StopButton, "Stop the selected service")
 	Local $ReinstallButton = GUICtrlCreateButton("Reinstall", 406, 342, 50, 25)
 	GUICtrlSetOnEvent($ReinstallButton, "guiMonitorReinstall")
-	GUICtrlSetTip($ReinstallButton, "Reinstall the selected Bridge service")
+	GUICtrlSetTip($ReinstallButton, "Reinstall the selected service")
 	Local $UninstallButton = GUICtrlCreateButton("Uninstall", 466, 342, 50, 25)
 	GUICtrlSetOnEvent($UninstallButton, "guiMonitorUninstall")
-	GUICtrlSetTip($UninstallButton, "Uninstall the selected Bridge service")
-	Local $DeleteButton = GUICtrlCreateButton("Delete", 526, 342, 50, 25)
-	GUICtrlSetOnEvent($DeleteButton, "guiMonitorDelete")
-	GUICtrlSetTip($DeleteButton, "Delete the selected Bridge completely")
+	GUICtrlSetTip($UninstallButton, "Uninstall the selected service")
+	Local $MonitorButton = GUICtrlCreateButton("Monitor", 526, 342, 50, 25)
+	GUICtrlSetOnEvent($MonitorButton, "guiMonitorMonitor")
+	GUICtrlSetTip($MonitorButton, "Monitor the selected completely")
 ;~ 	GUICtrlSetState($GUIButton, $GUI_DISABLE)
 ;~ 	GUICtrlSetState($StartButton, $GUI_DISABLE)
 ;~ 	GUICtrlSetState($StopButton, $GUI_DISABLE)
 ;~ 	GUICtrlSetState($ReinstallButton, $GUI_DISABLE)
 ;~ 	GUICtrlSetState($UninstallButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($DeleteButton, $GUI_DISABLE)
+;~ 	GUICtrlSetState($MonitorButton, $GUI_DISABLE)
 EndFunc
 
 ;----------------------------------------------------------------------------
@@ -83,58 +124,59 @@ Func guiMonitorItemPicked()
 ;~ 	GUICtrlSetState($StopButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($ReinstallButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($UninstallButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($DeleteButton, $GUI_ENABLE)
+;~ 	GUICtrlSetState($MonitorButton, $GUI_ENABLE)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorGUI()
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Run GUI " & $_guiMonitorSelected)
+	MsgBox(64, "Action", "Run GUI " & $_guiMonitorSelected)
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorStart()
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Start " & $_guiMonitorSelected)
+	MsgBox(64, "Action", "Start " & $_guiMonitorSelected)
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorStop()
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Stop " & $_guiMonitorSelected)
+	MsgBox(64, "Action", "Stop " & $_guiMonitorSelected)
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorUninstall()
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Uninstall " & $_guiMonitorSelected)
+	MsgBox(64, "Action", "Uninstall " & $_guiMonitorSelected)
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorReinstall()
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Reinstall " & $_guiMonitorSelected)
+	MsgBox(64, "Action", "Reinstall " & $_guiMonitorSelected)
 	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorDelete()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Bridge Action", "Delete " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func guiMonitorMonitor()
+	$_guiMonitorIsMonitoring = Not $_guiMonitorIsMonitoring
+;~ 	Dim $s
+;~ 	If $_guiMonitorIsMonitoring = True Then
+;~ 		$s = "True"
+;~ 	Else
+;~ 		$s = "False"
+;~ 	EndIf
+;~ 	MsgBox(64, "Action", "Monitoring = " & $s)
 EndFunc
 
 ;----------------------------------------------------------------------------
 Func guiMonitorUpdate()
 	;GUICtrlSetData($_guiLogEdit, $_logBuffer)
 EndFunc
-
-
-
-
 
 ; end
