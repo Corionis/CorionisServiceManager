@@ -1,10 +1,10 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=res\manager.ico
 #AutoIt3Wrapper_Res_Comment=MIT License
-#AutoIt3Wrapper_Res_Description=Manage selected Windows Services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.4
+#AutoIt3Wrapper_Res_Description=Monitor & manage selected services
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.8
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright (c) 2017 Todd R. Hill
+#AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT license
 #AutoIt3Wrapper_Res_Field=ProductName|Corionis Service Manager
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -33,14 +33,13 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ; application components
 #include "pan.au3"						; must be include first
-#include "build.au3"
 #include "configuration.au3"
+#include "control.au3"
 #include "guiAbout.au3"
 #include "guiMonitor.au3"
 #include "guiList.au3"
 #include "guiLog.au3"
-#include "Restart.au3"					; 3rd party function
-#include "ServiceControl.au3"
+#include "restart.au3"					; 3rd party function
 #include "services.au3"
 
 ;----------------------------------------------------------------------------
@@ -76,12 +75,7 @@ configurationReadConfig()
 If $_panErrorValue <> 0 Then
 	$_returnValue = $_panErrorValue
 	$_returnMsg = $_panErrorMsg
-EndIf
-
-servicesReadAll()
-If $_panErrorValue <> 0 Then
-	$_returnValue = $_panErrorValue
-	$_returnMsg = $_panErrorMsg
+	CloseProgram()
 EndIf
 
 guiLogUpdate()
@@ -89,9 +83,8 @@ If $_panErrorValue <> 0 Then
 	GUICtrlSetState($_logTab, $GUI_SHOW)
 	$_panErrorValue = 0
 	$_panErrorMsg = ""
+	CloseProgram()
 EndIf
-
-; guiListMakeTree()
 
 GUISetState()
 While 1
@@ -130,17 +123,6 @@ Func UpdateMonitor()
 			;MsgBox(64, "Service", $i & " = " & $l)
 		Next
 	EndIf
-
-
-;~ 		For $j = 1 to 4
-;~ 			$l = $l & $_selectedServices[$i][$j]
-
-;~ 			If $j < 4 Then
-;~ 				$l = $l & "|"
-;~ 			EndIf
-;~ 		Next
-;~ 		$_guiMonitorList[$_guiMonitorListCount] = GUICtrlCreateListViewItem($l, $_guiMonitorView)
-;~ 		$_guiMonitorListCount = $_guiMonitorListCount + 1
 
 EndFunc
 

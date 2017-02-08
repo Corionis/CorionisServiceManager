@@ -18,7 +18,6 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ; application components
 #include "pan.au3"						; must be include first
-#include "build.au3"
 
 ;----------------------------------------------------------------------------
 ; globals

@@ -35,7 +35,7 @@ global $_configurationStatus = 1
 ;----------------------------------------------------------------------------
 Func configurationReadConfig()
 	Dim $cd = @ScriptDir
-	$_configurationFilePath = $cd & "\config\ssm.ini"
+	$_configurationFilePath = $cd & "\config\csm.ini"
 	If FileExists($_configurationFilePath) Then
 		$_configurationVersion = IniRead($_configurationFilePath, "ssm", "cfgvers", "")
 		$_configurationStatus = 0

@@ -17,7 +17,6 @@ AutoItSetOption("MustDeclareVars", 1)
 #include "pan.au3"						; must be include first
 
 ; functions
-#include "directoryList.au3"
 #include "guiLog.au3"
 
 ;----------------------------------------------------------------------------
@@ -134,7 +133,7 @@ Func _servicesReadConfigComponents($count)
 		$cpath = $_servicesRootPath & "\" & $_winservicesData[$i][0][0]
 		If FileExists($cpath) Then
 			; directories only, exclude any directory leading with an underscore
-			$clist = directoryList($cpath, Default, 2, "_*")
+			;$clist = directoryList($cpath, Default, 2, "_*")
 			_ArraySort($clist)
 			$num = UBound($clist) - 1
 			For $j = 0 To $num
@@ -161,7 +160,7 @@ Func _servicesReadConfigFiles($i, $num)
 		$fpath &= "\" & $_winservicesData[$i][$j][0]
 		If FileExists($fpath) Then
 			; files only, exclude any filename leading with an underscore
-			$flist = directoryList($fpath, Default, 1, "_*")
+			;$flist = directoryList($fpath, Default, 1, "_*")
 			_ArraySort($flist)
 			$quan = UBound($flist) - 1
 			For $k = 0 To $quan
