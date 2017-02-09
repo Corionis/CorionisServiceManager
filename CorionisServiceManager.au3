@@ -33,13 +33,13 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ; application components
 #include "pan.au3"						; must be include first
+#include "about.au3"
 #include "configuration.au3"
 #include "control.au3"
-#include "guiAbout.au3"
-#include "guiMonitor.au3"
-#include "guiList.au3"
-#include "guiLog.au3"
-#include "restart.au3"					; 3rd party function
+#include "log.au3"
+#include "monitor.au3"
+#include "options.au3"
+#include "restart.au3"
 #include "services.au3"
 
 ;----------------------------------------------------------------------------
@@ -99,9 +99,9 @@ CloseProgram()
 
 Func UpdateMonitor()
 	Dim $i, $j, $l, $state, $svc[5]
-	If $_guiMonitorIsMonitoring = True Then
-		For $i = 0 to $_guiMonitorListCount - 1
-			$l = GUICtrlRead($_guiMonitorList[$i])
+	If $_monitorIsMonitoring = True Then
+		For $i = 0 to $_monitorListCount - 1
+			$l = GUICtrlRead($_monitorList[$i])
 			$svc = StringSplit($l, "|", $STR_NOCOUNT)
  			$j = _ServiceRunning("", $svc[0])
 			If $j = 1 Then
@@ -118,7 +118,7 @@ Func UpdateMonitor()
 						$l = $l & "|"
 					EndIf
 				Next
-				GUICtrlSetData($_guiMonitorList[$i], $l)
+				GUICtrlSetData($_monitorList[$i], $l)
 			EndIf
 			;MsgBox(64, "Service", $i & " = " & $l)
 		Next
@@ -140,6 +140,12 @@ Func CloseProgram()
 	; Note: at this point @GUI_CTRLID would equal $GUI_EVENT_CLOSE,
 	; and @GUI_WINHANDLE would equal $_mainWindow
 	;;;MsgBox(0, "GUI Event", "CLOSE clicked, Exiting...")
+
+
+
+	If $_returnValue <> 0 Then
+		MsgBox(64, $_progName, "Did not complete successfully. Code: " & $_returnValue & ". Message: " & $_returnMsg)
+	EndIf
 	Exit $_returnValue
 EndFunc   ;==>CloseProgram
 
@@ -176,7 +182,6 @@ Func InitMainWindow()
 
 	; name must match that in InitTab
 	$_monitorTab = InitTab("Monitor")
-	$_listTab = InitTab("Select")
 	$_logTab = InitTab("Runtime Log")
 
 EndFunc   ;==>InitMainWindow
@@ -191,9 +196,7 @@ Func InitTab($name)
 	; initialize the content of the tab before GUICtrlCreateTabItem
 	Select
 		Case $name = "Monitor"
-			guiMonitorInit()
-		Case $name = "Select"
-			guiListInit()
+			monitorInit()
 		Case $name = "Runtime Log"
 			guiLogInit()
 	EndSelect
@@ -226,9 +229,9 @@ Func RestartProgram()
 EndFunc   ;==>RestartProgram
 
 ;----------------------------------------------------------------------------
-Func ShowGuiAbout()
-	guiAbout()
-EndFunc   ;==>ShowGuiAbout
+Func Showabout()
+	about()
+EndFunc   ;==>Showabout
 
 
 ; end

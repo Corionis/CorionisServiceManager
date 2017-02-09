@@ -20,18 +20,34 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ; application components
 #include "pan.au3"						; must be include first
-#include "guiLog.au3"
+#include "log.au3"
 
 ;----------------------------------------------------------------------------
 ; globals
 global $_configurationVersion = ""
-
 global $_configurationFilePath = ""		; path to ssm.ini
 
 ; status
 global $_configurationMsg = "not loaded"
 global $_configurationStatus = 1
 
+; configuration
+Global $_cfgHostname = "localhost"
+Global $_cfgFriendlyName = "My Computer"
+Global $_cfgFileInTitle = True
+Global $_cfgFileInTitleFull = False
+Global $_cfgEscapeCloses = False
+Global $_cfgMinimizeOnClose = True
+Global $_cfgHideWhenMinimized = False
+Global $_cfgRefreshInterval = 5000
+Global $_cfgRunColor = 0x00FF00
+Global $_cfgStopColor = 0xFF0000
+;
+Global $_cfgLeft = -1
+Global $_cfgTop = -1
+Global $_cfgWidth = 638
+Global $_cfgHeight = 400
+;
 ;----------------------------------------------------------------------------
 Func configurationReadConfig()
 	Dim $cd = @ScriptDir
@@ -50,7 +66,7 @@ Func configurationReadConfig()
 	If $_panErrorValue <> 0 Then
 		$_panErrorMsg = $_configurationMsg
 	EndIf
-	guiLogAppend($_configurationMsg)
+	loggerAppend($_configurationMsg)
 EndFunc
 
 ; end

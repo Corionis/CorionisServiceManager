@@ -21,18 +21,18 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ;----------------------------------------------------------------------------
 ; globals
-Global $_guiMonitorView
+Global $_monitorView
 Global $i1, $i2, $i3
-Global $_guiMonitorSelected = -1
-Global $_guiMonitorIsMonitoring = false
-Global $_guiMonitorList[100]
-Global $_guiMonitorListCount = 0
+Global $_monitorSelected = -1
+Global $_monitorIsMonitoring = false
+Global $_monitorList[100]
+Global $_monitorListCount = 0
 
 ;----------------------------------------------------------------------------
-Func guiMonitorInit()
+Func monitorInit()
 	Dim $i, $j, $l
 
-	$_guiMonitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, 611, 305)
+	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, 611, 305)
 
 	$_selectedServices[0][0] = False
 	$_selectedServices[0][1] = "tomcat7"
@@ -74,28 +74,28 @@ Func guiMonitorInit()
 				$l = $l & "|"
 			EndIf
 		Next
-		$_guiMonitorList[$_guiMonitorListCount] = GUICtrlCreateListViewItem($l, $_guiMonitorView)
-		GUICtrlSetOnEvent($_guiMonitorList[$_guiMonitorListCount], "guiMonitorItemPicked")
-		$_guiMonitorListCount = $_guiMonitorListCount + 1
+		$_monitorList[$_monitorListCount] = GUICtrlCreateListViewItem($l, $_monitorView)
+		GUICtrlSetOnEvent($_monitorList[$_monitorListCount], "monitorItemPicked")
+		$_monitorListCount = $_monitorListCount + 1
 	Next
 
 
 
 
 	Local $StartButton = GUICtrlCreateButton("Start", 286, 342, 50, 25)
-	GUICtrlSetOnEvent($StartButton, "guiMonitorStart")
+	GUICtrlSetOnEvent($StartButton, "monitorStart")
 	GUICtrlSetTip($StartButton, "Start the selected service")
 	Local $StopButton = GUICtrlCreateButton("Stop", 346, 342, 50, 25)
-	GUICtrlSetOnEvent($StopButton, "guiMonitorStop")
+	GUICtrlSetOnEvent($StopButton, "monitorStop")
 	GUICtrlSetTip($StopButton, "Stop the selected service")
 	Local $ReinstallButton = GUICtrlCreateButton("Reinstall", 406, 342, 50, 25)
-	GUICtrlSetOnEvent($ReinstallButton, "guiMonitorReinstall")
+	GUICtrlSetOnEvent($ReinstallButton, "monitorReinstall")
 	GUICtrlSetTip($ReinstallButton, "Reinstall the selected service")
 	Local $UninstallButton = GUICtrlCreateButton("Uninstall", 466, 342, 50, 25)
-	GUICtrlSetOnEvent($UninstallButton, "guiMonitorUninstall")
+	GUICtrlSetOnEvent($UninstallButton, "monitorUninstall")
 	GUICtrlSetTip($UninstallButton, "Uninstall the selected service")
 	Local $MonitorButton = GUICtrlCreateButton("Monitor", 526, 342, 50, 25)
-	GUICtrlSetOnEvent($MonitorButton, "guiMonitorMonitor")
+	GUICtrlSetOnEvent($MonitorButton, "monitorMonitor")
 	GUICtrlSetTip($MonitorButton, "Monitor the selected completely")
 ;~ 	GUICtrlSetState($GUIButton, $GUI_DISABLE)
 ;~ 	GUICtrlSetState($StartButton, $GUI_DISABLE)
@@ -106,7 +106,7 @@ Func guiMonitorInit()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorItemPicked()
+Func monitorItemPicked()
 	Dim $item
 	Dim $msg = @GUI_CTRLID
 	Select
@@ -117,7 +117,7 @@ Func guiMonitorItemPicked()
 		Case $msg = $i3
 			$item = 2
 	EndSelect
-	$_guiMonitorSelected = $item
+	$_monitorSelected = $item
 	;MsgBox(64, "Item Picked", "Item " & $item & " was picked")
 ;~ 	GUICtrlSetState($GUIButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($StartButton, $GUI_ENABLE)
@@ -128,45 +128,45 @@ Func guiMonitorItemPicked()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorGUI()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Action", "Run GUI " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func monitorGUI()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Run GUI " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorStart()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Action", "Start " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func monitorStart()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Start " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorStop()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Action", "Stop " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func monitorStop()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Stop " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorUninstall()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Action", "Uninstall " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func monitorUninstall()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Uninstall " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorReinstall()
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
-	MsgBox(64, "Action", "Reinstall " & $_guiMonitorSelected)
-	_GUICtrlListView_ClickItem($_guiMonitorView, $_guiMonitorSelected)
+Func monitorReinstall()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Reinstall " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorMonitor()
-	$_guiMonitorIsMonitoring = Not $_guiMonitorIsMonitoring
+Func monitorMonitor()
+	$_monitorIsMonitoring = Not $_monitorIsMonitoring
 ;~ 	Dim $s
-;~ 	If $_guiMonitorIsMonitoring = True Then
+;~ 	If $_monitorIsMonitoring = True Then
 ;~ 		$s = "True"
 ;~ 	Else
 ;~ 		$s = "False"
@@ -175,8 +175,8 @@ Func guiMonitorMonitor()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiMonitorUpdate()
-	;GUICtrlSetData($_guiLogEdit, $_logBuffer)
+Func monitorUpdate()
+	;GUICtrlSetData($_loggerEdit, $_logBuffer)
 EndFunc
 
 ; end

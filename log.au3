@@ -18,43 +18,43 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ;----------------------------------------------------------------------------
 ; globals
-global $_guiLogEdit
+global $_loggerEdit
 
 ;----------------------------------------------------------------------------
-Func guiLogInit()
+Func loggerInit()
 	Dim $cd = @ScriptDir
-	guiLogAppend("Corionis Service Manager " & $_build & @CRLF & _
+	loggerAppend("Corionis Service Manager " & $_build & @CRLF & _
 		"    Started " & _NowDate() & " " & _NowTime() & @CRLF & _
 		"    Running from " & $cd & @CRLF )
-	$_guiLogEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, 611, 305)
+	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, 611, 305)
 	Local $ClearButton = GUICtrlCreateButton("Clear", 466, 342, 50, 25)
-	GUICtrlSetOnEvent($ClearButton, "guiLogClear")
+	GUICtrlSetOnEvent($ClearButton, "loggerClear")
 	GUICtrlSetTip($ClearButton, "Clear the log")
 	Local $SaveButton = GUICtrlCreateButton("Save", 526, 342, 50, 25)
-	GUICtrlSetOnEvent($SaveButton, "guiLogSave")
+	GUICtrlSetOnEvent($SaveButton, "loggerSave")
 	GUICtrlSetTip($SaveButton, "Save the log to a file")
-	guiLogUpdate()
+	loggerUpdate()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiLogAppend($msg)
+Func loggerAppend($msg)
 	$_logBuffer &= $msg
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiLogClear()
+Func loggerClear()
 	$_logBuffer = ""
-	guiLogUpdate()
+	loggerUpdate()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiLogSave()
+Func loggerSave()
 	MsgBox(64, "Save GUI Log", "You requested to Save the log. Sorry, not implemented yet.", $_logTab)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func guiLogUpdate()
-	GUICtrlSetData($_guiLogEdit, $_logBuffer)
+Func loggerUpdate()
+	GUICtrlSetData($_loggerEdit, $_logBuffer)
 EndFunc
 
 

@@ -21,27 +21,27 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ;----------------------------------------------------------------------------
 ; globals
-Global $_guiAboutForm
+Global $_aboutForm
 
 ;----------------------------------------------------------------------------
-Func guiAbout()
-	$_guiAboutForm = GUICreate("About", 400, 146, -1, -1, BitOR($DS_MODALFRAME, $WS_SYSMENU, $WS_CAPTION), Default, $_mainWindow)
+Func about()
+	$_aboutForm = GUICreate("About", 400, 146, -1, -1, BitOR($DS_MODALFRAME, $WS_SYSMENU, $WS_CAPTION), Default, $_mainWindow)
 	GUISetIcon("res\information.ico")
-	GUISetOnEvent($GUI_EVENT_CLOSE, "guiAboutFormClose")
+	GUISetOnEvent($GUI_EVENT_CLOSE, "aboutFormClose")
 	Local $bg = GUICtrlCreatePic("res\about_header.gif", 0, 0, 400, 60)
 	Local $OkButton = GUICtrlCreateButton("OK", 176, 112, 49, 25)
-	GUICtrlSetOnEvent($OkButton, "guiAboutFormClose")
-	GUICtrlSetOnEvent(-1, "guiAboutFormClose")
+	GUICtrlSetOnEvent($OkButton, "aboutFormClose")
+	GUICtrlSetOnEvent(-1, "aboutFormClose")
 	Local $copyrightLine = GUICtrlCreateLabel($_copyright, 77, 88, 246, 17, $SS_CENTER)
 	Local $buildLine = GUICtrlCreateLabel($_build, 77, 68, 246, 17, $SS_CENTER)
-	GUISetState(@SW_SHOW, $_guiAboutForm)
-EndFunc   ;==>guiAbout
+	GUISetState(@SW_SHOW, $_aboutForm)
+EndFunc   ;==>about
 
 ;----------------------------------------------------------------------------
-Func guiAboutFormClose()
+Func aboutFormClose()
 	;MsgBox(0, "GUI Event", "You clicked CLOSE")
-	If @GUI_WinHandle = $_guiAboutForm Then
-		GUISetState(@SW_HIDE, $_guiAboutForm)
+	If @GUI_WinHandle = $_aboutForm Then
+		GUISetState(@SW_HIDE, $_aboutForm)
 		WinActivate($_mainWindow)
 	EndIf
-EndFunc   ;==>guiAboutFormClose
+EndFunc   ;==>aboutFormClose

@@ -30,24 +30,8 @@ Global $_tabs[1]
 Global $_monitorTab
 Global $_listTab
 Global $_logTab
-Global $_guiListCurrentType
+Global $_optionsCurrentType
 
-; configuration										Read in configuration.au3 and push into monitor GUI - use THAT data
-Global $_cfgHostname = "localhost"
-Global $_cfgFriendlyName = "My Computer"
-Global $_cfgFileInTitle = True
-Global $_cfgFileInTitleFull = False
-Global $_cfgEscapeCloses = False
-Global $_cfgMinimizeOnClose = True
-Global $_cfgHideWhenMinimized = False
-Global $_cfgRefreshInterval = 5000
-Global $_cfgRunColor = 0x00FF00
-Global $_cfgStopColor = 0xFF0000
-;
-Global $_cfgLeft = -1
-Global $_cfgTop = -1
-Global $_cfgWidth = 638
-Global $_cfgHeight = 400
 ;
 
 
