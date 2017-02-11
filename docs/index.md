@@ -2,6 +2,13 @@
 layout: default
 ---
 
+This is the project site for the Corionis Service Manager.
+
+We're playing with the use of GitHub Pages to generate this stuff.
+
+Not much here yet.
+
+
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](another-page).
