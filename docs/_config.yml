@@ -1,5 +1,5 @@
 title: Corionis Service Manager
 description: Monitor & Manage Selected Windows Services
-show_downloads: true
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-tactile
