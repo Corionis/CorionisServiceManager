@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Corionis Service Manager</title>
-
-<link href="/favicon.ico" rel="SHORTCUT ICON">
+	<title>Corionis Service Manager</title>
+	<link href="/favicon.ico" rel="SHORTCUT ICON">
 	<style type="text/css">
 		A:link {
 		  text-decoration: none;
@@ -60,7 +59,7 @@
 
 <div id="gfx">&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/starfire-96.jpg" />
 <span class="bigtitle" style="position:relative;left:40px;top:-60px;">&nbsp;Corionis Service Manager&nbsp;</span>
-<span class="mediumblock" style="position:relative;left:-120px;top:-38px;">Monitor & manage selected services</span>
+<span class="mediumblock" style="position:relative;left:-120px;top:-38px;">Monitor & manage selected Windows services</span>
 </div>
 <br><br>
 
@@ -69,7 +68,7 @@
 <br>
 <p>
 We're working on it.  Please see the
-<a href="https://github.com/Corionis/CorionisServiceManager/">Corionis Service Manager</a> project on GitHub.net.</p>
+<a href="https://github.com/Corionis/CorionisServiceManager/">Corionis Service Manager</a> project on GitHub.</p>
 
 <br>
 
