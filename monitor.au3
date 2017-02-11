@@ -32,7 +32,9 @@ Global $_monitorListCount = 0
 Func monitorInit()
 	Dim $i, $j, $l
 
-	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, 611, 305)
+	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, $_cfgWidth - 47,  $_cfgHeight - 118)
+	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
+;	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP)
 
 	$_selectedServices[0][0] = False
 	$_selectedServices[0][1] = "tomcat7"
@@ -82,27 +84,37 @@ Func monitorInit()
 
 
 
-	Local $StartButton = GUICtrlCreateButton("Start", 286, 342, 50, 25)
-	GUICtrlSetOnEvent($StartButton, "monitorStart")
-	GUICtrlSetTip($StartButton, "Start the selected service")
-	Local $StopButton = GUICtrlCreateButton("Stop", 346, 342, 50, 25)
+ 	Local $StartButton = GUICtrlCreateButton("Start", 286, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+ 	GUICtrlSetOnEvent($StartButton, "monitorStart")
+ 	GUICtrlSetTip($StartButton, "Start the selected services")
+
+	Local $StopButton = GUICtrlCreateButton("Stop", 346, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($StopButton, "monitorStop")
-	GUICtrlSetTip($StopButton, "Stop the selected service")
-	Local $ReinstallButton = GUICtrlCreateButton("Reinstall", 406, 342, 50, 25)
-	GUICtrlSetOnEvent($ReinstallButton, "monitorReinstall")
-	GUICtrlSetTip($ReinstallButton, "Reinstall the selected service")
-	Local $UninstallButton = GUICtrlCreateButton("Uninstall", 466, 342, 50, 25)
-	GUICtrlSetOnEvent($UninstallButton, "monitorUninstall")
-	GUICtrlSetTip($UninstallButton, "Uninstall the selected service")
-	Local $MonitorButton = GUICtrlCreateButton("Monitor", 526, 342, 50, 25)
+	GUICtrlSetTip($StopButton, "Stop the selected services")
+
+	Local $AutomaticButton = GUICtrlCreateButton("Automatic", 406, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($AutomaticButton, "monitorAutomatic")
+	GUICtrlSetTip($AutomaticButton, "Set the selected services start to Automatic")
+
+	Local $ManualButton = GUICtrlCreateButton("Manual", 466, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($ManualButton, "monitorManual")
+	GUICtrlSetTip($ManualButton, "Set the selected services to start to Manual")
+
+	Local $MonitorButton = GUICtrlCreateButton("Monitor", 526, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($MonitorButton, "monitorMonitor")
 	GUICtrlSetTip($MonitorButton, "Monitor the selected completely")
-;~ 	GUICtrlSetState($GUIButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($StartButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($StopButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($ReinstallButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($UninstallButton, $GUI_DISABLE)
-;~ 	GUICtrlSetState($MonitorButton, $GUI_DISABLE)
+
+	if IsAdmin() == 0 then
+		GUICtrlSetState($AutomaticButton, $GUI_DISABLE)
+		GUICtrlSetTip($AutomaticButton, "Automatic requires Administrator privileges")
+		GUICtrlSetState($ManualButton, $GUI_DISABLE)
+		GUICtrlSetTip($ManualButton, "Manual requires Administrator privileges")
+	endif
 EndFunc
 
 ;----------------------------------------------------------------------------
@@ -123,7 +135,7 @@ Func monitorItemPicked()
 ;~ 	GUICtrlSetState($StartButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($StopButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($ReinstallButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($UninstallButton, $GUI_ENABLE)
+;~ 	GUICtrlSetState($ManualButton, $GUI_ENABLE)
 ;~ 	GUICtrlSetState($MonitorButton, $GUI_ENABLE)
 EndFunc
 
@@ -149,16 +161,16 @@ Func monitorStop()
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func monitorUninstall()
+Func monitorManual()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Uninstall " & $_monitorSelected)
+	MsgBox(64, "Action", "Manual " & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 
 ;----------------------------------------------------------------------------
-Func monitorReinstall()
+Func monitorAutomatic()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Reinstall " & $_monitorSelected)
+	MsgBox(64, "Action", "Automatic " & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 EndFunc
 

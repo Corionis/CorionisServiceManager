@@ -12,6 +12,29 @@ AutoItSetOption("MustDeclareVars", 1)
 ; basics
 Global $_build = "1.0.0"  ; match 3 digits with CorionisServiceManager.au3 #AutoIt3Wrapper_Res_Fileversion
 Global $_copyright = "By Todd R. Hill, MIT license"
+Global $_progActual = "Corionis Service Manager"
+Global $_progName = $_progActual
+Global $_progShort = "CSM"
+Global $_progTitle = $_progName & $_build
+
+; configuration
+Global $_configurationFilePath = ""
+Global $_cfgLeft = -1
+Global $_cfgTop = -1
+Global $_cfgWidth = 638
+Global $_cfgHeight = 400
+Global $_cfgMonitoring = False
+;
+
+; constants
+Global $STAT_NOTINIT = -1
+Global $STAT_OK = 0
+Global $STAT_ERROR = 1	; generic error
+
+Global $WIN_NOTUP = 0
+Global $WIN_UP = 1
+Global $WIN_MINIMIZED = 2
+Global $WIN_HIDDEN = 3
 
 ; debugging
 Global $_debugMsg
@@ -19,6 +42,8 @@ Global $_debugMsg
 ; error information
 Dim $_panErrorValue = 0
 Dim $_panErrorMsg = ""
+Global $_returnValue
+Global $_returnMsg
 
 ; log tab
 Global $_logBuffer = ""
@@ -30,6 +55,7 @@ Global $_tabs[1]
 Global $_monitorTab
 Global $_listTab
 Global $_logTab
+Global $_mode = $WIN_NOTUP
 Global $_optionsCurrentType
 
 ;

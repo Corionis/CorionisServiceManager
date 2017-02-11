@@ -17,7 +17,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include "pan.au3"						; must be include first
 
 ; functions
-#include "guiLog.au3"
+#include "logger.au3"
 
 ;----------------------------------------------------------------------------
 ; globals
@@ -120,7 +120,7 @@ Func servicesReadAll()
 
 
 
-	guiLogAppend(_ArrayToString($fa, @CRLF & "    ") & @CRLF)
+	loggerAppend(_ArrayToString($fa, @CRLF & "    ") & @CRLF)
 EndFunc   ;==>servicesReadAll
 
 ;----------------------------------------------------------------------------

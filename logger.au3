@@ -22,17 +22,15 @@ global $_loggerEdit
 
 ;----------------------------------------------------------------------------
 Func loggerInit()
-	Dim $cd = @ScriptDir
-	loggerAppend("Corionis Service Manager " & $_build & @CRLF & _
-		"    Started " & _NowDate() & " " & _NowTime() & @CRLF & _
-		"    Running from " & $cd & @CRLF )
-	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, 611, 305)
-	Local $ClearButton = GUICtrlCreateButton("Clear", 466, 342, 50, 25)
-	GUICtrlSetOnEvent($ClearButton, "loggerClear")
-	GUICtrlSetTip($ClearButton, "Clear the log")
-	Local $SaveButton = GUICtrlCreateButton("Save", 526, 342, 50, 25)
-	GUICtrlSetOnEvent($SaveButton, "loggerSave")
-	GUICtrlSetTip($SaveButton, "Save the log to a file")
+	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 47,  $_cfgHeight - 195)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP)
+
+;~ 	Local $ClearButton = GUICtrlCreateButton("Clear", 466, 342, 50, 25)
+;~ 	GUICtrlSetOnEvent($ClearButton, "loggerClear")
+;~ 	GUICtrlSetTip($ClearButton, "Clear the log")
+;~ 	Local $SaveButton = GUICtrlCreateButton("Save", 526, 342, 50, 25)
+;~ 	GUICtrlSetOnEvent($SaveButton, "loggerSave")
+;~ 	GUICtrlSetTip($SaveButton, "Save the log to a file")
 	loggerUpdate()
 EndFunc
 
