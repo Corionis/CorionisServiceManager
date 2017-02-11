@@ -101,7 +101,7 @@ end
 
 ### Small image
 
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
+![](res/starfire-96.jpg)
 
 ### Large image
 
