@@ -1,7 +1,7 @@
 #include-once
 #cs -------------------------------------------------------------------------
 
- Application Log tab
+	Application Log tab
 
 #ce -------------------------------------------------------------------------
 
@@ -14,46 +14,49 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <Date.au3>
 
 ; application components
-#include "pan.au3"						; must be include first
+#include "pan.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
-global $_loggerEdit
+Global $_loggerEdit
 
 ;----------------------------------------------------------------------------
-Func loggerInit()
-	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 47,  $_cfgHeight - 195)
-	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP)
+Func LoggerInit()
+	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
+	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-;~ 	Local $ClearButton = GUICtrlCreateButton("Clear", 466, 342, 50, 25)
-;~ 	GUICtrlSetOnEvent($ClearButton, "loggerClear")
-;~ 	GUICtrlSetTip($ClearButton, "Clear the log")
-;~ 	Local $SaveButton = GUICtrlCreateButton("Save", 526, 342, 50, 25)
-;~ 	GUICtrlSetOnEvent($SaveButton, "loggerSave")
-;~ 	GUICtrlSetTip($SaveButton, "Save the log to a file")
-	loggerUpdate()
-EndFunc
+	Local $ClearButton = GUICtrlCreateButton("Clear", 21, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($ClearButton, "loggerClear")
+	GUICtrlSetTip($ClearButton, "Clear the log")
+
+	Local $SaveButton = GUICtrlCreateButton("Save ...", 91, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($SaveButton, "loggerSave")
+	GUICtrlSetTip($SaveButton, "Save the log to a file")
+	LoggerUpdate()
+EndFunc   ;==>LoggerInit
 
 ;----------------------------------------------------------------------------
-Func loggerAppend($msg)
+Func LoggerAppend($msg)
 	$_logBuffer &= $msg
-EndFunc
+EndFunc   ;==>LoggerAppend
 
 ;----------------------------------------------------------------------------
 Func loggerClear()
 	$_logBuffer = ""
-	loggerUpdate()
-EndFunc
+	LoggerUpdate()
+EndFunc   ;==>loggerClear
 
 ;----------------------------------------------------------------------------
 Func loggerSave()
 	MsgBox(64, "Save GUI Log", "You requested to Save the log. Sorry, not implemented yet.", $_logTab)
-EndFunc
+EndFunc   ;==>loggerSave
 
 ;----------------------------------------------------------------------------
-Func loggerUpdate()
+Func LoggerUpdate()
 	GUICtrlSetData($_loggerEdit, $_logBuffer)
-EndFunc
+EndFunc   ;==>LoggerUpdate
 
 
 ; end

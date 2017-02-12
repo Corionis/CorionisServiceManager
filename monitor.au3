@@ -1,7 +1,7 @@
 #include-once
 #cs -------------------------------------------------------------------------
 
- Monitor Selected Services tab
+	Monitor Selected Services tab
 
 #ce -------------------------------------------------------------------------
 
@@ -17,24 +17,23 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3"						; must be include first
+#include "pan.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
 Global $_monitorView
 Global $i1, $i2, $i3
 Global $_monitorSelected = -1
-Global $_monitorIsMonitoring = false
 Global $_monitorList[100]
 Global $_monitorListCount = 0
+Global $MonitorButton
 
 ;----------------------------------------------------------------------------
-Func monitorInit()
+Func MonitorInit()
 	Dim $i, $j, $l
 
-	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, $_cfgWidth - 47,  $_cfgHeight - 118)
+	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
-;	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP)
 
 	$_selectedServices[0][0] = False
 	$_selectedServices[0][1] = "tomcat7"
@@ -68,9 +67,9 @@ Func monitorInit()
 
 	ReDim $_selectedServices[5][5]
 
-	For $i = 0 to UBound($_selectedServices) - 1
+	For $i = 0 To UBound($_selectedServices) - 1
 		$l = ""
-		For $j = 1 to 4
+		For $j = 1 To 4
 			$l = $l & $_selectedServices[$i][$j]
 			If $j < 4 Then
 				$l = $l & "|"
@@ -82,45 +81,61 @@ Func monitorInit()
 	Next
 
 
+	Local $AllButton = GUICtrlCreateButton("&All", 21, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($AllButton, "monitorAll")
+	GUICtrlSetTip($AllButton, "Select all services")
+
+	Local $NoneButton = GUICtrlCreateButton("&None", 75, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($NoneButton, "monitorNone")
+	GUICtrlSetTip($NoneButton, "De-select all services")
 
 
- 	Local $StartButton = GUICtrlCreateButton("Start", 286, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
- 	GUICtrlSetOnEvent($StartButton, "monitorStart")
- 	GUICtrlSetTip($StartButton, "Start the selected services")
+	Local $StartButton = GUICtrlCreateButton("&Start", 145, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($StartButton, "monitorStart")
+	GUICtrlSetTip($StartButton, "Start the selected services")
 
-	Local $StopButton = GUICtrlCreateButton("Stop", 346, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	Local $StopButton = GUICtrlCreateButton("S&top", 199, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($StopButton, "monitorStop")
 	GUICtrlSetTip($StopButton, "Stop the selected services")
 
-	Local $AutomaticButton = GUICtrlCreateButton("Automatic", 406, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+
+	Local $AutomaticButton = GUICtrlCreateButton("A&uto", 269, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($AutomaticButton, "monitorAutomatic")
-	GUICtrlSetTip($AutomaticButton, "Set the selected services start to Automatic")
+	GUICtrlSetTip($AutomaticButton, "Set the selected services startup type to Automatic")
 
-	Local $ManualButton = GUICtrlCreateButton("Manual", 466, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	Local $ManualButton = GUICtrlCreateButton("Manua&l", 323, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($ManualButton, "monitorManual")
-	GUICtrlSetTip($ManualButton, "Set the selected services to start to Manual")
+	GUICtrlSetTip($ManualButton, "Set the selected services startup type to Manual")
 
-	Local $MonitorButton = GUICtrlCreateButton("Monitor", 526, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	Local $DisableButton = GUICtrlCreateButton("&Disable", 377, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($DisableButton, "monitorDisable")
+	GUICtrlSetTip($DisableButton, "Set the selected services startup type to Disabled")
+
+
+	$MonitorButton = GUICtrlCreateButton("&Monitor", 447, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($MonitorButton, "monitorMonitor")
-	GUICtrlSetTip($MonitorButton, "Monitor the selected completely")
+	GUICtrlSetTip($MonitorButton, "Toggle active monitoring")
 
-	if IsAdmin() == 0 then
+	If IsAdmin() == 9999 Then ;;;;;;;;;;;;;; 0 Then
 		GUICtrlSetState($AutomaticButton, $GUI_DISABLE)
 		GUICtrlSetTip($AutomaticButton, "Automatic requires Administrator privileges")
 		GUICtrlSetState($ManualButton, $GUI_DISABLE)
 		GUICtrlSetTip($ManualButton, "Manual requires Administrator privileges")
-	endif
-EndFunc
+	EndIf
+EndFunc   ;==>MonitorInit
 
 ;----------------------------------------------------------------------------
 Func monitorItemPicked()
 	Dim $item
-	Dim $msg = @GUI_CTRLID
+	Dim $msg = @GUI_CtrlId
 	Select
 		Case $msg = $i1
 			$item = 0
@@ -131,64 +146,78 @@ Func monitorItemPicked()
 	EndSelect
 	$_monitorSelected = $item
 	;MsgBox(64, "Item Picked", "Item " & $item & " was picked")
-;~ 	GUICtrlSetState($GUIButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($StartButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($StopButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($ReinstallButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($ManualButton, $GUI_ENABLE)
-;~ 	GUICtrlSetState($MonitorButton, $GUI_ENABLE)
-EndFunc
+EndFunc   ;==>monitorItemPicked
 
 ;----------------------------------------------------------------------------
-Func monitorGUI()
+Func monitorAll()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Run GUI " & $_monitorSelected)
+	MsgBox(64, "Action", "All" & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc
+EndFunc   ;==>monitorAll
+
+;----------------------------------------------------------------------------
+Func monitorNone()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "None" & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+EndFunc   ;==>monitorNone
 
 ;----------------------------------------------------------------------------
 Func monitorStart()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 	MsgBox(64, "Action", "Start " & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc
+EndFunc   ;==>monitorStart
 
 ;----------------------------------------------------------------------------
 Func monitorStop()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 	MsgBox(64, "Action", "Stop " & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc
-
-;----------------------------------------------------------------------------
-Func monitorManual()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Manual " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc
+EndFunc   ;==>monitorStop
 
 ;----------------------------------------------------------------------------
 Func monitorAutomatic()
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
 	MsgBox(64, "Action", "Automatic " & $_monitorSelected)
 	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc
+EndFunc   ;==>monitorAutomatic
+
+;----------------------------------------------------------------------------
+Func monitorManual()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Manual " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+EndFunc   ;==>monitorManual
+
+;----------------------------------------------------------------------------
+Func monitorDisable()
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	MsgBox(64, "Action", "Disable " & $_monitorSelected)
+	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+EndFunc   ;==>monitorManual
 
 ;----------------------------------------------------------------------------
 Func monitorMonitor()
-	$_monitorIsMonitoring = Not $_monitorIsMonitoring
-;~ 	Dim $s
-;~ 	If $_monitorIsMonitoring = True Then
-;~ 		$s = "True"
-;~ 	Else
-;~ 		$s = "False"
-;~ 	EndIf
-;~ 	MsgBox(64, "Action", "Monitoring = " & $s)
-EndFunc
+	If $_cfgMonitoring == True Then
+		$_cfgMonitoring = False
+	Else
+		$_cfgMonitoring = True
+	EndIf
+	MonitorSetMonitorButton($_cfgMonitoring)
+	UpdateMonitor()
+EndFunc   ;==>monitorMonitor
 
 ;----------------------------------------------------------------------------
-Func monitorUpdate()
-	;GUICtrlSetData($_loggerEdit, $_logBuffer)
-EndFunc
+Func MonitorSetMonitorButton($state)
+	If $state == True Then
+		GUICtrlSetColor($MonitorButton, $_cfgRunningTextColor)
+		GUICtrlSetBkColor($MonitorButton, $_cfgRunningBackColor)
+	Else
+		GUICtrlSetColor($MonitorButton, $_cfgStoppedTextColor)
+		GUICtrlSetBkColor($MonitorButton, $_cfgStoppedBackColor)
+	EndIf
+EndFunc   ;==>monitorMonitor
+
 
 ; end

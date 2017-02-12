@@ -14,7 +14,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include "Array.au3"
 
 ; application components
-#include "pan.au3"						; must be include first
+#include "pan.au3" ; must be include first
 
 ; functions
 #include "logger.au3"
@@ -113,14 +113,14 @@ Func servicesReadAll()
 	$_panErrorValue = 0
 
 	Local $iPid = Run(@ComSpec & ' /c ' & 'query', '', @SW_HIDE, 6)
-		While 1
-			$sRead &= StdoutRead($iPid)
-			If @error Then ExitLoop
-		WEnd
+	While 1
+		$sRead &= StdoutRead($iPid)
+		If @error Then ExitLoop
+	WEnd
 
 
 
-	loggerAppend(_ArrayToString($fa, @CRLF & "    ") & @CRLF)
+	LoggerAppend(_ArrayToString($fa, @CRLF & "    ") & @CRLF)
 EndFunc   ;==>servicesReadAll
 
 ;----------------------------------------------------------------------------

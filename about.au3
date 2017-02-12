@@ -17,7 +17,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3"						; must be include first
+#include "pan.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
@@ -25,7 +25,10 @@ Global $_aboutForm
 
 ;----------------------------------------------------------------------------
 Func about()
-	$_aboutForm = GUICreate("About", 400, 146, -1, -1, BitOR($DS_MODALFRAME, $WS_SYSMENU, $WS_CAPTION), Default, $_mainWindow)
+	Local $w = 400
+	Local $h = 146
+	Local $info = WinGetPos($_mainWindow)
+	$_aboutForm = GUICreate("About", $w, $h, $info[0] + (($info[2] - $w) / 2), $info[1] + (($info[3] - $h) / 2), BitOR($DS_MODALFRAME, $DS_SETFOREGROUND, $WS_SYSMENU, $WS_CAPTION), $WS_EX_TOPMOST, $_mainWindow)
 	GUISetIcon("res\information.ico")
 	GUISetOnEvent($GUI_EVENT_CLOSE, "aboutFormClose")
 	Local $bg = GUICtrlCreatePic("res\about_header.gif", 0, 0, 400, 60)
@@ -39,7 +42,6 @@ EndFunc   ;==>about
 
 ;----------------------------------------------------------------------------
 Func aboutFormClose()
-	;MsgBox(0, "GUI Event", "You clicked CLOSE")
 	If @GUI_WinHandle = $_aboutForm Then
 		GUISetState(@SW_HIDE, $_aboutForm)
 		WinActivate($_mainWindow)

@@ -18,7 +18,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3"						; must be include first
+#include "pan.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals

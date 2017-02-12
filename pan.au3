@@ -1,7 +1,7 @@
 #include-once
 #cs -------------------------------------------------------------------------
 
- Pan-application global declarations
+	Pan-application global declarations
 
 #ce -------------------------------------------------------------------------
 
@@ -10,7 +10,7 @@
 AutoItSetOption("MustDeclareVars", 1)
 
 ; basics
-Global $_build = "1.0.0"  ; match 3 digits with CorionisServiceManager.au3 #AutoIt3Wrapper_Res_Fileversion
+Global $_build = "1.0.0" ; match 3 digits with CorionisServiceManager.au3 #AutoIt3Wrapper_Res_Fileversion
 Global $_copyright = "By Todd R. Hill, MIT license"
 Global $_progActual = "Corionis Service Manager"
 Global $_progName = $_progActual
@@ -29,12 +29,12 @@ Global $_cfgMonitoring = False
 ; constants
 Global $STAT_NOTINIT = -1
 Global $STAT_OK = 0
-Global $STAT_ERROR = 1	; generic error
+Global $STAT_ERROR = 1 ; generic error
 
+; for $_mode
 Global $WIN_NOTUP = 0
 Global $WIN_UP = 1
-Global $WIN_MINIMIZED = 2
-Global $WIN_HIDDEN = 3
+Global $WIN_DOWN = 2
 
 ; debugging
 Global $_debugMsg
