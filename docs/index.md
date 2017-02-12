@@ -8,6 +8,7 @@ We're playing with the use of GitHub Pages to generate this stuff.
 
 Not much here yet.
 
+---
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
