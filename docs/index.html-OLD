@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Corionis Service Manager</title>
+	<link href="/favicon.ico" rel="SHORTCUT ICON">
+<body>
+
+<hr size="1">
+<br>
+
+<div id="gfx">&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/starfire-96.jpg" />
+<span style="position:relative;left:40px;top:-60px;">&nbsp;Corionis Service Manager&nbsp;</span>
+<span style="position:relative;left:-120px;top:-38px;">Monitor & manage selected Windows services</span>
+</div>
+<br><br>
+
+<hr size="1">
+
+<br>
+<p>
+We're working on it.  Please see the
+<a href="https://github.com/Corionis/CorionisServiceManager/">Corionis Service Manager</a> project on GitHub.</p>
+
+<br>
+
+<hr size="1">
+<div id="bottom">
+<div>By Todd R. Hill. Corionis is a trademark of Corionis, LLC, All Rights Reserved.
+The Corionis Service Manager is distributed under the
+<a href="https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt" target="_new">MIT License</a>.</div>
+
+<div align="right"><a href="https://github.com/Corionis/CorionisServiceManager/"><img src="res/GitHub_Logo.png" width="120" height="30" border="0" alt="Go to the project on GitHub" title="Go to the project on GitHub" /></a></div>
+</div>
+
+</body>
+</html>
