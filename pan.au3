@@ -53,10 +53,10 @@ Global $_mainWindow
 Global $_tabbedFrame
 Global $_tabs[1]
 Global $_monitorTab
-Global $_listTab
+Global $_selectTab
+Global $_optionsTab
 Global $_logTab
 Global $_mode = $WIN_NOTUP
-Global $_optionsCurrentType
 
 ;
 
@@ -70,6 +70,8 @@ Global $_optionsCurrentType
 ;		* startup type (3)
 ;		* status (4)
 Global $_selectedServices[100][5]
+
+Global $_availableServices[100][5]
 
 ; template data
 ; first dimension  = types			Bolo, Excalibur, OGsql

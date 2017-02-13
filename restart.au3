@@ -1,7 +1,7 @@
+#include-once
 #Region Header
 
 #cs
-
     Title:          Restart script UDF Library for AutoIt3
     Filename:       Restart.au3
     Description:    Accurate restarting the script (AU3 or EXE)
@@ -9,7 +9,7 @@
     Version:        1.0
     Requirements:   AutoIt v3.3 +, Developed/Tested on WindowsXP Pro Service Pack 2
     Uses:           None
-    Notes:          The library uses OnAutoItStart() function
+    Notes:          The library uses onAutoItStart() function
 
     Available functions:
 
@@ -27,12 +27,9 @@
         If MsgBox(36, 'Restarting...', 'Press OK to restart this script.') = 6 Then
             _ScriptRestart()
         EndIf
-
 #ce
 
-#Include-once
-
-#OnAutoItStartRegister "OnAutoItStart"
+#onAutoItStartRegister "onAutoItStart"
 
 #EndRegion Header
 
@@ -54,10 +51,6 @@ Global $__Restart = False
 ; Return values..: Success - 1 ($fExit = TRUE)
 ;                  Failure - 0 and sets the @error flag to non-zero.
 ; Author.........: Yashied
-; Modified.......:
-; Remarks........:
-; Related .......:
-; Link...........:
 ; Example........: Yes
 ; ===============================================================================================================================
 
@@ -89,18 +82,18 @@ EndFunc   ;==>_ScriptRestart
 
 #EndRegion Public Functions
 
-#Region OnAutoItStart
+#Region onAutoItStart
 
-Func OnAutoItStart()
+Func onAutoItStart()
 	Sleep(50)
 
 	Local $Pid = ConsoleRead(1)
 
 	If @extended Then
 		While ProcessExists($Pid)
-			Sleep(100)
+			Sleep(1000)
 		WEnd
 	EndIf
-EndFunc   ;==>OnAutoItStart
+EndFunc   ;==>onAutoItStart
 
-#EndRegion OnAutoItStart
+#EndRegion onAutoItStart

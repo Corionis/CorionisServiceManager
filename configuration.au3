@@ -23,10 +23,12 @@ AutoItSetOption("MustDeclareVars", 1)
 ; globals
 
 ; configuration - preferences
-Global $_cfgStartAtLogin = False
 Global $_cfgHostname = "localhost"
 Global $_cfgFriendlyName = "My Computer"
 Global $_cfgFriendlyInTitle = False
+Global $_cfgStartAtLogin = False
+Global $_cfgDisplayNotifications = True
+Global $_cfgWriteToLogFile = False
 Global $_cfgEscapeCloses = False
 Global $_cfgMinimizeOnClose = False
 Global $_cfgHideWhenMinimized = False
@@ -79,24 +81,28 @@ Func ConfigurationReadConfig()
 	LoggerAppend("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" & @CRLF & _
 			"Application configuration: " & $_configurationFilePath & @CRLF)
 
-	$_cfgHostname = StringStripWS(IniRead($_configurationFilePath, "preferences", "Hostname", $_cfgHostname), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgFriendlyName = StringStripWS(IniRead($_configurationFilePath, "preferences", "FriendlyName", $_cfgFriendlyName), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgFriendlyInTitle = StringStripWS(IniRead($_configurationFilePath, "preferences", "FriendlyInTitle", $_cfgFriendlyInTitle), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgStartAtLogin = StringStripWS(IniRead($_configurationFilePath, "preferences", "StartAtLogin", $_cfgStartAtLogin), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgEscapeCloses = StringStripWS(IniRead($_configurationFilePath, "preferences", "EscapeCloses", $_cfgEscapeCloses), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgMinimizeOnClose = StringStripWS(IniRead($_configurationFilePath, "preferences", "MinimizeOnClose", $_cfgMinimizeOnClose), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgHideWhenMinimized = StringStripWS(IniRead($_configurationFilePath, "preferences", "HideWhenMinimized", $_cfgHideWhenMinimized), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgRefreshInterval = StringStripWS(IniRead($_configurationFilePath, "preferences", "RefreshInterval", $_cfgRefreshInterval), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgRunningTextColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "RunningTextColor", $_cfgRunningTextColor), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgRunningBackColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "RunningBackColor", $_cfgRunningBackColor), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgStoppedTextColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "StoppedTextColor", $_cfgStoppedTextColor), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgStoppedBackColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "StoppedBackColor", $_cfgStoppedBackColor), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgIconIndex = StringStripWS(IniRead($_configurationFilePath, "preferences", "IconIndex", $_cfgIconIndex), $STR_STRIPLEADING + $STR_STRIPTRAILING);
+	$_cfgHostname = StringStripWS(IniRead($_configurationFilePath, "preferences", "Hostname", $_cfgHostname), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgFriendlyName = StringStripWS(IniRead($_configurationFilePath, "preferences", "FriendlyName", $_cfgFriendlyName), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgFriendlyInTitle = StringStripWS(IniRead($_configurationFilePath, "preferences", "FriendlyInTitle", $_cfgFriendlyInTitle), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgStartAtLogin = StringStripWS(IniRead($_configurationFilePath, "preferences", "StartAtLogin", $_cfgStartAtLogin), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgDisplayNotifications = StringStripWS(IniRead($_configurationFilePath, "preferences", "DisplayNotifications", $_cfgDisplayNotifications), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgWriteToLogFile = StringStripWS(IniRead($_configurationFilePath, "preferences", "WriteToLogFile", $_cfgWriteToLogFile), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgEscapeCloses = StringStripWS(IniRead($_configurationFilePath, "preferences", "EscapeCloses", $_cfgEscapeCloses), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgMinimizeOnClose = StringStripWS(IniRead($_configurationFilePath, "preferences", "MinimizeOnClose", $_cfgMinimizeOnClose), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgHideWhenMinimized = StringStripWS(IniRead($_configurationFilePath, "preferences", "HideWhenMinimized", $_cfgHideWhenMinimized), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgRefreshInterval = StringStripWS(IniRead($_configurationFilePath, "preferences", "RefreshInterval", $_cfgRefreshInterval), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgRunningTextColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "RunningTextColor", $_cfgRunningTextColor), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgRunningBackColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "RunningBackColor", $_cfgRunningBackColor), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgStoppedTextColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "StoppedTextColor", $_cfgStoppedTextColor), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgStoppedBackColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "StoppedBackColor", $_cfgStoppedBackColor), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgIconIndex = StringStripWS(IniRead($_configurationFilePath, "preferences", "IconIndex", $_cfgIconIndex), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 
 	LoggerAppend("    Hostname:  " & $_cfgHostname & @CRLF)
 	LoggerAppend("    Friendly Name:  " & $_cfgFriendlyName & @CRLF)
 	LoggerAppend("    Friendly In Title:  " & $_cfgFriendlyInTitle & @CRLF)
 	LoggerAppend("    Start At Login:  " & $_cfgStartAtLogin & @CRLF)
+	LoggerAppend("    Display Notifications:  " & $_cfgDisplayNotifications & @CRLF)
+	LoggerAppend("    Write To Log File:  " & $_cfgWriteToLogFile & @CRLF)
 	LoggerAppend("    Escape Closes:  " & $_cfgEscapeCloses & @CRLF)
 	LoggerAppend("    Minimize On Close:  " & $_cfgMinimizeOnClose & @CRLF)
 	LoggerAppend("    Hide When Minimized:  " & $_cfgHideWhenMinimized & @CRLF)
@@ -109,6 +115,9 @@ Func ConfigurationReadConfig()
 
 	; normalize true/false values to make comparisons consistent
 	$_cfgFriendlyInTitle = configurationTrueFalse($_cfgFriendlyInTitle)
+	$_cfgStartAtLogin = configurationTrueFalse($_cfgStartAtLogin)
+	$_cfgDisplayNotifications = configurationTrueFalse($_cfgDisplayNotifications)
+	$_cfgWriteToLogFile = configurationTrueFalse($_cfgWriteToLogFile)
 	$_cfgEscapeCloses = configurationTrueFalse($_cfgEscapeCloses)
 	$_cfgMinimizeOnClose = configurationTrueFalse($_cfgMinimizeOnClose)
 	$_cfgHideWhenMinimized = configurationTrueFalse($_cfgHideWhenMinimized)
@@ -124,11 +133,11 @@ Func ConfigurationReadConfig()
 		$_progTitle = $_progShort & ": " & $_cfgFriendlyName
 	EndIf
 
-	$_cfgLeft = StringStripWS(IniRead($_configurationFilePath, "running", "Left", $_cfgLeft), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgTop = StringStripWS(IniRead($_configurationFilePath, "running", "Top", $_cfgTop), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgWidth = StringStripWS(IniRead($_configurationFilePath, "running", "Width", $_cfgWidth), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgHeight = StringStripWS(IniRead($_configurationFilePath, "running", "Height", $_cfgHeight), $STR_STRIPLEADING + $STR_STRIPTRAILING);
-	$_cfgMonitoring = StringStripWS(IniRead($_configurationFilePath, "running", "Monitoring", $_cfgMonitoring), $STR_STRIPLEADING + $STR_STRIPTRAILING);
+	$_cfgLeft = StringStripWS(IniRead($_configurationFilePath, "running", "Left", $_cfgLeft), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgTop = StringStripWS(IniRead($_configurationFilePath, "running", "Top", $_cfgTop), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgWidth = StringStripWS(IniRead($_configurationFilePath, "running", "Width", $_cfgWidth), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgHeight = StringStripWS(IniRead($_configurationFilePath, "running", "Height", $_cfgHeight), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgMonitoring = StringStripWS(IniRead($_configurationFilePath, "running", "Monitoring", $_cfgMonitoring), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 
 	; ########### Read services here ###########
 
@@ -157,6 +166,8 @@ Func ConfigurationWritePreferences()
 	IniWrite($_configurationFilePath, "preferences", "FriendlyName", $_cfgFriendlyName)
 	IniWrite($_configurationFilePath, "preferences", "FriendlyInTitle", $_cfgFriendlyInTitle)
 	IniWrite($_configurationFilePath, "preferences", "StartAtLogin", $_cfgStartAtLogin)
+	IniWrite($_configurationFilePath, "preferences", "DisplayNotifications", $_cfgDisplayNotifications)
+	IniWrite($_configurationFilePath, "preferences", "WriteToLogFile", $_cfgWriteToLogFile)
 	IniWrite($_configurationFilePath, "preferences", "EscapeCloses", $_cfgEscapeCloses)
 	IniWrite($_configurationFilePath, "preferences", "MinimizeOnClose", $_cfgMinimizeOnClose)
 	IniWrite($_configurationFilePath, "preferences", "HideWhenMinimized", $_cfgHideWhenMinimized)

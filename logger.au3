@@ -25,15 +25,16 @@ Func LoggerInit()
 	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	Local $ClearButton = GUICtrlCreateButton("Clear", 21, $_cfgHeight - 82, 50, 25)
+	Local $SaveButton = GUICtrlCreateButton("&Save", 21, $_cfgHeight - 82, 50, 25)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($SaveButton, "loggerSave")
+	GUICtrlSetTip($SaveButton, "Save the log to a file")
+
+	Local $ClearButton = GUICtrlCreateButton("&Clear", 91, $_cfgHeight - 82, 50, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($ClearButton, "loggerClear")
 	GUICtrlSetTip($ClearButton, "Clear the log")
 
-	Local $SaveButton = GUICtrlCreateButton("Save ...", 91, $_cfgHeight - 82, 50, 25)
-	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($SaveButton, "loggerSave")
-	GUICtrlSetTip($SaveButton, "Save the log to a file")
 	LoggerUpdate()
 EndFunc   ;==>LoggerInit
 

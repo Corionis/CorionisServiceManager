@@ -1,17 +1,22 @@
+; *** Start added by AutoIt3Wrapper ***
+#include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+; *** End added by AutoIt3Wrapper ***
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=res\manager.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.43
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.51
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
+#AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
 #AutoIt3Wrapper_Res_Field=ProductName|Corionis Service Manager
-#AutoIt3Wrapper_Res_Icon_Add=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager\res\manager-orange.ico
-#AutoIt3Wrapper_Res_Icon_Add=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager\res\manager-green.ico
-#AutoIt3Wrapper_Res_Icon_Add=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager\res\manager-purple.ico
-#AutoIt3Wrapper_Res_Icon_Add=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager\res\manager-red.ico
-#AutoIt3Wrapper_Run_Tidy=y
-#AutoIt3Wrapper_Run_Au3Stripper=y
+#AutoIt3Wrapper_Res_Field=ProgramName|Corionis Service Manager
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-orange.ico,1
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-green.ico,2
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-purple.ico,3
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-red.ico,4
+#AutoIt3Wrapper_Add_Constants=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
 #cs -------------------------------------------------------------------------
@@ -45,8 +50,9 @@ AutoItSetOption("MustDeclareVars", 1)
 #include "control.au3"
 #include "logger.au3"
 #include "monitor.au3"
-#include "preferences.au3"
+#include "options.au3"
 #include "restart.au3"
+#include "select.au3"
 #include "services.au3"
 
 ;----------------------------------------------------------------------------
@@ -240,9 +246,28 @@ Func InitMainWindow()
 	$_tabbedFrame = GUICtrlCreateTab(6, 6, $_cfgWidth - 13, $_cfgHeight - 56)
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	; name must match that in InitTab
-	$_monitorTab = InitTab("Monitor")
-	$_logTab = InitTab("Runtime Log")
+	; Initialize the tabs; Name must match that in InitTab exactly
+	$_monitorTab = InitTab("&1 Monitor")
+	$_selectTab = InitTab("&2 Select")
+	$_optionsTab = InitTab("&3 Options")
+	$_logTab = InitTab("&4 Runtime Log")
+
+	; ############### add accelerator keys for tabs ##################
+	Local $monitorDummy = GUICtrlCreateDummy()
+	GUICtrlSetOnEvent($monitorDummy, "activateMonitor")
+
+	Local $selectDummy = GUICtrlCreateDummy()
+	GUICtrlSetOnEvent($selectDummy, "activateSelect")
+
+	Local $optionsDummy = GUICtrlCreateDummy()
+	GUICtrlSetOnEvent($optionsDummy, "activateOptions")
+
+	Local $logDummy = GUICtrlCreateDummy()
+	GUICtrlSetOnEvent($logDummy, "activateLog")
+
+	Local $aAccelKeys[4][2] = [["!1", $monitorDummy], ["!2", $selectDummy], ["!3", $optionsDummy], ["!4", $logDummy]]
+	GUISetAccelerators($aAccelKeys)
+
 EndFunc   ;==>InitMainWindow
 
 ;----------------------------------------------------------------------------
@@ -256,9 +281,13 @@ Func InitTab($name)
 
 	; initialize the content of the tab before GUICtrlCreateTabItem
 	Select
-		Case $name = "Monitor"
+		Case $name = "&1 Monitor"
 			MonitorInit()
-		Case $name = "Runtime Log"
+		Case $name = "&2 Select"
+			SelectInit()
+		Case $name = "&3 Options"
+			OptionsInit()
+		Case $name = "&4 Runtime Log"
 			LoggerInit()
 	EndSelect
 
@@ -269,6 +298,26 @@ Func InitTab($name)
 	Return $_tabs[$index]
 EndFunc   ;==>InitTab
 
+
+;----------------------------------------------------------------------------
+Func activateMonitor()
+	_GUICtrlTab_ActivateTab($_tabbedFrame, 0)
+EndFunc   ;==>activateMonitor
+
+;----------------------------------------------------------------------------
+Func activateSelect()
+	_GUICtrlTab_ActivateTab($_tabbedFrame, 1)
+EndFunc   ;==>activateSelect
+
+;----------------------------------------------------------------------------
+Func activateOptions()
+	_GUICtrlTab_ActivateTab($_tabbedFrame, 2)
+EndFunc   ;==>activateOptions
+
+;----------------------------------------------------------------------------
+Func activateLog()
+	_GUICtrlTab_ActivateTab($_tabbedFrame, 3)
+EndFunc   ;==>activateLog
 
 ;----------------------------------------------------------------------------
 Func InitTray()
