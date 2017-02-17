@@ -6,7 +6,7 @@
 #AutoIt3Wrapper_Icon=res\manager.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.51
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.52
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
