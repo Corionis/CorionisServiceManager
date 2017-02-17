@@ -14,6 +14,7 @@ AutoItSetOption("MustDeclareVars", 1)
 
 ;----------------------------------------------------------------------------
 ; Includes
+#include <WinAPI.au3>
 
 ; application components
 #include "pan.au3" ; must be include first
@@ -182,11 +183,15 @@ EndFunc   ;==>ConfigurationWritePreferences
 ;----------------------------------------------------------------------------
 Func ConfigurationWriteRunning($newCfg)
 	Local $info = WinGetPos($_mainWindow)
+	Local $cSize = WinGetClientSize($_mainWindow)
 	If $newCfg == True Then
 		$info[0] = $_cfgLeft
 		$info[1] = $_cfgTop
 		$info[2] = $_cfgWidth
 		$info[3] = $_cfgHeight
+	Else
+		$info[2] = $info[2] - (_WinAPI_GetSystemMetrics(32) * 2) + 2			; 5   45   7   32
+		$info[3] = $info[3] - (_WinAPI_GetSystemMetrics(33) * 2) + 2			; 6   46   8   33
 	EndIf
 	IniWrite($_configurationFilePath, "running", "Left", $info[0])
 	IniWrite($_configurationFilePath, "running", "Top", $info[1])

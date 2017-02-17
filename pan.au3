@@ -21,8 +21,8 @@ Global $_progTitle = $_progName & $_build
 Global $_configurationFilePath = ""
 Global $_cfgLeft = -1
 Global $_cfgTop = -1
-Global $_cfgWidth = 638
-Global $_cfgHeight = 400
+Global $_cfgWidth = 538
+Global $_cfgHeight = 388
 Global $_cfgMonitoring = False
 ;
 
