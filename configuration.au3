@@ -79,8 +79,8 @@ Func ConfigurationReadConfig()
 		FileWriteLine($f, "")
 	EndIf
 
-	LoggerAppend("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" & @CRLF & _
-			"Application configuration: " & $_configurationFilePath & @CRLF)
+	;LoggerAppend("-----------------------------------------------------------------------------------------------" & @CRLF)
+	LoggerAppend("Application configuration: " & $_configurationFilePath & @CRLF)
 
 	$_cfgHostname = StringStripWS(IniRead($_configurationFilePath, "preferences", "Hostname", $_cfgHostname), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 	$_cfgFriendlyName = StringStripWS(IniRead($_configurationFilePath, "preferences", "FriendlyName", $_cfgFriendlyName), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;

@@ -19,21 +19,23 @@ AutoItSetOption("MustDeclareVars", 1)
 ;----------------------------------------------------------------------------
 ; globals
 Global $_loggerEdit
+Global $_loggerSaveButton
+Global $_loggerClearButton
 
 ;----------------------------------------------------------------------------
 Func LoggerInit()
 	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	Local $SaveButton = GUICtrlCreateButton("&Save", 21, $_cfgHeight - 82, 50, 25)
+	$_loggerSaveButton = GUICtrlCreateButton("Sa&ve", 21, $_cfgHeight - 82, 50, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($SaveButton, "loggerSave")
-	GUICtrlSetTip($SaveButton, "Save the log to a file")
+	GUICtrlSetOnEvent($_loggerSaveButton, "loggerSave")
+	GUICtrlSetTip($_loggerSaveButton, "Save the log to a file")
 
-	Local $ClearButton = GUICtrlCreateButton("&Clear", 91, $_cfgHeight - 82, 50, 25)
+	$_loggerClearButton = GUICtrlCreateButton("&Clear", 91, $_cfgHeight - 82, 50, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($ClearButton, "loggerClear")
-	GUICtrlSetTip($ClearButton, "Clear the log")
+	GUICtrlSetOnEvent($_loggerClearButton, "loggerClear")
+	GUICtrlSetTip($_loggerClearButton, "Clear the log")
 
 	LoggerUpdate()
 EndFunc   ;==>LoggerInit
@@ -41,17 +43,31 @@ EndFunc   ;==>LoggerInit
 ;----------------------------------------------------------------------------
 Func LoggerAppend($msg)
 	$_logBuffer &= $msg
+	GUICtrlSetState($_loggerSaveButton, $GUI_ENABLE)
+	GUICtrlSetState($_loggerClearButton, $GUI_ENABLE)
 EndFunc   ;==>LoggerAppend
 
 ;----------------------------------------------------------------------------
 Func loggerClear()
 	$_logBuffer = ""
 	LoggerUpdate()
+	GUICtrlSetState($_loggerSaveButton, $GUI_DISABLE)
+	GUICtrlSetState($_loggerClearButton, $GUI_DISABLE)
 EndFunc   ;==>loggerClear
 
 ;----------------------------------------------------------------------------
 Func loggerSave()
-	MsgBox(64, "Save GUI Log", "You requested to Save the log. Sorry, not implemented yet.", $_logTab)
+	Local $logFile = StringReplace($_configurationFilePath, ".ini", ".log")
+	Local $a = StringSplit($logFile, "\")
+	Local $nam = $a[$a[0]];
+	Local $dir = StringReplace($logFile, $nam, "")
+	$logFile = FileOpenDialog("Save Runtime Log", $dir, "Log files (*.log)|All files (*.*)", 0, $nam, $_mainWindow)
+	If @error == 0 Then
+		Local $fh = FileOpen($logFile, BitOR($FO_APPEND, $FO_CREATEPATH, $FO_ANSI))
+		FileWrite($fh, $_logBuffer)
+		FileClose($fh)
+	EndIf
+	MsgBox(64, "Result: Save Runtime Log", "The log has been saved to: " + $logFile, $_logTab)
 EndFunc   ;==>loggerSave
 
 ;----------------------------------------------------------------------------

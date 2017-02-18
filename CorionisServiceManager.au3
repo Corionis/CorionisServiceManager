@@ -67,6 +67,7 @@ Global $_updateBusy = False
 Dim $cd = @ScriptDir
 Dim $waitTime
 
+LoggerAppend("-----------------------------------------------------------------------------------------------" & @CRLF)
 LoggerAppend($_progActual & " " & $_build & @CRLF & _
 		"    Started " & _NowDate() & " " & _NowTime() & @CRLF & _
 		"    Running from " & $cd & @CRLF)
