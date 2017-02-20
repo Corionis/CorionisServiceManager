@@ -27,7 +27,7 @@ Func LoggerInit()
 	$_loggerEdit = GUICtrlCreateEdit($_logBuffer, 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	$_loggerSaveButton = GUICtrlCreateButton("Sa&ve", 21, $_cfgHeight - 82, 50, 25)
+	$_loggerSaveButton = GUICtrlCreateButton("&Save", 21, $_cfgHeight - 82, 50, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($_loggerSaveButton, "loggerSave")
 	GUICtrlSetTip($_loggerSaveButton, "Save the log to a file")
@@ -67,7 +67,6 @@ Func loggerSave()
 		FileWrite($fh, $_logBuffer)
 		FileClose($fh)
 	EndIf
-	MsgBox(64, "Result: Save Runtime Log", "The log has been saved to: " + $logFile, $_logTab)
 EndFunc   ;==>loggerSave
 
 ;----------------------------------------------------------------------------

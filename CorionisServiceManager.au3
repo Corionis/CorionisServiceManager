@@ -1,12 +1,8 @@
-; *** Start added by AutoIt3Wrapper ***
-#include <MsgBoxConstants.au3>
-#include <StringConstants.au3>
-; *** End added by AutoIt3Wrapper ***
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=res\manager.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.52
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.74
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
@@ -16,8 +12,11 @@
 #AutoIt3Wrapper_Res_Icon_Add=.\res\manager-green.ico,2
 #AutoIt3Wrapper_Res_Icon_Add=.\res\manager-purple.ico,3
 #AutoIt3Wrapper_Res_Icon_Add=.\res\manager-red.ico,4
-#AutoIt3Wrapper_Add_Constants=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+; *** Start added by AutoIt3Wrapper ***
+#include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+; *** End added by AutoIt3Wrapper ***
 
 #cs -------------------------------------------------------------------------
 
@@ -64,6 +63,7 @@ Global $_updateBusy = False
 
 ;============================================================================
 ; Main
+
 Dim $cd = @ScriptDir
 Dim $waitTime
 
@@ -92,8 +92,18 @@ If $_returnValue <> 0 Then
 	CloseProgram()
 EndIf
 
-GUISetState(@SW_SHOWNORMAL, $_mainWindow)
-$_mode = $WIN_UP
+If $_cfgStartMinimized == True Then
+	$_mode = $WIN_DOWN
+	If $_cfgHideWhenMinimized == True Then
+		GUISetState(@SW_HIDE, $_mainWindow)
+	Else
+		GUISetState(@SW_SHOWMINIMIZED, $_mainWindow)
+	EndIf
+Else
+	GUISetState(@SW_SHOWNORMAL, $_mainWindow)
+	$_mode = $WIN_UP
+EndIf
+
 
 $waitTime = $_cfgRefreshInterval
 If $waitTime < 500 Then
@@ -227,16 +237,16 @@ Func InitMainWindow()
 	GUICtrlSetOnEvent($exitItem, "ExitProgram")
 	GUICtrlSetTip($exitItem, "End the program")
 
-	; Options menu
-	$optionsMenu = GUICtrlCreateMenu("&Options")
+;~ 	; Options menu
+;~ 	$optionsMenu = GUICtrlCreateMenu("&Options")
 
-	$preferencesItem = GUICtrlCreateMenuItem("&Preferences", $optionsMenu)
-	GUICtrlSetOnEvent($preferencesItem, "ShowPreferences")
-	GUICtrlSetTip($preferencesItem, "Set user preferences")
+;~ 	$preferencesItem = GUICtrlCreateMenuItem("&Preferences", $optionsMenu)
+;~ 	GUICtrlSetOnEvent($preferencesItem, "ShowPreferences")
+;~ 	GUICtrlSetTip($preferencesItem, "Set user preferences")
 
-	$servicesItem = GUICtrlCreateMenuItem("S&elect Services", $optionsMenu)
-	GUICtrlSetOnEvent($servicesItem, "ShowServices")
-	GUICtrlSetTip($servicesItem, "Set user preferences")
+;~ 	$servicesItem = GUICtrlCreateMenuItem("S&elect Services", $optionsMenu)
+;~ 	GUICtrlSetOnEvent($servicesItem, "ShowServices")
+;~ 	GUICtrlSetTip($servicesItem, "Set user preferences")
 
 	; Help menu
 	$helpMenu = GUICtrlCreateMenu("&Help")
@@ -329,6 +339,7 @@ Func InitTray()
 	; get the icon from the executable
 	TraySetIcon(@ScriptFullPath, $_cfgIconIndex)
 	TraySetClick(1 + 8)
+	TraySetToolTip($_progTitle)
 
 	Local $showAboutItem = TrayCreateItem("About " & $_progTitle & " ...")
 	TrayItemSetOnEvent($showAboutItem, "ShowAbout")
@@ -379,8 +390,8 @@ EndFunc   ;==>ParseOptions
 
 ;----------------------------------------------------------------------------
 Func RestartProgram()
-	Dim $bc = MsgBox(1 + 32, "Restart " & $_progName, "Are you sure you want to restart the " & $_progName & "?", 0, $_mainWindow)
-	If $bc == 1 Then
+	Dim $bc = MsgBox($MB_OKCANCEL + $MB_ICONQUESTION, "Restart " & $_progName, "Are you sure you want to restart the " & $_progName & "?", 0, $_mainWindow)
+	If $bc == $IDOK Then
 		; capture coordinates & state
 		ConfigurationWriteRunning(False)
 		_ScriptRestart()
@@ -396,12 +407,12 @@ EndFunc   ;==>ShowAbout
 ;----------------------------------------------------------------------------
 Func ShowHide()
 	If $_mode <> $WIN_UP Then
+		$_mode = $WIN_UP
 		If $_cfgHideWhenMinimized == True Then
 			GUISetState(@SW_SHOWNORMAL, $_mainWindow)
 		Else
 			GUISetState(@SW_RESTORE, $_mainWindow)
 		EndIf
-		$_mode = $WIN_UP
 	Else
 		$_mode = $WIN_DOWN
 		If $_cfgHideWhenMinimized == True Then

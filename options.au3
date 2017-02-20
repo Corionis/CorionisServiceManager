@@ -28,6 +28,7 @@ Global $_cfgFriendlyNameCtrl
 Global $_cfgFriendlyInTitleCtrl
 Global $_cfgEscapeClosesCtrl
 Global $_cfgStartAtLoginCtrl
+Global $_cfgStartMinimizedCtrl
 Global $_cfgMinimizeOnCloseCtrl
 Global $_cfgDisplayNotificationsCtrl
 Global $_cfgHideWhenMinimizedCtrl
@@ -75,30 +76,35 @@ Func OptionsInit()
 	GUICtrlSetOnEvent($_cfgEscapeClosesCtrl, "optionsEvent")
 	GUICtrlSetTip($_cfgEscapeClosesCtrl, "Pressing the Escape (ESC) key will close the window")
 
-	$_cfgStartAtLoginCtrl = GUICtrlCreateCheckbox("Start when you login to Windows", 21, 113, Default, Default)
+	$_cfgDisplayNotificationsCtrl = GUICtrlCreateCheckbox("Display tray notifications", 21, 113, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($_cfgStartAtLoginCtrl, "optionsEvent")
-	GUICtrlSetTip($_cfgStartAtLoginCtrl, "Start this program when you login")
+	GUICtrlSetOnEvent($_cfgDisplayNotificationsCtrl, "optionsEvent")
+	GUICtrlSetTip($_cfgDisplayNotificationsCtrl, "Display tray notifications when selected services stop or start")
 
 	$_cfgMinimizeOnCloseCtrl = GUICtrlCreateCheckbox("Minimize on close", 237, 113, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($_cfgMinimizeOnCloseCtrl, "optionsEvent")
 	GUICtrlSetTip($_cfgMinimizeOnCloseCtrl, "Minimize the windows on close instead of exiting")
 
-	$_cfgDisplayNotificationsCtrl = GUICtrlCreateCheckbox("Display tray notifications", 21, 135, Default, Default)
+	$_cfgWriteToLogFileCtrl = GUICtrlCreateCheckbox("Write To Log File", 21, 135, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($_cfgDisplayNotificationsCtrl, "optionsEvent")
-	GUICtrlSetTip($_cfgDisplayNotificationsCtrl, "Display tray notifications when selected services stop or start")
+	GUICtrlSetOnEvent($_cfgWriteToLogFileCtrl, "optionsEvent")
+	GUICtrlSetTip($_cfgWriteToLogFileCtrl, "Write runtime log entries to the .log file")
 
 	$_cfgHideWhenMinimizedCtrl = GUICtrlCreateCheckbox("Hide When Minimized", 237, 135, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($_cfgHideWhenMinimizedCtrl, "optionsEvent")
 	GUICtrlSetTip($_cfgHideWhenMinimizedCtrl, "Hide the taskbar button when the window is minimized")
 
-	$_cfgWriteToLogFileCtrl = GUICtrlCreateCheckbox("Write To Log File", 21, 157, Default, Default)
+	$_cfgStartAtLoginCtrl = GUICtrlCreateCheckbox("Start when you login to Windows", 21, 157, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
-	GUICtrlSetOnEvent($_cfgWriteToLogFileCtrl, "optionsEvent")
-	GUICtrlSetTip($_cfgWriteToLogFileCtrl, "Write runtime log entries to the .log file")
+	GUICtrlSetOnEvent($_cfgStartAtLoginCtrl, "optionsEvent")
+	GUICtrlSetTip($_cfgStartAtLoginCtrl, "Start this program when you login")
+
+	$_cfgStartMinimizedCtrl = GUICtrlCreateCheckbox("Start minimized", 237, 157, Default, Default)
+	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
+	GUICtrlSetOnEvent($_cfgStartMinimizedCtrl, "optionsEvent")
+	GUICtrlSetTip($_cfgStartMinimizedCtrl, "Minimized the window when the program is started")
 
 	$obj = GUICtrlCreateLabel("Running text color: ", 21, 183)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
@@ -170,10 +176,36 @@ EndFunc   ;==>optionsEvent
 
 ;----------------------------------------------------------------------------
 Func optionsSave()
+	; get and save the options
 	optionsGetCtrls()
 	ConfigurationWritePreferences()
-	GUICtrlSetState($_optionsSaveCtrl, $GUI_DISABLE)
-	GUICtrlSetState($_optionsCancelCtrl, $GUI_DISABLE)
+
+	; handle any shortcut
+	Local $a = StringSplit($_configurationFilePath, "\")
+	Local $nam = $a[$a[0]];
+	Local $dir = @StartupDir
+	Local $shortcut = $dir & "\CSM+" & $nam & ".lnk"
+	If $_cfgStartAtLogin == True Then
+		Local $state
+		If $_cfgStartMinimized == True Then
+			$state = @SW_SHOWMINIMIZED
+		Else
+			$state = @SW_SHOWNORMAL
+		EndIf
+		If FileCreateShortcut("""" & @AutoItExe & """", $shortcut, @ScriptDir, "-c """ & $_configurationFilePath & """", _
+				"Corionis Service Manager for " & $nam, @AutoItExe, Default, $_cfgIconIndex, $state) <> 1 Then
+			MsgBox($MB_OK + $MB_ICONERROR, "Creae Shortcut Error", "Error " & @error & " occurred. Shortcut " & $shortcut & " could not be created.")
+		Else
+			GUICtrlSetState($_optionsSaveCtrl, $GUI_DISABLE)
+			GUICtrlSetState($_optionsCancelCtrl, $GUI_DISABLE)
+		EndIf
+	Else
+		If FileExists($shortcut) Then
+			FileDelete($shortcut)
+		EndIf
+		GUICtrlSetState($_optionsSaveCtrl, $GUI_DISABLE)
+		GUICtrlSetState($_optionsCancelCtrl, $GUI_DISABLE)
+	EndIf
 EndFunc   ;==>optionsSave
 
 ;----------------------------------------------------------------------------
@@ -195,6 +227,7 @@ Func optionsGetCtrls()
 	$_cfgFriendlyInTitle = optionsIsChecked($_cfgFriendlyInTitleCtrl)
 	$_cfgEscapeCloses = optionsIsChecked($_cfgEscapeClosesCtrl)
 	$_cfgStartAtLogin = optionsIsChecked($_cfgStartAtLoginCtrl)
+	$_cfgStartMinimized = optionsIsChecked($_cfgStartMinimizedCtrl)
 	$_cfgMinimizeOnClose = optionsIsChecked($_cfgMinimizeOnCloseCtrl)
 	$_cfgDisplayNotifications = optionsIsChecked($_cfgDisplayNotificationsCtrl)
 	$_cfgHideWhenMinimized = optionsIsChecked($_cfgHideWhenMinimizedCtrl)
@@ -223,6 +256,7 @@ Func optionsSetCtrls()
 	GUICtrlSetState($_cfgFriendlyInTitleCtrl, optionsGuiCheck($_cfgFriendlyInTitle))
 	GUICtrlSetState($_cfgEscapeClosesCtrl, optionsGuiCheck($_cfgEscapeCloses))
 	GUICtrlSetState($_cfgStartAtLoginCtrl, optionsGuiCheck($_cfgStartAtLogin))
+	GUICtrlSetState($_cfgStartMinimizedCtrl, optionsGuiCheck($_cfgStartMinimized))
 	GUICtrlSetState($_cfgMinimizeOnCloseCtrl, optionsGuiCheck($_cfgMinimizeOnClose))
 	GUICtrlSetState($_cfgDisplayNotificationsCtrl, optionsGuiCheck($_cfgDisplayNotifications))
 	GUICtrlSetState($_cfgHideWhenMinimizedCtrl, optionsGuiCheck($_cfgHideWhenMinimized))
