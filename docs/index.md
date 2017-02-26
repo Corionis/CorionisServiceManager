@@ -1,4 +1,4 @@
-Click [link to Help](help).
+Documentation [![something](res/docs-icon.png)](help)
 
 # What is the Corionis Service Manager?
 
