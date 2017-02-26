@@ -1,1 +1,5 @@
 theme: jekyll-theme-tactile
+title: Corionis Service Manager
+description: Monitor & manage selected Windows services
+show_downloads: true
+
