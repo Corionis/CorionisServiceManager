@@ -13,9 +13,9 @@ All that is needed is the "Corionis Service Manager.exe" program. It will create
 The [User Documentation](help) is also the Online Help in the program.
 
 ## Downloads
-`The latest CSM version: {{ page.version }}`
- * Get Version {{ page.version }} of the [Corionis%20Service%20Manager_{{ page.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ page.version }}.msi).
-* Get Version {{ page.version }} of the [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe) CSM executable only.
+ * Get Version {{ page.version }}:
+   - [Corionis Service Manager_{{ page.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ page.version }}.msi?raw=true).
+   - [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true) CSM executable only.
 
 ---
 ### Blog
