@@ -1,6 +1,5 @@
 ---
 layout: default
-version: 1.0.0.168
 ---
 # What is the Corionis Service Manager?
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few services.
