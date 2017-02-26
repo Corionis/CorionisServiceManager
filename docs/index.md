@@ -1,4 +1,4 @@
-Documentation [![something](res/docs-icon.png)](help)
+Documentation <a href="help"><img src="res/docs-icon.png" border="0"/></a>
 
 # What is the Corionis Service Manager?
 
