@@ -2,8 +2,8 @@
 layout: default
 version: 1.0.0.163
 ---
+`<div align="right" style="font-size=-1;padding-top:0;padding-bottom:6px;">Latest version: {{ page.version }}</div>`
 # What is the Corionis Service Manager?
-<div align="right">The latest version is {{ page.version }}</div>
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few specific services.
 
 The Corionis Service Manager is a small tray application that monitors and manages a list of user-selected Windows services.
