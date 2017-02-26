@@ -39,6 +39,9 @@
 			padding-left: 50px;
 			padding-left: 50px;
 		}
+		#download-exe span {
+  			background: transparent url(res/exe-icon.png) 12px 50% no-repeat;
+}		
 	</style>
 	<title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
   </head>
@@ -56,7 +59,7 @@
 		<section id="downloads" class="clearfix">
 		  {% if site.show_downloads %}
 		  <a href="{{ site.github.url }}" id="download-zip" class="button"><span>Project .zip</span></a>
-		  <a href="https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true" id="download" class="button"><span>Latest .exe</span></a>
+		  <a href="https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true" id="download-exe" class="button"><span>Latest .exe</span></a>
 		  {% endif %}
 		  <a href="{{ site.github.repository_url }}" id="view-on-github" class="button"><span>View on GitHub</span></a>
 		</section>
