@@ -3,9 +3,4 @@ title: Corionis Service Manager
 description: Monitor & manage selected Windows services
 show_downloads: true
 excerpt_separator: <!-nevermatchme-->
-defaults:
-  -
-  scope:
-    path: "" # an empty string here means all files in the project
-  values:
-    version: 1.0.0.168
+version: 1.0.0.168
