@@ -30,6 +30,11 @@
 			float: left;
 			margin: 0 20px 20px 0;
 		}
+		.blog {
+			padding-left: 30px;
+			list-style-type: disc;
+			
+		}
 	</style>
 	<title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
   </head>
@@ -58,8 +63,8 @@
 		  {{ content }}
 		</section>
 		  
-		  <p style="margin-left: 30px;">
-			<ul type="circle">
+		  <p class="blog">
+			<ul>
 				{% for post in site.posts %}
 				<li>
 					<a href="{{ post.url }}">{{ post.title }}</a>
@@ -67,7 +72,7 @@
 				</li>
 				{% endfor %}
 			</ul>
-		  </section>
+		  </p>
 
 		<footer>
 		{% if site.github.is_project_page %}
