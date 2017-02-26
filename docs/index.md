@@ -22,5 +22,12 @@ The latest version of CSM is  {{ site.version }}.
 ## What is Corionis?
 Corionis (kor-E-on-iss) is a name from science fiction, thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
 
+## Acknowledgements
+ * The Corionis Service Manager is written with [AutoIt](https://www.autoitscript.com/) scripting tool.
+ * The MSI installer is built using the free version of [Advanced Installer](http://www.advancedinstaller.com/).
+ * The project is hosted on [GitHub](https://github.com).
+ * These pages are rendered using [Jekyll](https://jekyllrb.com/).
+ * And the [Tactile](https://pages-themes.github.io/tactile/) theme.
+
 ---
 ### Blog
