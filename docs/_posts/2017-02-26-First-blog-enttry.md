@@ -1,6 +1,8 @@
 ---
 layout: post
 title: First Blog Entry
+date: 2017-02-26 00:49:01 -0700
+categories: todd general
 ---
 # Getting it together
 
