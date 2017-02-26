@@ -17,69 +17,36 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
-Global $_monitorView
-Global $i1, $i2, $i3
 Global $_monitorSelected = -1
-Global $_monitorList[100]
-Global $_monitorListCount = 0
 Global $MonitorButton
+Global $WORK_TYPE = 1
+Global $WORK_START = 2
+Global $WORK_STOP = 3
 
 ;----------------------------------------------------------------------------
 Func MonitorInit()
 	Dim $i, $j, $l
 
-	$_monitorView = GUICtrlCreateListView("Identifier          |Name                    |Startup Type         |Status    ", 13, 31, $_cfgWidth - 29, $_cfgHeight - 118)
+	$_monitorView = GUICtrlCreateListView("      Name                                                 |Identifier |Startup Type |Status ", _
+		13, 31, $_cfgWidth - 29, $_cfgHeight - 118, _
+		BitOR($LVS_REPORT, $LVS_SINGLESEL), BitOR($LVS_EX_CHECKBOXES, $LVS_EX_FULLROWSELECT, $WS_EX_CLIENTEDGE))
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	$_selectedServices[0][0] = False
-	$_selectedServices[0][1] = "tomcat7"
-	$_selectedServices[0][2] = "DocVue Enterprise Server"
-	$_selectedServices[0][3] = "Automatic"
-	$_selectedServices[0][4] = "-"
+	monitorPopulate()
+	If $_selectedServicesCount > 0 Then
+		monitorPopulate()
+	EndIf
 
-	$_selectedServices[1][0] = False
-	$_selectedServices[1][1] = "jasperreportsTomcat"
-	$_selectedServices[1][2] = "Jasperreports Tomcat"
-	$_selectedServices[1][3] = "Automatic"
-	$_selectedServices[1][4] = "-"
-
-	$_selectedServices[2][0] = False
-	$_selectedServices[2][1] = "jasperreportsPostgreSQL"
-	$_selectedServices[2][2] = "jasperreportsPostgreSQL"
-	$_selectedServices[2][3] = "Automatic"
-	$_selectedServices[2][4] = "-"
-
-	$_selectedServices[3][0] = False
-	$_selectedServices[3][1] = "MSSQLSERVER"
-	$_selectedServices[3][2] = "SQL Server"
-	$_selectedServices[3][3] = "Automatic"
-	$_selectedServices[3][4] = "-"
-
-	$_selectedServices[4][0] = False
-	$_selectedServices[4][1] = "Spooler"
-	$_selectedServices[4][2] = "Print Spooler"
-	$_selectedServices[4][3] = "Automatic"
-	$_selectedServices[4][4] = "-"
-
-	ReDim $_selectedServices[5][5]
-
-	For $i = 0 To UBound($_selectedServices) - 1
-		$l = ""
-		For $j = 1 To 4
-			$l = $l & $_selectedServices[$i][$j]
-			If $j < 4 Then
-				$l = $l & "|"
-			EndIf
+	If StringLen($_cfgMonitorWidths) > 0 Then
+		$l = StringSplit($_cfgMonitorWidths, "|", $STR_NOCOUNT)
+		For $i = 0 To $SVC_LAST
+			_GUICtrlListView_SetColumnWidth($_monitorView, $i, Int($l[$i]))
 		Next
-		$_monitorList[$_monitorListCount] = GUICtrlCreateListViewItem($l, $_monitorView)
-		GUICtrlSetOnEvent($_monitorList[$_monitorListCount], "monitorItemPicked")
-		$_monitorListCount = $_monitorListCount + 1
-	Next
-
+	EndIf
 
 	Local $AllButton = GUICtrlCreateButton("&All", 21, $_cfgHeight - 82, 50, 25)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKSIZE)
@@ -124,88 +91,101 @@ Func MonitorInit()
 	GUICtrlSetOnEvent($MonitorButton, "monitorMonitor")
 	GUICtrlSetTip($MonitorButton, "Toggle active monitoring")
 
-	If IsAdmin() == 9999 Then ;;;;;;;;;;;;;; 0 Then
+	If IsAdmin() == 0 Then
 		GUICtrlSetState($AutomaticButton, $GUI_DISABLE)
 		GUICtrlSetTip($AutomaticButton, "Automatic requires Administrator privileges")
 		GUICtrlSetState($ManualButton, $GUI_DISABLE)
 		GUICtrlSetTip($ManualButton, "Manual requires Administrator privileges")
+		GUICtrlSetState($DisableButton, $GUI_DISABLE)
+		GUICtrlSetTip($DisableButton, "Disable requires Administrator privileges")
 	EndIf
 EndFunc   ;==>MonitorInit
 
 ;----------------------------------------------------------------------------
+Func monitorPopulate()
+	Local $i, $l
+	; remove any existing list view items
+	If $_monitorListCtrlsCount > 0 Then
+		For $i = 0 To $_monitorListCtrlsCount - 1
+			GUICtrlDelete($_monitorListCtrls[$i])
+		Next
+		$_monitorListCtrlsCount = 0
+	EndIf
+	; reset data
+	If $_monitorListCtrlsCount == 0 Or UBound($_monitorListCtrls) == 0 Then
+		ReDim $_monitorListCtrls[$SVC_MAX]
+		$_monitorListCtrlsCount = 0
+	EndIf
+	; create list view items one per service
+	For $i = 0 To $_selectedServicesCount - 1
+		$l = $_selectedServices[$i]
+		$_monitorListCtrls[$_monitorListCtrlsCount] = GUICtrlCreateListViewItem($l, $_monitorView)
+		GUICtrlSetOnEvent($_monitorListCtrls[$_monitorListCtrlsCount], "monitorItemPicked")
+		$_monitorListCtrlsCount = $_monitorListCtrlsCount + 1
+	Next
+	ReDim $_monitorListCtrls[$_monitorListCtrlsCount]
+EndFunc   ;==>monitorPopulate
+
+;----------------------------------------------------------------------------
 Func monitorItemPicked()
-	Dim $item
-	Dim $msg = @GUI_CtrlId
-	Select
-		Case $msg = $i1
-			$item = 0
-		Case $msg = $i2
-			$item = 1
-		Case $msg = $i3
-			$item = 2
-	EndSelect
-	$_monitorSelected = $item
-	;MsgBox(64, "Item Picked", "Item " & $item & " was picked")
+;~ 	Dim $item = @GUI_CtrlId
+;~ 	$_monitorSelected = $item
+;~ 	MsgBox(64, "Item Picked", "Item " & $item & " was picked")
 EndFunc   ;==>monitorItemPicked
 
 ;----------------------------------------------------------------------------
 Func monitorAll()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "All" & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	Local $i
+	For $i = 0 To $_monitorListCtrlsCount - 1
+		GUICtrlSetState($_monitorListCtrls[$i], $GUI_CHECKED)
+	Next
 EndFunc   ;==>monitorAll
 
 ;----------------------------------------------------------------------------
 Func monitorNone()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "None" & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	Local $i
+	For $i = 0 To $_monitorListCtrlsCount - 1
+		GUICtrlSetState($_monitorListCtrls[$i], $GUI_UNCHECKED)
+	Next
 EndFunc   ;==>monitorNone
 
 ;----------------------------------------------------------------------------
 Func monitorStart()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Start " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	monitorWork($WORK_START, 0)
 EndFunc   ;==>monitorStart
 
 ;----------------------------------------------------------------------------
 Func monitorStop()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Stop " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	monitorWork($WORK_STOP, 0)
 EndFunc   ;==>monitorStop
 
 ;----------------------------------------------------------------------------
 Func monitorAutomatic()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Automatic " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	monitorWork($WORK_TYPE, $SERVICE_AUTO_START)
 EndFunc   ;==>monitorAutomatic
 
 ;----------------------------------------------------------------------------
 Func monitorManual()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Manual " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
+	monitorWork($WORK_TYPE, $SERVICE_DEMAND_START)
 EndFunc   ;==>monitorManual
 
 ;----------------------------------------------------------------------------
 Func monitorDisable()
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-	MsgBox(64, "Action", "Disable " & $_monitorSelected)
-	_GUICtrlListView_ClickItem($_monitorView, $_monitorSelected)
-EndFunc   ;==>monitorManual
+	monitorWork($WORK_TYPE, $SERVICE_DISABLED)
+EndFunc   ;==>monitorDisable
 
 ;----------------------------------------------------------------------------
 Func monitorMonitor()
 	If $_cfgMonitoring == True Then
 		$_cfgMonitoring = False
+		LoggerAppend(_NowDate() & " " & _NowTime() & " monitoring off " & @CRLF)
 	Else
 		$_cfgMonitoring = True
+		LoggerAppend(_NowDate() & " " & _NowTime() & " monitoring on " & @CRLF)
 	EndIf
 	MonitorSetMonitorButton($_cfgMonitoring)
 	UpdateMonitor()
+	LoggerUpdate()
 EndFunc   ;==>monitorMonitor
 
 ;----------------------------------------------------------------------------
@@ -217,7 +197,48 @@ Func MonitorSetMonitorButton($state)
 		GUICtrlSetColor($MonitorButton, $_cfgStoppedTextColor)
 		GUICtrlSetBkColor($MonitorButton, $_cfgStoppedBackColor)
 	EndIf
-EndFunc   ;==>monitorMonitor
+EndFunc   ;==>MonitorSetMonitorButton
+
+;----------------------------------------------------------------------------
+Func monitorWork($op, $type)
+	Local $i, $id, $it, $l, $svc, $worked = False
+	For $i = 0 To $_monitorListCtrlsCount - 1
+		If _GUICtrlListView_GetItemChecked($_monitorView, $i) == True Then
+			$it = _GUICtrlListView_GetItem($_monitorView, $i)
+			$l = GUICtrlRead($it[5]) ; use the item id to get the line regardless of the sort
+			$svc = StringSplit($l, "|", $STR_NOCOUNT)
+			$id = $svc[$SVC_ID]
+			If $op == $WORK_TYPE Then
+				If RegWrite("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "Start", "REG_DWORD", $type) == 0 Then
+					MsgBox($MB_OK + $MB_ICONERROR, "Set Startup Type Failed", "Set Startup Type for " & $svc[$SVC_NAME] & " failed with code " & @error)
+					Return
+				EndIf
+				$svc[$SVC_START] = servicesGetStartTypeString($type)
+			EndIf
+			If $op == $WORK_START Then
+				If servicesStartService($_cfgHostname, $id) == 0 Then
+					MsgBox($MB_OK + $MB_ICONERROR, "Start Failed", "Start failed for " & $id & " with code " & @error)
+					Return
+				EndIf
+			EndIf
+			If $op == $WORK_STOP Then
+				If servicesStopService($_cfgHostname, $id) == 0 Then
+					MsgBox($MB_OK + $MB_ICONERROR, "Stop Failed", "Stop failed for " & $id & " with code " & @error)
+					Return
+				EndIf
+			EndIf
+			$l = ""
+			$svc[$SVC_STATUS] = "?" ; change service status so the monitor refreshes
+			$l = _ArrayToString($svc, "|")
+			GUICtrlSetData($_monitorListCtrls[$i], $l)
+			$worked = True
+		EndIf
+	Next
+	If $worked == False Then
+		MsgBox($MB_OK + $MB_ICONINFORMATION, $_progTitle, "No checkboxes are checked - nothing to do.", 0, $_mainWindow)
+	EndIf
+	UpdateMonitor()
+EndFunc   ;==>monitorStop
 
 
 ; end

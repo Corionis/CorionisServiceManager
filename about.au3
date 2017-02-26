@@ -17,7 +17,9 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
+
+#include "resources.au3"
 
 ;----------------------------------------------------------------------------
 ; globals
@@ -26,19 +28,38 @@ Global $_aboutForm
 ;----------------------------------------------------------------------------
 Func about()
 	Local $w = 400
-	Local $h = 146
+	Local $h = 166
 	Local $info = WinGetPos($_mainWindow)
 	$_aboutForm = GUICreate("About", $w, $h, $info[0] + (($info[2] - $w) / 2), $info[1] + (($info[3] - $h) / 2), BitOR($DS_MODALFRAME, $DS_SETFOREGROUND, $WS_SYSMENU, $WS_CAPTION), $WS_EX_TOPMOST, $_mainWindow)
 	GUISetIcon("res\information.ico")
 	GUISetOnEvent($GUI_EVENT_CLOSE, "aboutFormClose")
-	Local $bg = GUICtrlCreatePic("res\about_header.gif", 0, 0, 400, 60)
-	Local $OkButton = GUICtrlCreateButton("&OK", 176, 112, 49, 25)
+
+	Local $bg = GUICtrlCreatePic("", 0, 0, 400, 60)
+	;GUICtrlSetState(-1, $GUI_DISABLE)
+	_ResourceSetImageToCtrl($bg, "ABOUT_HDR")
+
+	Local $urlLine = GUICtrlCreateLabel("See the Corionis Service Manager project on GitHub",  49, $h - 98, 300, 17, $SS_CENTER)
+	GUICtrlSetOnEvent($urlLine, "aboutUrlLine")
+	GUICtrlSetCursor($urlLine, 0)
+	GUICtrlSetColor($urlLine, 0x4287f8)
+
+	Local $buildLine = GUICtrlCreateLabel("Version: " & $_build & "   " & $_buildDate,  49, $h - 78, 300, 17, $SS_CENTER)
+
+	Local $copyrightLine = GUICtrlCreateLabel("By Todd R. Hill, Corionis, LLC", 49, $h - 58, 300, 17, $SS_CENTER)
+
+	Local $OkButton = GUICtrlCreateButton("&OK", 176, $h - 34, 49, 25)
 	GUICtrlSetOnEvent($OkButton, "aboutFormClose")
 	GUICtrlSetOnEvent(-1, "aboutFormClose")
-	Local $copyrightLine = GUICtrlCreateLabel($_copyright, 77, 88, 246, 17, $SS_CENTER)
-	Local $buildLine = GUICtrlCreateLabel($_build, 77, 68, 246, 17, $SS_CENTER)
+
 	GUISetState(@SW_SHOW, $_aboutForm)
+
 EndFunc   ;==>about
+
+;----------------------------------------------------------------------------
+Func aboutUrlLine()
+	ShellExecute("https://corionis.github.io/CorionisServiceManager/")
+	aboutFormClose()
+EndFunc
 
 ;----------------------------------------------------------------------------
 Func aboutFormClose()

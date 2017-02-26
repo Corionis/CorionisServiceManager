@@ -14,7 +14,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <Date.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
@@ -43,6 +43,18 @@ EndFunc   ;==>LoggerInit
 ;----------------------------------------------------------------------------
 Func LoggerAppend($msg)
 	$_logBuffer &= $msg
+	; if continuously writing to file do that
+	; the program does not log much so we open/close on each append
+	If $__loggerBufferFlushed == False And $__logStartHold == False Then
+		$msg = $_logBuffer
+		$__loggerBufferFlushed = True
+	EndIf
+	If $_cfgWriteToLogFile == True Then
+		Local $logFile = StringReplace($_configurationFilePath, ".ini", ".log")
+		Local $fh = FileOpen($logFile, BitOR($FO_APPEND, $FO_CREATEPATH, $FO_ANSI))
+		FileWrite($fh, $msg)
+		FileClose($fh)
+	EndIf
 	GUICtrlSetState($_loggerSaveButton, $GUI_ENABLE)
 	GUICtrlSetState($_loggerClearButton, $GUI_ENABLE)
 EndFunc   ;==>LoggerAppend

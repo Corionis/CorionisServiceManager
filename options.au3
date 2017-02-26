@@ -19,7 +19,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
 
 ;----------------------------------------------------------------------------
 ; globals
@@ -76,10 +76,10 @@ Func OptionsInit()
 	GUICtrlSetOnEvent($_cfgEscapeClosesCtrl, "optionsEvent")
 	GUICtrlSetTip($_cfgEscapeClosesCtrl, "Pressing the Escape (ESC) key will close the window")
 
-	$_cfgDisplayNotificationsCtrl = GUICtrlCreateCheckbox("Display tray notifications", 21, 113, Default, Default)
+	$_cfgDisplayNotificationsCtrl = GUICtrlCreateCheckbox("Display notifications", 21, 113, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
 	GUICtrlSetOnEvent($_cfgDisplayNotificationsCtrl, "optionsEvent")
-	GUICtrlSetTip($_cfgDisplayNotificationsCtrl, "Display tray notifications when selected services stop or start")
+	GUICtrlSetTip($_cfgDisplayNotificationsCtrl, "Display notifications when selected services stop or start")
 
 	$_cfgMinimizeOnCloseCtrl = GUICtrlCreateCheckbox("Minimize on close", 237, 113, Default, Default)
 	GUICtrlSetResizing(-1, $GUI_DOCKLEFT + $GUI_DOCKTOP + $GUI_DOCKSIZE)
@@ -238,6 +238,21 @@ Func optionsGetCtrls()
 	$_cfgStoppedBackColor = GUICtrlRead($_cfgStoppedBackColorCtrl)
 	$_cfgRefreshInterval = GUICtrlRead($_cfgRefreshIntervalCtrl)
 	$_cfgIconIndex = GUICtrlRead($_cfgIconIndexCtrl)
+
+	If $_cfgFriendlyInTitle == True Then
+		$_progTitle = $_cfgFriendlyName & " - " & $_progShort
+		WinSetTitle($_mainWindow, "", $_progTitle)
+		TraySetToolTip($_progTitle)
+	Else
+		$_progTitle = $_progName & $_build
+		WinSetTitle($_mainWindow, "", $_progTitle)
+		TraySetToolTip($_progTitle)
+	EndIf
+	If $_cfgEscapeCloses == True Then
+		Opt("GUICloseOnESC", 1)
+	Else
+		Opt("GUICloseOnESC", 0)
+	EndIf
 EndFunc   ;==>optionsGetCtrls
 
 ;----------------------------------------------------------------------------

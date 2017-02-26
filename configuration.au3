@@ -17,29 +17,11 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <WinAPI.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
 #include "logger.au3"
 
 ;----------------------------------------------------------------------------
 ; globals
-
-; configuration - preferences
-Global $_cfgHostname = "localhost"
-Global $_cfgFriendlyName = "My Computer"
-Global $_cfgFriendlyInTitle = False
-Global $_cfgStartAtLogin = False
-Global $_cfgStartMinimized = False
-Global $_cfgDisplayNotifications = True
-Global $_cfgWriteToLogFile = False
-Global $_cfgEscapeCloses = False
-Global $_cfgMinimizeOnClose = False
-Global $_cfgHideWhenMinimized = False
-Global $_cfgRefreshInterval = 5000
-Global $_cfgRunningTextColor = 0x000000
-Global $_cfgRunningBackColor = 0x8eff9e
-Global $_cfgStoppedTextColor = 0x0000
-Global $_cfgStoppedBackColor = 0xff9b8e
-Global $_cfgIconIndex = -1
 
 ;----------------------------------------------------------------------------
 Func ConfigurationReadConfig()
@@ -60,9 +42,7 @@ Func ConfigurationReadConfig()
 		FileWriteLine($f, ";")
 		FileWriteLine($f, "; Parameters for the Corionis Service Manager")
 		FileWriteLine($f, ";")
-		FileWriteLine($f, "; WARNING:")
-		FileWriteLine($f, "; This file is maintained automatically by the program.")
-		FileWriteLine($f, "; Any changes made WILL BE OVERWRITTEN.")
+		FileWriteLine($f, "; WARNING: This file is maintained automatically by the program.")
 		FileWriteLine($f, ";")
 		FileWriteLine($f, "; To specify a configuration file use:  -c [path][filename]")
 		FileWriteLine($f, "; If [path] is not specified the directory containing the program is assumed.")
@@ -100,6 +80,8 @@ Func ConfigurationReadConfig()
 	$_cfgStoppedBackColor = StringStripWS(IniRead($_configurationFilePath, "preferences", "StoppedBackColor", $_cfgStoppedBackColor), $STR_STRIPLEADING + $STR_STRIPTRAILING);
 	$_cfgIconIndex = StringStripWS(IniRead($_configurationFilePath, "preferences", "IconIndex", $_cfgIconIndex), $STR_STRIPLEADING + $STR_STRIPTRAILING);
 
+	$__logStartHold = False ; now there is configuration write any buffered log
+
 	LoggerAppend("    Hostname:  " & $_cfgHostname & @CRLF)
 	LoggerAppend("    Friendly Name:  " & $_cfgFriendlyName & @CRLF)
 	LoggerAppend("    Friendly In Title:  " & $_cfgFriendlyInTitle & @CRLF)
@@ -135,7 +117,7 @@ Func ConfigurationReadConfig()
 	EndIf
 
 	If $_cfgFriendlyInTitle == True Then
-		$_progTitle = $_progShort & ": " & $_cfgFriendlyName
+		$_progTitle = $_cfgFriendlyName & " - " & $_progShort
 	EndIf
 
 	$_cfgLeft = StringStripWS(IniRead($_configurationFilePath, "running", "Left", $_cfgLeft), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
@@ -143,8 +125,20 @@ Func ConfigurationReadConfig()
 	$_cfgWidth = StringStripWS(IniRead($_configurationFilePath, "running", "Width", $_cfgWidth), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 	$_cfgHeight = StringStripWS(IniRead($_configurationFilePath, "running", "Height", $_cfgHeight), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 	$_cfgMonitoring = StringStripWS(IniRead($_configurationFilePath, "running", "Monitoring", $_cfgMonitoring), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgMonitorWidths = StringStripWS(IniRead($_configurationFilePath, "running", "MonitorWidths", $_cfgMonitorWidths), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
+	$_cfgSelectWidths = StringStripWS(IniRead($_configurationFilePath, "running", "SelectWidths", $_cfgSelectWidths), $STR_STRIPLEADING + $STR_STRIPTRAILING) ;
 
-	; ########### Read services here ###########
+	Local $arr = IniReadSection($_configurationFilePath, "services")
+	Local $i
+	If @error == 0 Then
+		LoggerAppend("Selected " & $arr[0][0] & " services:" & @CRLF)
+		For $i = 1 To $arr[0][0]
+			$_selectedServices[$_selectedServicesCount] = $arr[$i][1]
+			LoggerAppend("    " & $_selectedServices[$_selectedServicesCount] & @CRLF)
+			$_selectedServicesCount = $_selectedServicesCount + 1
+		Next
+	EndIf
+	ReDim $_selectedServices[$_selectedServicesCount]
 
 	If $newCfg == True Then
 		ConfigurationWritePreferences()
@@ -199,11 +193,24 @@ Func ConfigurationWriteRunning($newCfg)
 		$info[2] = $info[2] - (_WinAPI_GetSystemMetrics(32) * 2) + 2			; 5   45   7   32
 		$info[3] = $info[3] - (_WinAPI_GetSystemMetrics(33) * 2) + 2			; 6   46   8   33
 	EndIf
+	; get listviews user-defined column widths
+	Local $i, $w, $monWidths = ""
+	For $i = 0 To $SVC_LAST
+		$w = _GUICtrlListView_GetColumnWidth($_monitorView, $i)
+		$monWidths = $monWidths & $w & "|"
+	Next
+	Local $selWidths = ""
+	For $i = 0 To $SVC_LAST
+		$w = _GUICtrlListView_GetColumnWidth($_selectView, $i)
+		$selWidths = $selWidths & $w & "|"
+	Next
 	IniWrite($_configurationFilePath, "running", "Left", $info[0])
 	IniWrite($_configurationFilePath, "running", "Top", $info[1])
 	IniWrite($_configurationFilePath, "running", "Width", $info[2])
 	IniWrite($_configurationFilePath, "running", "Height", $info[3])
 	IniWrite($_configurationFilePath, "running", "Monitoring", $_cfgMonitoring)
+	IniWrite($_configurationFilePath, "running", "MonitorWidths", $monWidths)
+	IniWrite($_configurationFilePath, "running", "SelectWidths", $selWidths)
 EndFunc   ;==>ConfigurationWriteRunning
 
 

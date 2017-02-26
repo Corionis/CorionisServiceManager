@@ -1,22 +1,30 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=res\manager.ico
+#AutoIt3Wrapper_Icon=res\manager-round-bronco.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.74
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.158
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
 #AutoIt3Wrapper_Res_Field=ProductName|Corionis Service Manager
 #AutoIt3Wrapper_Res_Field=ProgramName|Corionis Service Manager
-#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-orange.ico,1
-#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-green.ico,2
-#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-purple.ico,3
-#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-red.ico,4
+#AutoIt3Wrapper_Res_Field=Timestamp|%date%
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-bronco.ico,1
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-blue.ico,2
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-green.ico,3
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-purple.ico,4
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-red.ico,5
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-white.ico,6
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-round-yellow.ico,7
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-bronco.ico,8
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-blue.ico,9
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-green.ico,10
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-purple.ico,11
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-red.ico,12
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-white.ico,13
+#AutoIt3Wrapper_Res_Icon_Add=.\res\manager-square-yellow.ico,14
+#AutoIt3Wrapper_Res_File_Add=.\res\about-header.jpg, rt_rcdata, ABOUT_HDR
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
-; *** Start added by AutoIt3Wrapper ***
-#include <MsgBoxConstants.au3>
-#include <StringConstants.au3>
-; *** End added by AutoIt3Wrapper ***
 
 #cs -------------------------------------------------------------------------
 
@@ -37,16 +45,17 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiTab.au3>
+#include <MsgBoxConstants.au3>
 #include <StaticConstants.au3>
+#include <StringConstants.au3>
 #include <TabConstants.au3>
 #include <TrayConstants.au3>
 #include <WindowsConstants.au3>
 
 ; application components
-#include "pan.au3" ; must be include first
+#include "globals.au3" ; must be include first
 #include "about.au3"
 #include "configuration.au3"
-#include "control.au3"
 #include "logger.au3"
 #include "monitor.au3"
 #include "options.au3"
@@ -68,9 +77,14 @@ Dim $cd = @ScriptDir
 Dim $waitTime
 
 LoggerAppend("-----------------------------------------------------------------------------------------------" & @CRLF)
-LoggerAppend($_progActual & " " & $_build & @CRLF & _
+LoggerAppend($_progActual & " " & $_build & "   " & $_buildDate & @CRLF & _
 		"    Started " & _NowDate() & " " & _NowTime() & @CRLF & _
 		"    Running from " & $cd & @CRLF)
+If IsAdmin() == 0 Then
+	LoggerAppend("    - User does not have Administrative privileges" & @CRLF)
+Else
+	LoggerAppend("    + User has Administrative privileges" & @CRLF)
+EndIf
 
 ParseOptions()
 If $_returnValue <> 0 Then
@@ -111,6 +125,8 @@ If $waitTime < 500 Then
 EndIf
 
 MonitorSetMonitorButton($_cfgMonitoring)
+LoggerAppend("Initial status of selected services:" & @CRLF)
+Global $__cmsIsStartup = True
 
 While 1
 	UpdateMonitor()
@@ -122,8 +138,9 @@ CloseProgram()
 ; Main
 ;============================================================================
 
+;----------------------------------------------------------------------------
 Func UpdateMonitor()
-	Dim $i, $j, $l, $state, $desc, $svc[5]
+	Dim $i, $j, $l, $state, $desc, $svc[$SVC_LAST]
 
 	; protect running more than once concurrently
 	If $_updateBusy == True Then
@@ -131,13 +148,13 @@ Func UpdateMonitor()
 	EndIf
 	$_updateBusy = True
 
-	For $i = 0 To $_monitorListCount - 1
-		$l = GUICtrlRead($_monitorList[$i])
+	For $i = 0 To $_monitorListCtrlsCount - 1
+		$l = GUICtrlRead($_monitorListCtrls[$i])
 		$svc = StringSplit($l, "|", $STR_NOCOUNT)
 		If $_cfgMonitoring == True Then
-			$state = _ServiceRunning("", $svc[0])
+			$state = servicesIsRunning($_cfgHostname, $svc[$SVC_ID])
 		Else
-			$state = 2
+			$state = 2 ; unknown
 		EndIf
 		Select
 			Case $state == 0
@@ -147,30 +164,50 @@ Func UpdateMonitor()
 			Case $state == 2
 				$desc = "-------"
 		EndSelect
-		If $svc[3] <> $desc Then
-			$svc[3] = $desc
+		If $svc[$SVC_STATUS] <> $desc Then
+			If $state <> 2 Then
+				If $__cmsIsStartup == True Then
+					LoggerAppend("    " & $svc[$SVC_NAME] & " starts " & $svc[$SVC_START] & " is " & $desc & @CRLF)
+				Else
+					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc & @CRLF)
+					If $_cfgDisplayNotifications == True Then
+						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
+					EndIf
+				EndIf
+				LoggerUpdate()
+			EndIf
+			$svc[$SVC_STATUS] = $desc
 			$l = ""
-			For $j = 0 To 3
+			For $j = 0 To $SVC_LAST
 				$l = $l & $svc[$j]
-				If $j < 3 Then
+				If $j < $SVC_LAST Then
 					$l = $l & "|"
 				EndIf
 			Next
-			GUICtrlSetData($_monitorList[$i], $l)
+			GUICtrlSetData($_monitorListCtrls[$i], $l)
 			Select
 				Case $state == 0
-					GUICtrlSetColor($_monitorList[$i], $_cfgStoppedTextColor)
-					GUICtrlSetBkColor($_monitorList[$i], $_cfgStoppedBackColor)
+					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgStoppedTextColor)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgStoppedBackColor)
 				Case $state == 1
-					GUICtrlSetColor($_monitorList[$i], $_cfgRunningTextColor)
-					GUICtrlSetBkColor($_monitorList[$i], $_cfgRunningBackColor)
+					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgRunningTextColor)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgRunningBackColor)
 				Case $state == 2
-					GUICtrlSetColor($_monitorList[$i], 0x000000)
-					GUICtrlSetBkColor($_monitorList[$i], 0xffffff)
+					GUICtrlSetColor($_monitorListCtrls[$i], 0x000000)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], 0xffffff)
 			EndSelect
 		EndIf
 		;MsgBox(64, "Service", $i & " = " & $l)
 	Next
+	; show a (hopefully) helpful dialog at startup if no services have been selected
+	If $__cmsIsStartup == True Then
+		If $_monitorListCtrlsCount < 1 Then
+			MsgBox($MB_OK + $MB_ICONINFORMATION, $_progTitle, "To get started - first go to the Select tab to choose services to monitor. Then on the Monitor tab click the Monitor button to toggle active monitoring on/off.", 0, $_mainWindow)
+		EndIf
+		$__cmsIsStartup = False
+		LoggerAppend("Service status monitor begins:" & @CRLF)
+		LoggerUpdate()
+	EndIf
 	$_updateBusy = False
 EndFunc   ;==>UpdateMonitor
 
@@ -203,7 +240,7 @@ EndFunc   ;==>ExitProgram
 
 ;----------------------------------------------------------------------------
 Func InitMainWindow()
-	Local $aboutItem, $exitItem, $fileMenu, $helpMenu, $optionsMenu, $preferencesItem, $restartItem, $servicesItem
+	Local $aboutItem, $exitItem, $fileMenu, $helpMenu, $helpItem, $optionsMenu, $preferencesItem, $restartItem, $servicesItem
 
 	Opt("GUIOnEventMode", 1)
 	If $_cfgEscapeCloses == True Then
@@ -231,25 +268,19 @@ Func InitMainWindow()
 	GUICtrlSetOnEvent($restartItem, "RestartProgram")
 	GUICtrlSetTip($restartItem, "Restart the " & $_progName)
 
-	GUICtrlCreateMenuItem("", $fileMenu) ; Create a separator line1
+	GUICtrlCreateMenuItem("", $fileMenu) ; Create a separator line
 
 	$exitItem = GUICtrlCreateMenuItem("E&xit", $fileMenu)
 	GUICtrlSetOnEvent($exitItem, "ExitProgram")
 	GUICtrlSetTip($exitItem, "End the program")
 
-;~ 	; Options menu
-;~ 	$optionsMenu = GUICtrlCreateMenu("&Options")
-
-;~ 	$preferencesItem = GUICtrlCreateMenuItem("&Preferences", $optionsMenu)
-;~ 	GUICtrlSetOnEvent($preferencesItem, "ShowPreferences")
-;~ 	GUICtrlSetTip($preferencesItem, "Set user preferences")
-
-;~ 	$servicesItem = GUICtrlCreateMenuItem("S&elect Services", $optionsMenu)
-;~ 	GUICtrlSetOnEvent($servicesItem, "ShowServices")
-;~ 	GUICtrlSetTip($servicesItem, "Set user preferences")
-
 	; Help menu
 	$helpMenu = GUICtrlCreateMenu("&Help")
+	$helpItem = GUICtrlCreateMenuItem("&Online help ...", $helpMenu)
+	GUICtrlSetOnEvent($helpItem, "ShowHelp")
+
+	GUICtrlCreateMenuItem("", $helpMenu) ; Create a separator line
+
 	$aboutItem = GUICtrlCreateMenuItem("&About ...", $helpMenu)
 	GUICtrlSetOnEvent($aboutItem, "ShowAbout")
 
@@ -263,7 +294,7 @@ Func InitMainWindow()
 	$_optionsTab = InitTab("&3 Options")
 	$_logTab = InitTab("&4 Runtime Log")
 
-	; ############### add accelerator keys for tabs ##################
+	; add accelerator keys for tabs
 	Local $monitorDummy = GUICtrlCreateDummy()
 	GUICtrlSetOnEvent($monitorDummy, "activateMonitor")
 
@@ -401,6 +432,12 @@ EndFunc   ;==>RestartProgram
 ;----------------------------------------------------------------------------
 Func ShowAbout()
 	about()
+	TrayItemSetState($showHideItem, $TRAY_DEFAULT)
+EndFunc   ;==>ShowAbout
+
+;----------------------------------------------------------------------------
+Func ShowHelp()
+	ShellExecute("https://corionis.github.io/CorionisServiceManager/res/GitHub_Logo.png")
 	TrayItemSetState($showHideItem, $TRAY_DEFAULT)
 EndFunc   ;==>ShowAbout
 

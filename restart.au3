@@ -2,34 +2,34 @@
 #Region Header
 
 #cs
-    Title:          Restart script UDF Library for AutoIt3
-    Filename:       Restart.au3
-    Description:    Accurate restarting the script (AU3 or EXE)
-    Author:         Yashied
-    Version:        1.0
-    Requirements:   AutoIt v3.3 +, Developed/Tested on WindowsXP Pro Service Pack 2
-    Uses:           None
-    Notes:          The library uses onAutoItStart() function
+	Title:          Restart script UDF Library for AutoIt3
+	Filename:       Restart.au3
+	Description:    Accurate restarting the script (AU3 or EXE)
+	Author:         Yashied
+	Version:        1.0
+	Requirements:   AutoIt v3.3 +, Developed/Tested on WindowsXP Pro Service Pack 2
+	Uses:           None
+	Notes:          The library uses onAutoItStart() function
 
-    Available functions:
+	Available functions:
 
-    _ScriptRestart
+	_ScriptRestart
 
-    Example:
+	Example:
 
-        #NoTrayIcon
+	#NoTrayIcon
 
-        #Include <Misc.au3>
-        #Include <Restart.au3>
+	#Include <Misc.au3>
+	#Include <Restart.au3>
 
-        _Singleton('MyProgram')
+	_Singleton('MyProgram')
 
-        If MsgBox(36, 'Restarting...', 'Press OK to restart this script.') = 6 Then
-            _ScriptRestart()
-        EndIf
+	If MsgBox(36, 'Restarting...', 'Press OK to restart this script.') = 6 Then
+	_ScriptRestart()
+	EndIf
 #ce
 
-#onAutoItStartRegister "onAutoItStart"
+#OnAutoItStartRegister "onAutoItStart"
 
 #EndRegion Header
 
@@ -59,7 +59,7 @@ Func _ScriptRestart($fExit = 1)
 	Local $Pid
 
 	If Not $__Restart Then
-		If @compiled Then
+		If @Compiled Then
 			$Pid = Run(@ScriptFullPath & ' ' & $CmdLineRaw, @ScriptDir, Default, 1)
 		Else
 			$Pid = Run(@AutoItExe & ' "' & @ScriptFullPath & '" ' & $CmdLineRaw, @ScriptDir, Default, 1)
@@ -68,9 +68,9 @@ Func _ScriptRestart($fExit = 1)
 			Return SetError(@error, 0, 0)
 		EndIf
 		StdinWrite($Pid, @AutoItPID)
-;		If @error Then
-;
-;		EndIf
+		;		If @error Then
+		;
+		;		EndIf
 	EndIf
 	$__Restart = 1
 	If $fExit Then
