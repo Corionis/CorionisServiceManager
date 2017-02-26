@@ -12,7 +12,7 @@ All that is needed is the "Corionis Service Manager.exe" program. It will create
 The [User Documentation](help) is also the Online Help in the program.
 
 ## Download Version {{ site.version }}
-  - MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ page.version }}.msi?raw=true).
+  - MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true).
  - CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true).
 
 ---
