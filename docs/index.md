@@ -1,4 +1,9 @@
 # What is the Corionis Service Manager?
 
-The Corionis Service Manager will monitor and manager a user-select list of Windows services. It is a small program that resides
-in the system tray area by the system clock.
+Most people who need to monitor and manage Windows services on a regular basis are only interested in a few specific services.
+
+The Corionis Service Manager is a small tray application that monitors and manages a list of user-select Windows services.
+
+![One of the icons](res/manager-round-bronco.png)
+
+
