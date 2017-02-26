@@ -31,10 +31,13 @@
 			margin: 0 20px 20px 0;
 		}
 		.blog {
-			padding-left: 50px;
-			padding-left: 50px;
+			padding-left: 40px;
+			padding-left: 40px;
 			list-style-type: circle;
-			
+		}
+		.blogentry {
+			padding-left: 20px;
+			padding-left: 20px;
 		}
 	</style>
 	<title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
@@ -69,7 +72,7 @@
 				{% for post in site.posts %}
 				<li>
 					<font size="+1"><i>{{ post.title }}</i></font>
-					{{ post.excerpt }}
+					<span class="blogentry">{{ post.excerpt }}</span>
 				</li>
 				{% endfor %}
 			</ul>
