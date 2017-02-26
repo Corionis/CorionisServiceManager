@@ -14,7 +14,8 @@ pics go here
 ## User documentation
 The [User documentation](help) is also the Online Help in the program.
 
-## Download version {{ site.version }}
+## Download version
+The latest version of CSM is  {{ site.version }}.
  * Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
