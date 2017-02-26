@@ -2,7 +2,7 @@
 layout: default
 version: 1.0.0.163
 ---
-`<div align="right" style="font-size=-1;padding-top:0;padding-bottom:6px;">Latest version: {{ page.version }}</div>`
+`Latest version: {{ page.version }}`
 # What is the Corionis Service Manager?
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few specific services.
 
