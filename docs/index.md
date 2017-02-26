@@ -6,14 +6,20 @@ Most people who need to monitor and manage Windows services on a regular basis a
 
 The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services.
 
-All that is needed is the "Corionis Service Manager.exe" program. It will create a localhost.ini file in it's directory to hold a variety of options and the list of selected services. But a standard Windows MSI installer is also available.
+The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016.
 
-## User Documentation
-The [User Documentation](help) is also the Online Help in the program.
+## Screenshots
+pics go here
 
-## Download Version {{ site.version }}
-  - MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true).
- - CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true).
+## User documentation
+The [User documentation](help) is also the Online Help in the program.
+
+## Download version {{ site.version }}
+ * Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
+ * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
+
+## What is Corionis?
+Corionis (kor-E-on-iss) is a name from science fiction, thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
 
 ---
 ### Blog
