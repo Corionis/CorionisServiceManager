@@ -27,6 +27,15 @@ REM set the version and build the installer
 "%aiexe%"  /rebuild "Corionis Service Manager.aip"
 set r=%ERRORLEVEL%
 if not %r% == 0 goto Error
+
+REM generate a new _config.yml with the build number
+echo theme: jekyll-theme-tactile >docs/_config.yml
+echo title: Corionis Service Manager >>docs/_config.yml
+echo description: Monitor ^& manage selected Windows services >>docs/_config.yml
+echo show_downloads: true >>docs/_config.yml
+echo excerpt_separator: thisnevermatchme >>docs/_config.yml
+echo version: %1>>docs/_config.yml
+
 goto JXT
 
 
