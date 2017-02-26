@@ -9,4 +9,4 @@ Just getting the site put together and creating the content. A little patience p
 
 Trying to decide if this little program needs a "real" installer.
 
-And there's lots of documentation to write. :pencil:
+And there's lots of documentation to write. ::pencil::
