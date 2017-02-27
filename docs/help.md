@@ -2,6 +2,8 @@
 
 The Corionis Service Manager is a relatively simple program to install and use. The topics below will be expanded upon over time.
 
+*Why online documentation only?* There are several good reasons to keep and serve the documentation pages from GitHub. The two primary reasons are 1) to keep the CSM program simple enough to only require the .exe, and 2) GitHub provides these GitHub Pages that are kept in the project's GitHub repository. So the rich content and rendering are all capabilities provided by the GitHub servers.
+
 Go to the [**Main Page**](index).
 
 <br/>
@@ -9,7 +11,7 @@ Go to the [**Main Page**](index).
 ## Getting Started
 
 ### Using The Installer
- * Using the installer versus just the .exe.
+ * Using the MSI installer versus just the .exe.
  * Downloading the latest CSM.
  * Running the installer.
 
@@ -37,7 +39,7 @@ Go to the [**Main Page**](index).
 
 ### Runtime Log
  * Log information not written to a file by default.
- * Saving and clearing the Runtime Log tab.
+ * Saving and Clearing the Runtime Log tab.
 
 <br/>
 
@@ -58,7 +60,10 @@ The Corionis Service Manager executable contains several round and square icons 
 ### Downloading The EXE Only
  * Installer and installation are not really needed.
  * Do not mix installer and .exe versions in the same directory.
-   - What to do if you overwrite an older installation with a downloaded .exe.
+
+### Frequently Asked Questions
+ * What to do if CSM comes up off the visible screen. There's a bug written on this one.
+ * What to do if you overwrite an MSI installation with a downloaded .exe.
 
 <br/>
 <br/>
