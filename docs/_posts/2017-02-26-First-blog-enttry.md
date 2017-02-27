@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "First Blog Entry"
+title: "Initial Release 168"
 ---
 As of 25 February 2017 the initial release of the Corionis Service Manager (build 168) is complete. This version has all the basic functionality needed for a service manager. Additional user interface work is planned.
 
