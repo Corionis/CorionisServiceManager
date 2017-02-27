@@ -4,6 +4,8 @@ The Corionis Service Manager is a relatively simple program to install and use. 
 
 Go to the [**Main Page**](index).
 
+<br/>
+
 ## Getting Started
 
 ### Using The Installer
