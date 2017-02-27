@@ -18,8 +18,8 @@ CSM Select tab:<br/>
 CSM Options tab:<br/>
 ![Options tab](res/ss-options.jpg "Options tab")<br/>
 
-## User documentation
-The [User documentation](help) is also the Online Help in the program.
+## User Documentation
+The [User Documentation](help) is also the Online Help in the program.
 
 ## Download Latest Version
 The latest version of CSM is {{ site.version }}. The buttons at the top of the page provide the same downloads as listed here.
