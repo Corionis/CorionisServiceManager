@@ -27,3 +27,6 @@ Click on the Select tab or press Alt-2 to begin selecting Windows services.
 
 ### The Available Icons
 The Corionis Service Manager executable contains several round and square icons of different colors. These are useful if running multiple instances of CSM or if you just want a different shape or color.
+
+---
+### Blog
