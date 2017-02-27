@@ -2,7 +2,7 @@
 
 The Corionis Service Manager is a relatively simple program to install and use.
 
-[**BACK**](help) to the main page
+[**BACK**](index) to the main page
 
 ## Getting Started
 
@@ -34,6 +34,6 @@ The Corionis Service Manager executable contains several round and square icons 
 
 ### Downloading The EXE Only
 
-[**BACK**](help) to the main page
+[**BACK**](index) to the main page
 ---
 ### Blog
