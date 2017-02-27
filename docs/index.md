@@ -24,7 +24,7 @@ Corionis (core-E-on-iss) is a name from the science fiction series [Babylon 5](h
 
 ## Acknowledgements
  * The Corionis Service Manager is written using the [AutoIt](https://www.autoitscript.com/) scripting tool.
- * The MSI installer is built with the free version of [Advanced Installer](http://www.advancedinstaller.com/).
+ * The MSI installer is built with the **free version** of [Advanced Installer](http://www.advancedinstaller.com/).
  * The project is graciously hosted on [GitHub](https://github.com).
  * These pages are rendered using [Jekyll](https://jekyllrb.com/).
  * And use the [Tactile](https://pages-themes.github.io/tactile/) theme.
