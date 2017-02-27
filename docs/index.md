@@ -9,7 +9,14 @@ The Corionis Service Manager is a small Windows tray application that monitors a
 Because it is a Windows tray application it is always avilable and may be popped up or down by double-clicking the tray icon. Notifications are displayed when a selected service's state changes.
 
 ## Screenshots
-pics go here
+CSM Monitor tab:<br/>
+![CSM Monitor tab](res/ss-monitor.jpg "Monitor tab")<br/>
+
+CSM Select tab:<br/>
+![CSM Select tab](res/ss-select.jpg "Select tab")<br/>
+
+CSM Options tab:<br/>
+![Options tab](res/ss-options.jpg "Options tab")<br/>
 
 ## User documentation
 The [User documentation](help) is also the Online Help in the program.
