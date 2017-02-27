@@ -440,7 +440,7 @@ EndFunc   ;==>ShowAbout
 
 ;----------------------------------------------------------------------------
 Func ShowHelp()
-	ShellExecute("https://corionis.github.io/CorionisServiceManager/res/GitHub_Logo.png")
+	ShellExecute("https://corionis.github.io/CorionisServiceManager/help")
 	TrayItemSetState($showHideItem, $TRAY_DEFAULT)
 EndFunc   ;==>ShowAbout
 
