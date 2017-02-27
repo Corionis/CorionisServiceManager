@@ -30,7 +30,7 @@ The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
 ## What is Corionis?
-Corionis (core-E-on-iss) is a name from the science fiction series [Babylon 5](http://www.imdb.com/title/tt0105946/), thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
+Corionis (core-E-on-iss) is a planet name from the science fiction series [Babylon 5](http://www.imdb.com/title/tt0105946/), thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
 
 ## Acknowledgements
  * The Corionis Service Manager is written using the [AutoIt](https://www.autoitscript.com/) scripting tool.
