@@ -2,9 +2,8 @@
 layout: post
 title: "First Blog Entry"
 ---
+As of 25 February 2017 the initial release of the Corionis Service Manager (build 168) is complete. This version has all the basic functionality needed for a service manager. Additional user interface work is planned.
 
-Getting it together. Or at least that's the plan. A little patience please.
+At this time it is limited to working on the local system only. Remote system management may be added at a later time.
 
-Trying to decide if this little program needs a "real" installer.
-
-And there's lots of documentation to write.
+There is still a lot of documentation to write. This site will be changing over the coming days.
