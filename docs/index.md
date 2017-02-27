@@ -20,14 +20,14 @@ The latest version of CSM is  {{ site.version }}.
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
 ## What is Corionis?
-Corionis (kor-E-on-iss) is a name from science fiction, thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
+Corionis (core-E-on-iss) is a name from the science fiction series [Babylon 5](http://www.imdb.com/title/tt0105946/), thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
 
 ## Acknowledgements
- * The Corionis Service Manager is written with [AutoIt](https://www.autoitscript.com/) scripting tool.
- * The MSI installer is built using the free version of [Advanced Installer](http://www.advancedinstaller.com/).
- * The project is hosted on [GitHub](https://github.com).
+ * The Corionis Service Manager is written using [AutoIt](https://www.autoitscript.com/) scripting tool.
+ * The MSI installer is built with the free version of [Advanced Installer](http://www.advancedinstaller.com/).
+ * The project is graciously hosted on [GitHub](https://github.com).
  * These pages are rendered using [Jekyll](https://jekyllrb.com/).
- * And the [Tactile](https://pages-themes.github.io/tactile/) theme.
+ * And use the [Tactile](https://pages-themes.github.io/tactile/) theme.
 
 ---
 ### Blog
