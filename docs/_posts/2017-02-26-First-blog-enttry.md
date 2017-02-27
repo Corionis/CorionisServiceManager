@@ -7,3 +7,5 @@ As of 25 February 2017 the initial release of the Corionis Service Manager (buil
 At this time it is limited to working on the local system only. Remote system management may be added at a later time.
 
 There is still a lot of documentation to write. This site will be changing over the coming days.
+
+**Known Issue:** Currently CSM will not auto-start on Windows 10.
