@@ -1,10 +1,10 @@
+Go to the [**Main Page**](index).
+
 # Documentation
 
 The Corionis Service Manager is a relatively simple program to install and use. The topics below will be expanded upon over time.
 
-*Why online documentation only?* There are several good reasons to keep and serve the documentation pages from GitHub. The two primary reasons are 1) to keep the CSM program simple enough to only require the .exe, and 2) GitHub provides these GitHub Pages that are kept in the project's GitHub repository. So the rich content and rendering are all capabilities provided by the GitHub servers.
-
-Go to the [**Main Page**](index).
+*Why online documentation only?* There are several good reasons to keep and serve the documentation pages from GitHub. The two primary reasons are 1) to keep the CSM program simple enough to only require the .exe, and 2) GitHub provides these GitHub Pages that are kept in the project's GitHub repository. So the rich content and rendering are all capabilities provided by GitHub (*Thanks for that!*).
 
 <br/>
 
