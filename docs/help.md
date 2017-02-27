@@ -8,7 +8,8 @@ Go to the [**Main Page**](index).
 
 ### Using The Installer
 
-[### First Start](firststart)
+### First Start
+[First Start dialog](firststart).
 
 ### User Privileges
 
