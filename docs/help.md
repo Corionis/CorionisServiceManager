@@ -1,8 +1,12 @@
 # Documentation
 
-The Corionis Service Manager is a relatively simple program to install and use. 
+The Corionis Service Manager is a relatively simple program to install and use.
+
+[**BACK**](help) to the main page
 
 ## Getting Started
+
+### Using The Installer
 
 ### First Start
 If no Windows services have been selected a reminder dialog is displayed:<br/>
@@ -28,5 +32,8 @@ Click on the Select tab or press Alt-2 to begin selecting Windows services.
 ### The Available Icons
 The Corionis Service Manager executable contains several round and square icons of different colors. These are useful if running multiple instances of CSM or if you just want a different shape or color.
 
+### Downloading The EXE Only
+
+[**BACK**](help) to the main page
 ---
 ### Blog
