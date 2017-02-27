@@ -9,7 +9,7 @@ Go to the [**Main Page**](index).
 ### Using The Installer
 
 ### First Start
-[First Start dialog](firststart).
+ * [First Start dialog](firststart) on first start or when no services have been selected.
 
 ### User Privileges
 
