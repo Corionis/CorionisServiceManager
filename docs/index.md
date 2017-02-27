@@ -4,9 +4,7 @@ layout: default
 # What is the Corionis Service Manager?
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few services.
 
-The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services.
-
-The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016.
+The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services. When services have been selected they are monitored with changing colors and may be started, stopped, etc. with a couple of clicks. Because it is a Windows tray application it is always avilable and may be popped up or down by double-clicking the tray icon.
 
 ## Screenshots
 pics go here
@@ -15,7 +13,8 @@ pics go here
 The [User documentation](help) is also the Online Help in the program.
 
 ## Download version
-The latest version of CSM is  {{ site.version }}.
+The latest version of CSM is  {{ site.version }}. The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016.
+
  * Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
