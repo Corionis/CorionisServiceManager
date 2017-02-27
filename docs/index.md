@@ -4,7 +4,7 @@ layout: default
 # What is the Corionis Service Manager?
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few services.
 
-The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services. When services have been selected they are monitored with changing colors and may be started, stopped, etc. with a couple of clicks. Because it is a Windows tray application it is always avilable and may be popped up or down by double-clicking the tray icon.
+The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services. The selected services are monitored and may be easily started, stopped, etc. Because it is a Windows tray application it is always avilable and may be popped up or down by double-clicking the tray icon. Notifications are displayed when a selected service's state changes.
 
 ## Screenshots
 pics go here
