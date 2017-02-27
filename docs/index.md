@@ -12,8 +12,8 @@ pics go here
 ## User documentation
 The [User documentation](help) is also the Online Help in the program.
 
-## Downloads
-The latest version of CSM is  {{ site.version }}. The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016.
+## Download Latest Version
+The latest version of CSM is {{ site.version }}. The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016.
 
  * Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
