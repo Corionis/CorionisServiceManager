@@ -1,5 +1,5 @@
-Go to the [**Documentation**](help).<br/>
-Go to the [**Main Page**](index).
+Go to the [**Main Page**](index).<br/>
+Go to the [**Documentation**](help).
 
 # First Start
 If no Windows services have been selected a reminder dialog is displayed:<br/>
