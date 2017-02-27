@@ -9,7 +9,7 @@ Go to the [**Main Page**](index).
 ## Getting Started
 
 ### Using The Installer
- * Using the Installer versus just the EXE.
+ * Using the installer versus just the .exe.
  * Downloading the latest CSM.
  * Running the installer.
 
@@ -57,8 +57,8 @@ The Corionis Service Manager executable contains several round and square icons 
 
 ### Downloading The EXE Only
  * Installer and installation are not really needed.
- * Do not mix installer and EXE versions in the same directory.
-   - What to do if you overwrite an older installation with a downloaded EXE.
+ * Do not mix installer and .exe versions in the same directory.
+   - What to do if you overwrite an older installation with a downloaded .exe.
 
 <br/>
 <br/>
