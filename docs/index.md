@@ -21,7 +21,7 @@ CSM Select tab:<br/>
 CSM Options tab:<br/>
 ![Options tab](res/ss-options.jpg "Options tab")<br/>
 
-## Downloads
+## Download Files
 The latest version of CSM is **{{ site.version }}**.
 
 See [Downloads](downloads) for the files.
