@@ -16,7 +16,7 @@ The Corionis Service Manager is a relatively simple program to install and use. 
  * [Using the installer](usinginstaller).
 
 ### First Start
- * [First Start dialog](firststart) or when no services have been selected.
+ * [First Start](firststart) dialog or when no services have been selected.
 
 <br/>
 
