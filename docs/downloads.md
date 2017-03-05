@@ -3,8 +3,8 @@ Go to the [**Documentation**](help).
 
 Previous Using the [MSI installer versus just the .exe](msi-vs-exe.md).
 
-# Downloads
-The latest version of CSM is {{ site.version }}. The buttons at the top of the page provide the same downloads as listed here.
+# Download Files
+The latest version of CSM is **{{ site.version }}**. The buttons at the top of the page provide the same downloads as listed here.
 
 See Using the [MSI installer versus just the .exe](msi-vs-exe) if you are not sure which to download.</br>
 See [Using the installer](usinginstaller) for information on using the MSI.
