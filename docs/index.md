@@ -21,7 +21,7 @@ CSM Options tab:<br/>
 ## Download Files
 The latest version of CSM is **{{ site.version }}**. See [Downloads](downloads) for the files. 
 
-### User Documentation
+## User Documentation
 The [User Documentation](help) is also the Online Help in the program.
 
 ## What is Corionis?
