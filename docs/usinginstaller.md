@@ -17,7 +17,7 @@ Open a Command Prompt (DOS box) then enter:<br/>
 <code>msiexec /i "Corionis Service Manager_*version*.msi"</code>
 Don't forget the double-quotes around the filename.
 
-Next
+Next [First Start](firststart) dialog.
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
