@@ -12,8 +12,8 @@ The Corionis Service Manager is a relatively simple program to install and use. 
 
 ### Using The Installer
  * Using the [MSI installer versus just the .exe](msi-vs-exe.md).
- * Downloading the latest CSM.
- * Running the installer.
+ * Where the [Downloads](downloads) are.
+ * [Using the installer](usinginstaller).
 
 ### First Start
  * [First Start dialog](firststart) or when no services have been selected.
