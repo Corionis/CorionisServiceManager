@@ -21,13 +21,10 @@ CSM Select tab:<br/>
 CSM Options tab:<br/>
 ![Options tab](res/ss-options.jpg "Options tab")<br/>
 
-## Download Latest Version
-The latest version of CSM is {{ site.version }}. The buttons at the top of the page provide the same downloads as listed here.
+## Downloads
+The latest version of CSM is **{{ site.version }}**.
 
-The current version as been tested on Windows XP, Windows 7 Pro, Windows 8.1 Pro, Windows 10, Windows Server 2008 R2, Windows Server 2012 R2, and Windows Server 2016. It may run on additional platforms but there are no guarantees of course. In the words of old BBS shareware writers ... *"If you break it you own both parts"*.
-
- * Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
- * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
+See [Downloads](downloads) for the files.
 
 ## What is Corionis?
 Corionis (core-E-on-iss) is a planet name from the science fiction series [Babylon 5](http://www.imdb.com/title/tt0105946/), thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
@@ -35,7 +32,8 @@ Corionis (core-E-on-iss) is a planet name from the science fiction series [Babyl
 ## Acknowledgements
  * The Corionis Service Manager is written using the [AutoIt](https://www.autoitscript.com/) scripting tool.
  * The MSI installer is built with the **free version** of [Advanced Installer](http://www.advancedinstaller.com/).
- * The graphics are created with [GIMP - GNU Image Manipulation Program](https://www.gimp.org/).
+ * The graphics are created with [GIMP, the GNU Image Manipulation Program](https://www.gimp.org/).
+ * The screenshots were taken with [Greenshot](http://getgreenshot.org/).
  * The project is hosted on [GitHub](https://github.com).
  * These pages are served by [GitHub Pages](https://pages.github.com/) and rendered with [Jekyll](https://jekyllrb.com/).
  * And use a (slightly modified) [Tactile](https://pages-themes.github.io/tactile/) theme.
