@@ -9,7 +9,7 @@ the simple .exe is required. So which you use depends on how you want to manage 
  * Installs the software.
    * Personal or All Users option.
    * Install location option.
- * Creates a Start menu program group and shortcut.
+ * Creates a Start menu shortcut.
  * Creates an entry in Control Panel, Programs & Features.
  * Is upgradable as new versions of the installer are released.
 
