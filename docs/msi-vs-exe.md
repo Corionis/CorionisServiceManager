@@ -7,17 +7,20 @@ the simple .exe is required. So which you use depends on how you want to manage 
 
 ## The MSI Installer:
  * Installs the software.
-   - Personal or All Users option.
-   - Install location option.
+   * Personal or All Users option.
+   * Install location option.
  * Creates a Start menu program group and shortcut.
  * Creates an entry in Control Panel, Programs & Features.
- * Is upgradable as new versions are released.
+ * Is upgradable as new versions of the installer are released.
 
 ## The .exe only:
  * Does not require installation.
  * Automatically creates the needed .ini file.
  * Creates it's own optional auto-start shortcut.
  * Is upgraded by simply replacing the .exe with a newer one, manually.
+ * _**Does not**_ do the things the MSI Installer does.
+ 
+Next [Downloads](downloads).
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
