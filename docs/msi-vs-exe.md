@@ -24,9 +24,9 @@ the simple .exe is required. So which you use depends on how you want to manage 
  * Is upgraded by simply replacing the .exe with a newer one, manually.
  * _**Does not**_ do the things the MSI Installer does.
  
-Next: *[Download Files](downloads)*.
-
 ---
+
+Next: *[Download Files](downloads)*.
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
