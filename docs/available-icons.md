@@ -6,11 +6,8 @@ The Corionis Service Manager executable contains several round and square icons 
 different colors. These are useful if running multiple instances of CSM or if you
 just want a different shape or color.
 
-Index | Icon | Description
------ | ---------- | ------------------------
-1 | abc | abc123
-
 Set the Option for the Icon index to the number of the desired icon:
+
 Index | Icon | Description
 ----- | ---------- | ------------------------
 1 | ![Round Bronco](\manager-round-bronco.jpg "Round Bronco") | Round Bronco
