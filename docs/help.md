@@ -57,7 +57,7 @@ The topics below will be completed over time.
 
 ### The Available Icons
 The Corionis Service Manager executable contains several round and square icons of different colors. These are useful if running multiple instances of CSM or if you just want a different shape or color.
- * Available icons.
+ * [Available icons](available-icons).
 
 ### Downloading The EXE Only
  * Installer and installation are not really needed.
