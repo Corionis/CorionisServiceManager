@@ -1,5 +1,5 @@
 # Corionis Service Manager
 
-**Note:** This is the development section of the project. If you just want to use the Corionis Service Manager go to the public site at https://corionis.github.io/CorionisServiceManager/.
+**Note:** This is the development section of the project. For the release files go to the [Corionis Service Manager public site] (https://corionis.github.io/CorionisServiceManager/).
 
 For technical details and development information see the [Corionis Service Manager Wiki on GitHub](https://github.com/Corionis/CorionisServiceManager/wiki).
