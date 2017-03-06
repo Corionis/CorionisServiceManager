@@ -6,17 +6,27 @@ Previous [Download Files](downloads).
 # Using the installer
 The MSI Installer is a standard Wiindows Installer-based MSI. There are at least two ways to run the installer.
 
-## Technique 1 - Run the MSI from a file explorer
+## Running the installer
+
+### Technique 1 - Run the MSI from a file explorer
 Using a file explorer you can navigate to the directory containing the downloaded MSI file.
 
 Then right-click the MSI file and select Install:<br/>
 ![Install MSI](res/ss-open-installer.jpg "Install MSI")<br/>
 
-## Technique 2 - From a Command Prompt
+### Technique 2 - From a Command Prompt
 Open a Command Prompt (DOS box) then enter:<br/>
-<code>msiexec /i "Corionis Service Manager_*version*.msi"</code>
+<code> msiexec /i "Corionis Service Manager_{{ site.version }}.msi" </code>
 
 Don't forget the double-quotes around the filename.
+
+## Installer dialogs
+
+### Welcome
+
+### Type of install
+
+### Location for install
 
 Next [First Start](firststart) dialog.
 
