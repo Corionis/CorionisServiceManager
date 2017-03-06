@@ -10,7 +10,7 @@ Set the Option for the Icon index to the number of the desired icon:
 
 Index | Icon | Description
 ----- | ---------- | ------------------------
-1 | ![Round Bronco](res/manager-round.bronco.png "Round Default") | Round Bronco
+1 | ![Round Bronco](res/manager-round.bronco.png "Round Bronco") | Round Default
 2 | ![Round Blue](res/manager-round.blue.png "Round Blue") | Round Blue
 3 | ![Round Green](res/manager-round.green.png "Round Green") | Round Green
 4 | ![Round Purple](res/manager-round.purple.png "Round Purple") | Round Purple
