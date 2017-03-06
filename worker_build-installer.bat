@@ -5,8 +5,10 @@ REM Requires Advanced Installer to be available and
 REM the "aiexe" variable below to be set correctly.
 
 
-REM This MUST be correct
-set aiexe=D:\Tools\Advanced Installer 13.6\bin\x86\AdvancedInstaller.com
+REM The location of the Advanced Installer executable MUST be correct
+set aiexe=D:\Tools\Advanced Installer 13.7\bin\x86\AdvancedInstaller.com
+
+if not exist "%aiexe%" goto NoAI
 
 
 if "r%1" == "r" goto NoArgs
@@ -24,6 +26,7 @@ if exist "*.msi" del /q "*.msi"
 
 REM set the version and build the installer
 "%aiexe%" /edit "Corionis Service Manager.aip" /SetVersion %1
+"%aiexe%" /edit "Corionis Service Manager.aip" /SetProductCode -langid 1033
 "%aiexe%"  /rebuild "Corionis Service Manager.aip"
 set r=%ERRORLEVEL%
 if not %r% == 0 goto Error
@@ -38,6 +41,13 @@ echo version: %1>>docs/_config.yml
 
 goto JXT
 
+:NoAI
+echo/
+echo ERROR: Building the installer requires the free version of Advanced Installer.
+echo Cannot find the executable as specified in this batch file.
+echo Install Advanced Installer and/or edit this batch file to set the location.
+echo See http://www.advancedinstaller.com/
+goto JXT
 
 :NoArgs
 echo/
