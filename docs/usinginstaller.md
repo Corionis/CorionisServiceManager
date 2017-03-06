@@ -4,6 +4,8 @@ Go to the [**Documentation**](help).
 Previous: *[Download Files](downloads)*.<br/>
 Next: *[First Start](firststart) dialog*.
 
+---
+
 # Using the installer
 The MSI Installer is a standard Wiindows Installer-based MSI.
 
@@ -45,6 +47,8 @@ Click Install when ready.
 ### Install finished
 ![Install finish dialog](res/ss-install-finish.jpg "Install finish dialog")<br/>
 Uncheck the run option if you wish. Click Finish when done.
+
+---
 
 Next: *[First Start](firststart) dialog*.<br/>
 Previous: *[Download Files](downloads)*.
