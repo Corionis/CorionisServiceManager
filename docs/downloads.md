@@ -2,6 +2,7 @@ Go to the [**Main Page**](index).<br/>
 Go to the [**Documentation**](help).
 
 Previous Using the [MSI installer versus just the .exe](msi-vs-exe.md).
+Next [Using the installer](usinginstaller).
 
 # Download Files
 The latest version of CSM is **{{ site.version }}**. The buttons at the top of the page provide the same downloads as listed here.
@@ -14,6 +15,7 @@ of course. In the words of old BBS shareware writers ... *"If you break it you o
  * CSM executable only: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
 Next [Using the installer](usinginstaller).
+Previous Using the [MSI installer versus just the .exe](msi-vs-exe.md).
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
