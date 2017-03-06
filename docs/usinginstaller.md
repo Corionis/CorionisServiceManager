@@ -1,7 +1,7 @@
 Go to the [**Main Page**](index).<br/>
 Go to the [**Documentation**](help).
 
-Previous [Download Files](downloads).
+Previous [Download Files](downloads).<br/>
 Next [First Start](firststart) dialog.
 
 # Using the installer
@@ -46,7 +46,7 @@ Click Install when ready.
 ![Install finish dialog](res/ss-install-finish.jpg "Install finish dialog")<br/>
 Uncheck the run option if you wish. Click Finish when done.
 
-Next [First Start](firststart) dialog.
+Next [First Start](firststart) dialog.<br/>
 Previous [Download Files](downloads).
 
 Go to the [**Documentation**](help).<br/>
