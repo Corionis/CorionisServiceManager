@@ -19,7 +19,7 @@ Then right-click the MSI file and select Install:<br/>
 ![Install MSI](res/ss-open-installer.jpg "Install MSI")<br/>
 
 ### Technique 2 - From a Command Prompt
-Open a Command Prompt (DOS box) then enter:<br/>
+Open a Command Prompt (DOS box) in the file download directory then enter:<br/>
 <code> msiexec /i "Corionis Service Manager_{{ site.version }}.msi" </code>
 
 Don't forget the double-quotes around the filename.
