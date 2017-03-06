@@ -15,7 +15,7 @@
     <ROW Property="ARPURLUPDATEINFO" Value="https://corionis.github.io/CorionisServiceManager/downloads"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Corionis"/>
-    <ROW Property="ProductCode" Value="1033:{848266D0-CFD7-4258-9502-A0A369968C8E} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{62D321E3-7970-4765-9035-E928500241D2} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Corionis Service Manager"/>
     <ROW Property="ProductVersion" Value="1.0.0.168" Type="32"/>
