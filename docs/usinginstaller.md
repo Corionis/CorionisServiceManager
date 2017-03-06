@@ -31,8 +31,8 @@ Click Next.
 ### Type of install
 ![Install type dialog](res/ss-install-type.jpg "Install type dialog")<br/>
 Select the type of installation.
- * All users installs a shortcut for everyone, and the .ini file is shared.
  * Only for me installs a shortcut only for the user, and the .ini file is kept in the user's APPDATA directory.
+ * Everybody (all users) installs a shortcut for everyone, and the .ini file is shared.
 
 ### Install folder
 ![Install folder dialog](res/ss-install-folder.jpg "Install folder dialog")<br/>
