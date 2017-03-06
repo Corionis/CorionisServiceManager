@@ -7,8 +7,8 @@ different colors. These are useful if running multiple instances of CSM or if yo
 just want a different shape or color.
 
 Set the Option for the Icon index to the number of the desired icon:
-Index|Icon|Description
------|----------|------------------------
+Index | Icon | Description
+----- | ---------- | ------------------------
 1 | ![Round Bronco](\manager-round-bronco.jpg "Round Bronco") | Round Bronco
 2 | ![Round Blue](\manager-round-blue.jpg "Round Blue") | Round Blue
 3 | ![Round Green](\manager-round-green.jpg "Round Green") | Round Green
