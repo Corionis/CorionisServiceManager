@@ -1,6 +1,8 @@
 Go to the [**Main Page**](index).<br/>
 Go to the [**Documentation**](help).
 
+---
+
 # Available Icons
 The Corionis Service Manager executable contains several round and square icons of
 different colors. These are useful if running multiple instances of CSM or if you
@@ -25,7 +27,7 @@ Index | Icon | Description
 13 | ![Square White](res/manager-square.white.png "Square White") | Square White
 14 | ![Square Yellow](res/manager-square.yellow.png "Square Yellow") | Square Yellow
 
-<br/>
+---
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
