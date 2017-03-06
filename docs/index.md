@@ -10,7 +10,7 @@ Because it is a Windows tray app it is monitoring each service and always availa
 
 &nbsp;&nbsp;&nbsp;&nbsp;![CSM in the system tray](res/ss-tray.jpg "CSM in the system tray")
 
-CSM is free and open source distributed under the [Mit License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
+CSM is free and open source distributed under the [MIT License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
 
 ## Screenshots
 CSM Monitor tab:<br/>
