@@ -1,6 +1,8 @@
 Go to the [**Main Page**](index).<br/>
 Go to the [**Documentation**](help).
 
+Next [Download Files](downloads).
+
 # Using the MSI installer versus just the .exe
 The MSI Installer does a few things to make using the Corionis Service Manager easier. However it is not required, only
 the simple .exe is required. So which you use depends on how you want to manage it.
