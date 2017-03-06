@@ -2,6 +2,7 @@ Go to the [**Main Page**](index).<br/>
 Go to the [**Documentation**](help).
 
 Previous [Download Files](downloads).
+Next [First Start](firststart) dialog.
 
 # Using the installer
 The MSI Installer is a standard Wiindows Installer-based MSI.
@@ -46,6 +47,7 @@ Click Install when ready.
 Uncheck the run option if you wish. Click Finish when done.
 
 Next [First Start](firststart) dialog.
+Previous [Download Files](downloads).
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
