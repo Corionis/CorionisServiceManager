@@ -15,6 +15,7 @@ Then right-click the MSI file and select Install:<br/>
 ## Technique 2 - From a Command Prompt
 Open a Command Prompt (DOS box) then enter:<br/>
 <code>msiexec /i "Corionis Service Manager_*version*.msi"</code>
+
 Don't forget the double-quotes around the filename.
 
 Next [First Start](firststart) dialog.

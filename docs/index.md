@@ -1,13 +1,10 @@
 ---
 layout: default
 ---
-### Looking for the documentation?
-The [User Documentation](help) is also the Online Help in the program.
-
 # What is the Corionis Service Manager?
 Most people who need to monitor and manage Windows services on a regular basis are only interested in a few services.
 
-The Corionis Service Manager is a small Windows tray application that monitors and manages a list of user-selected Windows services. The selected services are monitored and may be easily started, stopped, etc.<br/>
+The Corionis Service Manager (CSM) is a small Windows tray application that monitors and manages a list of user-selected Windows services. The selected services are monitored and may be easily started, stopped, etc.<br/>
 ![CSM in the system tray](res/ss-tray.jpg "CSM in the system tray")<br/>
 Because it is a Windows tray application it is always available and may be popped up or down by double-clicking the tray icon. Notifications are displayed when a selected service's state changes.
 
@@ -22,9 +19,10 @@ CSM Options tab:<br/>
 ![Options tab](res/ss-options.jpg "Options tab")<br/>
 
 ## Download Files
-The latest version of CSM is **{{ site.version }}**.
+The latest version of CSM is **{{ site.version }}**. See [Downloads](downloads) for the files. 
 
-See [Downloads](downloads) for the files.
+## User Documentation
+The [User Documentation](help) is also the Online Help in the program.
 
 ## What is Corionis?
 Corionis (core-E-on-iss) is a planet name from the science fiction series [Babylon 5](http://www.imdb.com/title/tt0105946/), thanks to [J. Michael Straczynski](http://www.imdb.com/name/nm0833089). It is also a trademark of Corionis, LLC. All Rights Reserved.
