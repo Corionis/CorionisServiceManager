@@ -1,6 +1,6 @@
 Go to the [**Main Page**](index).
 
-# Documentation
+# User Documentation
 
 The Corionis Service Manager is a relatively simple program to install and use. The topics below will be expanded upon over time.
 
