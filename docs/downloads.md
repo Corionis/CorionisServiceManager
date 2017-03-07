@@ -21,10 +21,9 @@ The current version as been tested on:
 It may run on additional platforms but there are no guarantees
 of course. In the words of old BBS shareware writers ... *"If you break it you own both parts"*.
 
-Windows MSI installer: ` [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true) `
+Windows MSI installer: [Corionis Service Manager_{{ site.version }}.msi](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager_{{ site.version }}.msi?raw=true)
 
-The .exe is only the CSM program. This download is not an installer!
-CSM executable only: ` [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true) `
+CSM executable only. This download is not an installer: [Corionis Service Manager.exe](https://github.com/Corionis/CorionisServiceManager/blob/master/Corionis%20Service%20Manager.exe?raw=true)
 
 ---
 
