@@ -12,6 +12,8 @@ Because it is a Windows tray app it is monitoring each service and always availa
 
 CSM is free and open source distributed under the [MIT License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
 
+Not sure which download to use? See [Using the MSI installer versus just the .exe](msi-vs-exe).
+
 ## Screenshots
 CSM Monitor tab:<br/>
 ![CSM Monitor tab](res/ss-monitor.jpg "Monitor tab")<br/>
