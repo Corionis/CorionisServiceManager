@@ -1,5 +1,6 @@
 ---
 layout: default
+show_blog: true
 ---
 There are download choices, see [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
 Looking for the [User Documentation](help)?
