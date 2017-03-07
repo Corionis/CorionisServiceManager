@@ -1,3 +1,7 @@
+---
+layout: default
+show_blog: true
+---
 Go to the [**Main Page**](index).
 
 # User Documentation
