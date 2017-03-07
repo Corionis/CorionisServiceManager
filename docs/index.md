@@ -1,8 +1,8 @@
 ---
 layout: default
 ---
-Need help on which download to use? See [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
-Looking for the User Documentation? See [User Documentation](help).
+There are downloads choices, see [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
+Looking for the [User Documentation](help)?
 
 # What is the Corionis Service Manager?
 Most people who regularly monitor and manage Windows services are only interested in a few.
