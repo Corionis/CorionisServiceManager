@@ -16,7 +16,3 @@ Previous: *[Using the installer](usinginstaller)*.
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
-
----
-
-### Blog
