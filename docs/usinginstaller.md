@@ -55,7 +55,3 @@ Previous: *[Download Files](downloads)*.
 
 Go to the [**Documentation**](help).<br/>
 Go to the [**Main Page**](index).
-
----
-
-### Blog
