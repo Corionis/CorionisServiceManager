@@ -11,13 +11,15 @@ the simple .exe is required. So which you use depends on how you want to manage 
 
 ## The MSI Installer:
  * Installs the software.
-   * Personal or All Users option.
-   * Install location option.
+   - Personal or All Users option.
+   - Install location option.
  * Creates a Start menu shortcut.
  * Creates an entry in Control Panel, Programs & Features.
  * Is upgradable as new versions of the installer are released.
 
 ## The .exe only:
+ * Is just the "Corionis Service Manager.exe" program.
+ * Meant for power users who do not care about it being *installed*.
  * Does not require installation.
  * Automatically creates the needed .ini file.
  * Creates it's own optional auto-start shortcut.
