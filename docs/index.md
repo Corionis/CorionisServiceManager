@@ -1,6 +1,8 @@
 ---
 layout: default
 ---
+Not sure which download to use? See [Using the MSI installer versus just the .exe](msi-vs-exe).
+
 # What is the Corionis Service Manager?
 Most people who regularly monitor and manage Windows services are only interested in a few.
 
@@ -11,8 +13,6 @@ Because it is a Windows tray app it is monitoring each service and always availa
 &nbsp;&nbsp;&nbsp;&nbsp;![CSM in the system tray](res/ss-tray.jpg "CSM in the system tray")
 
 CSM is free and open source distributed under the [MIT License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
-
-Not sure which download to use? See [Using the MSI installer versus just the .exe](msi-vs-exe).
 
 ## Screenshots
 CSM Monitor tab:<br/>
