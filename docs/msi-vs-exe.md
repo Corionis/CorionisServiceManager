@@ -22,7 +22,7 @@ the simple .exe is required. So which you use depends on how you want to manage 
  * Is upgradable as new versions of the installer are released.
 
 ## The .exe only:
- * Is just the "Corionis Service Manager.exe" program.
+ * Is just the <code>Corionis Service Manager.exe</code> program.
  * Meant for power users who do not care about it being *installed*.
  * Does not require installation.
  * Automatically creates the needed .ini file.
