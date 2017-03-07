@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-There are downloads choices, see [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
+There are download choices, see [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
 Looking for the [User Documentation](help)?
 
 # What is the Corionis Service Manager?
