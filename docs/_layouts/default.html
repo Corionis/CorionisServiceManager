@@ -75,8 +75,9 @@
 		<section id="main_content">
 		  {{ content }}
 		</section>
-		  
-		  <p>
+
+		{% if page.show_blog %}
+		<p>
 			<ul class="blog">
 				{% for post in site.posts %}
 				<li>
@@ -85,6 +86,7 @@
 				</li>
 				{% endfor %}
 			</ul></p>
+		{% endif %}
 		<footer>
 		  The Corionis Service Manager is distributed under the <a href="https://raw.githubusercontent.com/Corionis/CorionisServiceManager/master/LICENSE.txt">MIT License</a>.<br/>
 		  Corionis is a trademark of Corionis, LLC. All Rights Reserved.<br/>
