@@ -133,6 +133,10 @@ Func selectPopulate()
 	ReDim $_selectListCtrls[$_selectListCtrlsCount]
 	Dim $sort = False
 	_GUICtrlListView_SimpleSort($_selectView, $sort, 0)
+	Local $w = _GUICtrlListView_GetColumnWidth($_selectView, 0)
+	If $w < 22 Then
+		_GUICtrlListView_SetColumnWidth($_selectView, 0, 262)
+	EndIf
 EndFunc   ;==>selectPopulate
 
 ;----------------------------------------------------------------------------
@@ -159,10 +163,8 @@ EndFunc   ;==>selectNone
 
 ;----------------------------------------------------------------------------
 Func selectSave()
-	Local $i, $it, $j = 1, $l, $svc
+	Local $fnd, $i, $it, $j = 1, $k, $l, $m, $ss, $svc
 	Local $dat[$SVC_MAX][2]
-	Global $_selectedServices[$SVC_MAX]
-	$_selectedServicesCount = 0
 	For $i = 0 To $_selectListCtrlsCount - 1
 		If _GUICtrlListView_GetItemChecked($_selectView, $i) == True Then
 			$it = _GUICtrlListView_GetItem($_selectView, $i)
@@ -172,18 +174,56 @@ Func selectSave()
 			$l = _ArrayToString($svc, "|")
 			$dat[$j][0] = $svc[$SVC_ID] ; key
 			$dat[$j][1] = $l ; value
+			; is it already in the selected list?
+			$fnd = False
+			For $k = 0 To $_selectedServicesCount - 1
+				$m = $_selectedServices[$k]
+				$ss = StringSplit($m, "|", $STR_NOCOUNT)
+				If $ss[$SVC_ID] == $svc[$SVC_ID] Then
+					$dat[$j][1] = $_selectedServices[$k] ; yes, use selected service's value
+					$fnd = True
+					ExitLoop
+				EndIf
+			Next
+			If $fnd == False Then
+				; no, add it
+				$_selectedServicesCount = $_selectedServicesCount + 1
+				ReDim $_selectedServices[$_selectedServicesCount]
+				$_selectedServices[$_selectedServicesCount - 1] = $l
+			EndIf
 			$j = $j + 1
-			$_selectedServices[$_selectedServicesCount] = $l
-			$_selectedServicesCount = $_selectedServicesCount + 1
 		EndIf
 	Next
-	ReDim $_selectedServices[$_selectedServicesCount]
-	If $j > 1 Then
-		ReDim $dat[$j][2] ; redimension to the exact count
-		$dat[0][0] = $j ; set the count
-		$dat[0][1] = ""
-		IniWriteSection($_configurationFilePath, "services", $dat)
+	; remove any deletions & make a new array for IniWriteSection()
+	$fnd = True
+	Local $vals[$SVC_MAX][2]
+	While $fnd == True
+		$j = 1
+		$fnd = False
+		For $i = 0 To $_selectedServicesCount - 1
+			$l = $_selectedServices[$i]
+			$svc = StringSplit($l, "|", $STR_NOCOUNT)
+			; is it in the $dat array of selections?
+			$k = _ArrayFindAll($dat, $svc[$SVC_ID])
+			If @error <> 0 Then
+				_ArrayDelete($_selectedServices, $i) ; no, remove it
+				$_selectedServicesCount = $_selectedServicesCount - 1
+				$fnd = True
+				ExitLoop
+			Else
+				$vals[$j][0] = $svc[$SVC_ID] ; yes, add it to the new array
+				$vals[$j][1] = $l
+				$j = $j + 1
+			EndIf
+		Next
+	WEnd
+	If $j - 1 <> $_selectedServicesCount Then
+		MsgBox(64, "LOGIC FAULT", "The new and old lists are not the same size")
 	EndIf
+	ReDim $vals[$_selectedServicesCount + 1][2] ; use +1 for the 0 element
+	$vals[0][0] = $_selectedServicesCount ; set the count
+	$vals[0][1] = ""
+	IniWriteSection($_configurationFilePath, "services", $vals, 1)
 	monitorPopulate()
 	UpdateMonitor()
 EndFunc   ;==>selectSave
