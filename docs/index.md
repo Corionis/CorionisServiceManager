@@ -16,6 +16,18 @@ Because it is a Windows tray app it is monitoring each service and always availa
 
 CSM is free and open source distributed under the [MIT License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
 
+## Features
+ * Monitors and manages a list of user-selected Windows services.
+ * Select tab shows all Windows services available on the system.
+ * Monitor and Select lists have multi-letter speed select.
+ * Remembers state:
+   - Window size & location.
+   - Monitor & Select lists column sizes.
+   - Whether active monitoring is enabled.
+ * Logs running status changes of selected services.
+ * Optional logging to a file.
+ * Can be operated with the keyboard.
+
 ## Screenshots
 CSM Monitor tab:<br/>
 ![CSM Monitor tab](res/ss-monitor.jpg "Monitor tab")<br/>
