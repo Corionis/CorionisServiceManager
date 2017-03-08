@@ -6,10 +6,10 @@ Enhancements and bug fixes.
 
 Slowly working on the User Documentation section of the user site.
 
-####### A few enhancements:
+#### A few enhancements:
 #4 Retain manual edits to services.
 
-####### Fixed a few bugs:
+#### Fixed a few bugs:
 #3 Cannot save an empty selection list.
 #8 Select shows zero-width checbox and first column.
 #7 Change default install directory.

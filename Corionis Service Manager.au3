@@ -26,7 +26,7 @@
 #AutoIt3Wrapper_Res_File_Add=.\res\about-header.jpg, rt_rcdata, ABOUT_HDR
 #AutoIt3Wrapper_Run_After=echo @echo off >build_installer.bat
 #AutoIt3Wrapper_Run_After=echo REM Use this to build the installer >>build_installer.bat
-#AutoIt3Wrapper_Run_After=echo "%scriptdir%\worker_build-installer.bat" %fileversion% >>build_installer.bat
+#AutoIt3Wrapper_Run_After=echo worker_build-installer.bat %fileversion% >>build_installer.bat
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
 #cs -------------------------------------------------------------------------
