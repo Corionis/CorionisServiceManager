@@ -2,7 +2,7 @@
 #AutoIt3Wrapper_Icon=res\manager-round-bronco.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.169
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.171
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
@@ -140,79 +140,6 @@ CloseProgram()
 
 ; Main
 ;============================================================================
-
-;----------------------------------------------------------------------------
-Func UpdateMonitor()
-	Dim $i, $j, $l, $state, $desc, $svc[$SVC_LAST]
-
-	; protect running more than once concurrently
-	If $_updateBusy == True Then
-		Return
-	EndIf
-	$_updateBusy = True
-
-	For $i = 0 To $_monitorListCtrlsCount - 1
-		$l = GUICtrlRead($_monitorListCtrls[$i])
-		$svc = StringSplit($l, "|", $STR_NOCOUNT)
-		If $_cfgMonitoring == True Then
-			$state = servicesIsRunning($_cfgHostname, $svc[$SVC_ID])
-		Else
-			$state = 2 ; unknown
-		EndIf
-		Select
-			Case $state == 0
-				$desc = "Stopped"
-			Case $state == 1
-				$desc = "Running"
-			Case $state == 2
-				$desc = "-------"
-		EndSelect
-		If $svc[$SVC_STATUS] <> $desc Then
-			If $state <> 2 Then
-				If $__cmsIsStartup == True Then
-					LoggerAppend("    " & $svc[$SVC_NAME] & " starts " & $svc[$SVC_START] & " is " & $desc & @CRLF)
-				Else
-					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc & @CRLF)
-					If $_cfgDisplayNotifications == True Then
-						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
-					EndIf
-				EndIf
-				LoggerUpdate()
-			EndIf
-			$svc[$SVC_STATUS] = $desc
-			$l = ""
-			For $j = 0 To $SVC_LAST
-				$l = $l & $svc[$j]
-				If $j < $SVC_LAST Then
-					$l = $l & "|"
-				EndIf
-			Next
-			GUICtrlSetData($_monitorListCtrls[$i], $l)
-			Select
-				Case $state == 0
-					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgStoppedTextColor)
-					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgStoppedBackColor)
-				Case $state == 1
-					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgRunningTextColor)
-					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgRunningBackColor)
-				Case $state == 2
-					GUICtrlSetColor($_monitorListCtrls[$i], 0x000000)
-					GUICtrlSetBkColor($_monitorListCtrls[$i], 0xffffff)
-			EndSelect
-		EndIf
-		;MsgBox(64, "Service", $i & " = " & $l)
-	Next
-	; show a (hopefully) helpful dialog at startup if no services have been selected
-	If $__cmsIsStartup == True Then
-		If $_monitorListCtrlsCount < 1 Then
-			MsgBox($MB_OK + $MB_ICONINFORMATION, $_progTitle, "To get started - first go to the Select tab to choose services to monitor. Then on the Monitor tab click the Monitor button to toggle active monitoring on/off.", 0, $_mainWindow)
-		EndIf
-		$__cmsIsStartup = False
-		LoggerAppend("Service status monitor begins:" & @CRLF)
-		LoggerUpdate()
-	EndIf
-	$_updateBusy = False
-EndFunc   ;==>UpdateMonitor
 
 ;----------------------------------------------------------------------------
 Func CloseProgram()
@@ -494,6 +421,80 @@ EndFunc   ;==>ShowPreferences
 Func ShowServices()
 	about()
 EndFunc   ;==>ShowServices
+
+;----------------------------------------------------------------------------
+Func UpdateMonitor()
+	Dim $i, $j, $l, $state, $desc, $svc[$SVC_LAST]
+
+	; protect running more than once concurrently
+	If $_updateBusy == True Then
+		Return
+	EndIf
+	$_updateBusy = True
+
+	For $i = 0 To $_monitorListCtrlsCount - 1
+		$l = GUICtrlRead($_monitorListCtrls[$i])
+		$svc = StringSplit($l, "|", $STR_NOCOUNT)
+		If $_cfgMonitoring == True Then
+			$state = servicesIsRunning($_cfgHostname, $svc[$SVC_ID])
+		Else
+			$state = 2 ; unknown
+		EndIf
+		Select
+			Case $state == 0
+				$desc = "Stopped"
+			Case $state == 1
+				$desc = "Running"
+			Case $state == 2
+				$desc = "-------"
+		EndSelect
+		If $svc[$SVC_STATUS] <> $desc Then
+			If $state <> 2 Then
+				If $__cmsIsStartup == True Then
+					LoggerAppend("    " & $svc[$SVC_NAME] & " starts " & $svc[$SVC_START] & " is " & $desc & @CRLF)
+				Else
+					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc & @CRLF)
+					If $_cfgDisplayNotifications == True Then
+						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
+					EndIf
+				EndIf
+				LoggerUpdate()
+			EndIf
+			$svc[$SVC_STATUS] = $desc
+			$l = ""
+			For $j = 0 To $SVC_LAST
+				$l = $l & $svc[$j]
+				If $j < $SVC_LAST Then
+					$l = $l & "|"
+				EndIf
+			Next
+			GUICtrlSetData($_monitorListCtrls[$i], $l)
+			Select
+				Case $state == 0
+					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgStoppedTextColor)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgStoppedBackColor)
+				Case $state == 1
+					GUICtrlSetColor($_monitorListCtrls[$i], $_cfgRunningTextColor)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], $_cfgRunningBackColor)
+				Case $state == 2
+					GUICtrlSetColor($_monitorListCtrls[$i], 0x000000)
+					GUICtrlSetBkColor($_monitorListCtrls[$i], 0xffffff)
+			EndSelect
+		EndIf
+		;MsgBox(64, "Service", $i & " = " & $l)
+	Next
+	; show a (hopefully) helpful dialog at startup if no services have been selected
+	If $__cmsIsStartup == True Then
+		If $_monitorListCtrlsCount < 1 Then
+			MsgBox($MB_OK + $MB_ICONINFORMATION, $_progTitle, "To get started - first go to the Select tab to choose services to monitor. Then on the Monitor tab click the Monitor button to toggle active monitoring on/off.", 0, $_mainWindow)
+		EndIf
+		$__cmsIsStartup = False
+		LoggerAppend("Service status monitor begins:" & @CRLF)
+		LoggerUpdate()
+	EndIf
+	$_updateBusy = False
+EndFunc   ;==>UpdateMonitor
+
 
 
 ; end
