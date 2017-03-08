@@ -253,6 +253,8 @@ Func optionsGetCtrls()
 	Else
 		Opt("GUICloseOnESC", 0)
 	EndIf
+	GUISetIcon(@ScriptFullPath, $_cfgIconIndex, $_mainWindow)
+	TraySetIcon(@ScriptFullPath, $_cfgIconIndex)
 EndFunc   ;==>optionsGetCtrls
 
 ;----------------------------------------------------------------------------
