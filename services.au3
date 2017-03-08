@@ -299,7 +299,6 @@ Func servicesReadAll()
 				$t = servicesGetStartTypeString(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "Start"));
 
 				; this is where the format (order) of the columns is defined
-;~ 				$_servicesArray[$_servicesCount] = $id & "|" & $n & "|" & $t & "|" & $s
 				$_servicesArray[$_servicesCount] = $n & "|" & $id & "|" & $t & "|" & $s
 
 				;MsgBox(64, "A service entry", $_servicesArray[$_servicesCount])

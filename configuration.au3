@@ -194,14 +194,16 @@ Func ConfigurationWriteRunning($newCfg)
 		$info[3] = $info[3] - (_WinAPI_GetSystemMetrics(33) * 2) + 2			; 6   46   8   33
 	EndIf
 	; get listviews user-defined column widths
-	Local $i, $w, $monWidths = ""
+	Local $i, $w, $monWidths = "", $mt = 0
 	For $i = 0 To $SVC_LAST
 		$w = _GUICtrlListView_GetColumnWidth($_monitorView, $i)
+		$mt = $mt + $w
 		$monWidths = $monWidths & $w & "|"
 	Next
-	Local $selWidths = ""
+	Local $selWidths = "", $st = 0
 	For $i = 0 To $SVC_LAST
 		$w = _GUICtrlListView_GetColumnWidth($_selectView, $i)
+		$st = $st + $w
 		$selWidths = $selWidths & $w & "|"
 	Next
 	IniWrite($_configurationFilePath, "running", "Left", $info[0])
@@ -209,8 +211,12 @@ Func ConfigurationWriteRunning($newCfg)
 	IniWrite($_configurationFilePath, "running", "Width", $info[2])
 	IniWrite($_configurationFilePath, "running", "Height", $info[3])
 	IniWrite($_configurationFilePath, "running", "Monitoring", $_cfgMonitoring)
-	IniWrite($_configurationFilePath, "running", "MonitorWidths", $monWidths)
-	IniWrite($_configurationFilePath, "running", "SelectWidths", $selWidths)
+	If $mt > 0 Then
+		IniWrite($_configurationFilePath, "running", "MonitorWidths", $monWidths)
+	EndIf
+	If $st > 0 Then
+		IniWrite($_configurationFilePath, "running", "SelectWidths", $selWidths)
+	EndIf
 EndFunc   ;==>ConfigurationWriteRunning
 
 
