@@ -16,3 +16,5 @@ Slowly working on the User Documentation section of the user site.
  * #9 Change titlebar and tray icons when a different icon is selected.
 
 **Known Issue:** Currently CSM will not auto-start on Windows 10.
+
+---
