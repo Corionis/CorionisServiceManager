@@ -12,9 +12,7 @@ The Corionis Service Manager (CSM) is a small Windows tray application that moni
 
 Because it is a Windows tray app it is monitoring each service and always available. The utility may be popped up or down by double-clicking the tray icon. Notifications are displayed and logged when a selected service's state changes.
 
-&nbsp;&nbsp;&nbsp;&nbsp;![CSM in the system tray](res/ss-tray.jpg "CSM in the system tray")
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/ss-tray.jpg" alt="CSM in the system tray" title="CSM in the system tray" style="size=200%"/>
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/ss-tray.jpg" alt="CSM in the system tray" title="CSM in the system tray" style="width:468px;height:134px;"/>
 
 CSM is free and open source distributed under the [MIT License](https://github.com/Corionis/CorionisServiceManager/blob/master/LICENSE.txt).
 
