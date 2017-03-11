@@ -19,7 +19,7 @@ CSM is free and open source distributed under the [MIT License](https://github.c
 ## Features
  * Monitors and manages a list of user-selected Windows services.
  * Select tab shows all Windows services available on the system.
- * Monitor and Select lists have multi-letter speed search for the service name.
+ * Monitor and Select lists have multi-letter speed search of service names.
  * Remembers state:
    - Window size & location.
    - Monitor & Select lists column sizes.
