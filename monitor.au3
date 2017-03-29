@@ -36,7 +36,7 @@ Func MonitorInit()
 		BitOR($LVS_REPORT, $LVS_SINGLESEL), BitOR($LVS_EX_CHECKBOXES, $LVS_EX_FULLROWSELECT, $WS_EX_CLIENTEDGE))
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 
-	monitorPopulate()
+	;monitorPopulate()
 	If $_selectedServicesCount > 0 Then
 		monitorPopulate()
 	EndIf
@@ -103,7 +103,7 @@ EndFunc   ;==>MonitorInit
 
 ;----------------------------------------------------------------------------
 Func monitorPopulate()
-	Local $i, $l
+	Local $i, $l, $svc
 	; remove any existing list view items
 	If $_monitorListCtrlsCount > 0 Then
 		For $i = 0 To $_monitorListCtrlsCount - 1
@@ -119,6 +119,9 @@ Func monitorPopulate()
 	; create list view items one per service
 	For $i = 0 To $_selectedServicesCount - 1
 		$l = $_selectedServices[$i]
+		$svc = StringSplit($l, "|", $STR_NOCOUNT)
+		$svc[$SVC_START] = servicesGetStartTypeString(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $svc[$SVC_ID], "Start"));
+		$l = servicesFormatServiceLine($svc[$SVC_NAME], $svc[$SVC_ID], $svc[$SVC_START], $svc[$SVC_STATUS])
 		$_monitorListCtrls[$_monitorListCtrlsCount] = GUICtrlCreateListViewItem($l, $_monitorView)
 		GUICtrlSetOnEvent($_monitorListCtrls[$_monitorListCtrlsCount], "monitorItemPicked")
 		$_monitorListCtrlsCount = $_monitorListCtrlsCount + 1

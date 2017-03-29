@@ -2,7 +2,7 @@
 #AutoIt3Wrapper_Icon=res\manager-round-bronco.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.171
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.173
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
@@ -424,7 +424,7 @@ EndFunc   ;==>ShowServices
 
 ;----------------------------------------------------------------------------
 Func UpdateMonitor()
-	Dim $i, $j, $l, $state, $desc, $svc[$SVC_LAST]
+	Dim $i, $j, $l, $start, $state, $stateDesc, $svc[$SVC_LAST]
 
 	; protect running more than once concurrently
 	If $_updateBusy == True Then
@@ -437,30 +437,43 @@ Func UpdateMonitor()
 		$svc = StringSplit($l, "|", $STR_NOCOUNT)
 		If $_cfgMonitoring == True Then
 			$state = servicesIsRunning($_cfgHostname, $svc[$SVC_ID])
+			$start = servicesGetStartTypeString(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $svc[$SVC_ID], "Start"));
 		Else
 			$state = 2 ; unknown
 		EndIf
 		Select
 			Case $state == 0
-				$desc = "Stopped"
+				$stateDesc = "Stopped"
 			Case $state == 1
-				$desc = "Running"
+				$stateDesc = "Running"
 			Case $state == 2
-				$desc = "-------"
+				$stateDesc = "-------"
 		EndSelect
-		If $svc[$SVC_STATUS] <> $desc Then
-			If $state <> 2 Then
+		If $svc[$SVC_STATUS] <> $stateDesc Or $svc[$SVC_START] <> $start Then
+			If $svc[$SVC_STATUS] <> $stateDesc And $state <> 2 Then
 				If $__cmsIsStartup == True Then
-					LoggerAppend("    " & $svc[$SVC_NAME] & " starts " & $svc[$SVC_START] & " is " & $desc & @CRLF)
+					LoggerAppend("    " & $svc[$SVC_NAME] & " starts " & $svc[$SVC_START] & " is " & $stateDesc & @CRLF)
 				Else
-					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc & @CRLF)
+					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $stateDesc & @CRLF)
 					If $_cfgDisplayNotifications == True Then
-						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $desc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
+						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $stateDesc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
 					EndIf
 				EndIf
 				LoggerUpdate()
 			EndIf
-			$svc[$SVC_STATUS] = $desc
+			If $svc[$SVC_START] <> $start Then
+				$svc[$SVC_START] = $start
+				If $__cmsIsStartup == True Then
+					LoggerAppend("    " & $svc[$SVC_NAME] & " start type " & $svc[$SVC_START] & " is now " & $start & @CRLF)
+				Else
+					LoggerAppend(_NowDate() & " " & _NowTime() & " service " & $svc[$SVC_ID] & ": " & $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $stateDesc & @CRLF)
+					If $_cfgDisplayNotifications == True Then
+						TrayTip($_progTitle, $svc[$SVC_NAME] & " | " & $svc[$SVC_START] & " | " & $stateDesc, 30, (($state == 0) ? $TIP_ICONEXCLAMATION : $TIP_ICONASTERISK) + $TIP_NOSOUND)
+					EndIf
+				EndIf
+				LoggerUpdate()
+			EndIf
+			$svc[$SVC_STATUS] = $stateDesc
 			$l = ""
 			For $j = 0 To $SVC_LAST
 				$l = $l & $svc[$j]

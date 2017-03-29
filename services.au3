@@ -297,10 +297,7 @@ Func servicesReadAll()
 		Else
 			If StringLen($s) > 0 Then
 				$t = servicesGetStartTypeString(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "Start"));
-
-				; this is where the format (order) of the columns is defined
-				$_servicesArray[$_servicesCount] = $n & "|" & $id & "|" & $t & "|" & $s
-
+				$_servicesArray[$_servicesCount] = servicesFormatServiceLine($n, $id, $t, $s)
 				;MsgBox(64, "A service entry", $_servicesArray[$_servicesCount])
 				$_servicesCount = $_servicesCount + 1
 				$s = ""
@@ -314,33 +311,21 @@ Func servicesReadAll()
 	$_servicesStatus = 2
 EndFunc   ;==>servicesReadAll
 
-
-;~ Func servicesReadAll()
-;~ 	Dim $i = 1, $id, $l, $n, $s = "", $t, $st
-;~ 	$_panErrorValue = 0
-;~ 	$_servicesCount = 0
-
-;~ 	While 1
-;~ 		$id = RegEnumKey("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services", $i)
-;~ 		$i = $i + 1
-;~ 		If $id <> "" Then
-;~ 			$st = RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "Type");
-;~ 			if BitAND($st, $SERVICE_WIN32) <> 0 Then
-;~ 				$n = RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "DisplayName");
-;~ 				$t = servicesGetStartTypeString(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\" & $id, "Start"));
-;~ 				$s = (servicesIsRunning($_cfgHostname, $id) == 1) ? "Running" : "Stopped"
-;~ 				$_servicesArray[$_servicesCount] = $id & "|" & $n & "|" & $t & "|" & $s
-;~ 				;MsgBox(64, "A service entry", $_servicesArray[$_servicesCount])
-;~ 				$_servicesCount = $_servicesCount + 1
-;~ 			EndIf
-;~ 		Else
-;~ 			ExitLoop
-;~ 		EndIf
-;~ 	WEnd
-;~ 	ReDim $_servicesArray[$_servicesCount]
-;~ 	LoggerAppend("Discovered " & $_servicesCount & " Windows services:" & @CRLF & "    ")
-;~ 	LoggerAppend(_ArrayToString($_servicesArray, @CRLF & "    ") & @CRLF)
-;~ EndFunc   ;==>servicesReadAll
+; #FUNCTION# ====================================================================================================================
+; Name ..........: servicesFormatServiceLine
+; Description ...: Format a service line.
+;                  This is the one place where the format and order of the listview columns are assembled.
+; Syntax ........: servicesFormatServiceLine($n, $id, $t, $s)
+; Parameters ....: $n                   - the service description.
+;                  $id                  - the service identifier.
+;                  $t                   - the service start type.
+;                  $s                   - the service running status.
+; Return values .: Formatted service entry line
+; ===============================================================================================================================
+Func servicesFormatServiceLine($n, $id, $t, $s)
+	; this is where the format (order) of the columns is defined
+	return $n & "|" & $id & "|" & $t & "|" & $s
+EndFunc
 
 ;===============================================================================
 ; Description:   Checks if a service exists on a computer
