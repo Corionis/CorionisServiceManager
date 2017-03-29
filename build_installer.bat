@@ -1,3 +1,3 @@
 @echo off 
 REM Use this to build the installer 
-"worker_build-installer.bat" 1.0.0.170 
+worker_build-installer.bat 1.0.0.172 

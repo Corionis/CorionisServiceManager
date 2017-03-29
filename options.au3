@@ -183,6 +183,7 @@ Func optionsSave()
 	; handle any shortcut
 	Local $a = StringSplit($_configurationFilePath, "\")
 	Local $nam = $a[$a[0]];
+	$nam = StringReplace($nam, ".ini", "")
 	Local $dir = @StartupDir
 	Local $shortcut = $dir & "\CSM+" & $nam & ".lnk"
 	If $_cfgStartAtLogin == True Then
