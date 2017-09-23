@@ -2,7 +2,7 @@
 #AutoIt3Wrapper_Icon=res\manager-round-bronco.ico
 #AutoIt3Wrapper_Res_Comment=Distributed under the MIT License
 #AutoIt3Wrapper_Res_Description=Monitor & manage selected services
-#AutoIt3Wrapper_Res_Fileversion=1.0.1.184
+#AutoIt3Wrapper_Res_Fileversion=1.0.1.181
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_LegalCopyright=By Todd R. Hill, MIT License
 #AutoIt3Wrapper_Res_requestedExecutionLevel=highestAvailable
@@ -305,6 +305,9 @@ Func InitTray()
 	Local $showAboutItem = TrayCreateItem("About " & $_progTitle & " ...")
 	TrayItemSetOnEvent($showAboutItem, "ShowAbout")
 
+	Local $resetAboutItem = TrayCreateItem("Reset screen position and size")
+	TrayItemSetOnEvent($resetAboutItem, "ResetPosition")
+
 	$showHideItem = TrayCreateItem("Show/Hide (double-click)")
 	TrayItemSetOnEvent($showHideItem, "ShowHide")
 	TrayItemSetState($showHideItem, $TRAY_DEFAULT)
@@ -348,6 +351,29 @@ Func ParseOptions()
 		EndIf
 	Next
 EndFunc   ;==>ParseOptions
+
+;----------------------------------------------------------------------------
+Func ResetPosition()
+	$_cfgLeft = -1
+	$_cfgTop = -1
+	$_cfgWidth = 534
+	$_cfgHeight = 388
+
+	$_cfgMonitorWidths = "262|70|86|64"
+	Local $l = StringSplit($_cfgMonitorWidths, "|", $STR_NOCOUNT)
+	For $i = 0 To $SVC_LAST
+		_GUICtrlListView_SetColumnWidth($_monitorView, $i, Int($l[$i]))
+	Next
+
+	$_cfgSelectWidths = "262|70|86|64"
+	$l = StringSplit($_cfgSelectWidths, "|", $STR_NOCOUNT)
+	For $i = 0 To $SVC_LAST
+		_GUICtrlListView_SetColumnWidth($_selectView, $i, Int($l[$i]))
+	Next
+
+	ConfigurationWriteRunning(True)
+	_ScriptRestart()
+EndFunc
 
 ;----------------------------------------------------------------------------
 Func RestartProgram()
