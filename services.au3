@@ -266,6 +266,7 @@ Func servicesReadAll()
 	Dim $ar, $i, $id, $l, $n, $s, $t, $sr, $sRead
 	$_panErrorValue = 0
 	$_servicesCount = 0
+	ReDim $_servicesArray[$SVC_MAX]
 
 	; query and read list of Windows services
 	Local $iPid = Run(@ComSpec & ' /c ' & 'sc query type= service state= all', '', @SW_HIDE, $STDOUT_CHILD + $STDERR_CHILD)
