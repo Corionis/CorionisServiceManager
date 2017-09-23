@@ -16,6 +16,7 @@ AutoItSetOption("MustDeclareVars", 1)
 #include <GUIConstantsEx.au3>
 #include <GuiScrollBars.au3>
 #include <StructureConstants.au3>
+#include <WinAPISys.au3>
 #include <WindowsConstants.au3>
 
 ; application components
@@ -199,6 +200,12 @@ Func optionsSave()
 		Else
 			GUICtrlSetState($_optionsSaveCtrl, $GUI_DISABLE)
 			GUICtrlSetState($_optionsCancelCtrl, $GUI_DISABLE)
+			If isWinTen() Then
+				Local $resp = MsgBox($MB_YESNO + $MB_ICONINFORMATION, "Startup Shortcut Warning", "On Windows 10+ and Windows Server 2016+ the Start, Programs, Startup shortcut for " & $_progActual & " requires the Advanced property 'As Administrator' to be enabled manually." & @CRLF & @CRLF & "The path is " & $shortcut & @CRLF & @CRLF & "Would you like to go there in a File Explorer?", 0 , $_mainWindow)
+				If $resp == $IDYES Then
+					Local $iPid = Run('explorer.exe ' & @StartupDir, @StartupDir)
+				EndIf
+			EndIf
 		EndIf
 	Else
 		If FileExists($shortcut) Then
@@ -287,5 +294,20 @@ Func optionsSetCtrls()
 	GUICtrlSetData($_cfgIconIndexCtrl, $_cfgIconIndex)
 EndFunc   ;==>optionsSetCtrls
 
+;----------------------------------------------------------------------------
+Func isWinTen()
+	Local $v = _WinAPI_GetVersion();
+	Switch $v
+		Case '6.3'
+		Case '6.2'
+		Case '6.1'
+		Case '6.0'
+		Case '5.2'
+		Case '5.1'
+			Return False
+		Case Else
+			Return True
+	EndSwitch
+EndFunc
 
 ; end
