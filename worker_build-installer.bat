@@ -6,7 +6,7 @@ REM the "aiexe" variable below to be set correctly.
 
 
 REM The location of the Advanced Installer executable MUST be correct
-set aiexe=D:\Tools\Advanced Installer 13.7\bin\x86\AdvancedInstaller.com
+set aiexe=D:\Tools\Advanced Installer 14.3\bin\x86\AdvancedInstaller.com
 
 if not exist "%aiexe%" goto NoAI
 
