@@ -1,5 +1,8 @@
 # Corionis Service Manager
 
+**Note**: There is a *new* implementation available - [Corionis Service Manager.NET](https://github.com/Corionis/CorionisServiceManager.NET)
+that is a complete re-write in Microsoft C# and .NET and has a few new features. Check it out!
+
 **Note:** This is the development section of the project. 
 For the release files go to the [Corionis Service Manager user site](https://corionis.github.io/CorionisServiceManager/).
 

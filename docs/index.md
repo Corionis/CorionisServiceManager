@@ -2,6 +2,10 @@
 layout: default
 show_blog: true
 ---
+**Note**: There is a *new* implementation available - [Corionis Service Manager.NET](https://corionis.github.io/CorionisServiceManager.NET)
+that is a complete re-write in Microsoft C# and .NET and has a few new features. Check it out!
+
+For the original version:<br/>
 There are download choices, see [Using the MSI installer versus just the .exe](msi-vs-exe).<br/>
 Looking for the [User Documentation](help)? Need the [Downloads](downloads) for {{ site.version }}?
 
